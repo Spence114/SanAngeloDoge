@@ -238,3 +238,112 @@ export const MEDIAN_HOME = { taxable: 212_830, prior: 207_300, cityBill: 1691.36
 
 export const APPRAISAL_NOTE =
   "The Tom Green County Appraisal District's 2027 proposed budget is $3,924,849, up 3.1% from its 2026 budget as presented. The taxing units pay it in proportion to their levies. Its 2027 budget includes no debt payments; we have not yet checked its audit. {{c:tgcad-budget-2027,tgcad-agenda-2025-09-11,tgcad-impact-2027}}";
+
+// Principal outstanding at each Aug 31, from the Texas Bond Review Board issuer pages
+// (City 3224, County 3600, SAISD 3225). FY2005 to FY2025 are reported. FY2026 onward is
+// the payoff schedule for debt outstanding on Aug 31, 2025, with no new borrowing.
+// The BRB County schedule predates the County's Sept 2025 refunding.
+export const HISTORY_FIRST = 2005;
+export const HISTORY_LAST_REPORTED = 2025;
+export const DEBT_HISTORY: Array<{ key: "city" | "county" | "saisd"; gov: Government; label: string; values: number[]; cite: string[] }> = [
+  {
+    key: "saisd",
+    gov: "San Angelo ISD",
+    label: "SAISD",
+    cite: ["brb-saisd"],
+    values: [29024991, 27043081, 25195000, 23135000, 138004985, 135769985, 132213822, 128690000, 124510000, 120190000, 115129982, 110304982, 105829982, 101369982, 96694982, 93115000, 86884994, 81294994, 75419994, 69254994, 447884994,
+      446040000, 439275000, 431940000, 424035000, 415535000, 406510000, 397030000, 387080000, 376630000, 367340000, 357455000, 346940000, 335765000, 323895000, 311290000, 297915000, 283730000, 268695000, 252760000, 235885000, 217995000, 199010000, 178875000, 157525000, 134900000, 110925000, 85525000, 58625000, 30145000, 0],
+  },
+  {
+    key: "city",
+    gov: "City of San Angelo",
+    label: "City",
+    cite: ["brb-san-angelo", "brb-san-angelo-schedule"],
+    values: [69610000, 82515000, 101740000, 95395000, 113315000, 105635000, 231660000, 218425000, 205095000, 192000000, 192595000, 191155000, 221760000, 220960000, 204665000, 260190000, 236010000, 192905000, 231850000, 216745000, 265865000,
+      246860000, 231035000, 215595000, 199715000, 183105000, 165780000, 154570000, 143005000, 131030000, 118640000, 106195000, 94225000, 81805000, 70215000, 58200000, 48145000, 37730000, 28310000, 18545000, 8420000, 5185000, 2645000, 0],
+  },
+  {
+    key: "county",
+    gov: "Tom Green County",
+    label: "County",
+    cite: ["brb-tgc"],
+    values: [14610000, 12850000, 11005000, 11080000, 8930000, 15065000, 12785000, 10475000, 8025000, 5470000, 2780000, 50000000, 59515000, 65940000, 63950000, 61785000, 59485000, 57080000, 54560000, 51935000, 49200000,
+      46320000, 43300000, 40155000, 36845000, 33415000, 29845000, 26115000, 22240000, 18220000, 14035000, 9680000, 5170000, 530000, 0],
+  },
+];
+
+/** Moments worth labeling on the history chart. */
+export const HISTORY_EVENTS = [
+  { year: 2009, key: "saisd", text: "SAISD bonds, about $115M" },
+  { year: 2011, key: "city", text: "City borrows $126M in one year" },
+  { year: 2016, key: "county", text: "County bonds, $47M" },
+  { year: 2025, key: "saisd", text: "SAISD issues $385M (Prop A)" },
+] as const;
+
+export interface PurposeSlice {
+  k: string;
+  v: number;
+  tone: number;
+  note?: string;
+  unv?: boolean;
+}
+
+export interface PurposeRow {
+  gov: Government;
+  short: string;
+  total: number;
+  asOf: string;
+  slices: PurposeSlice[];
+  note: string;
+  cite: string[];
+}
+
+// What the debt was borrowed for, as of Aug 31, 2025 (state FY2025), from the BRB issuer pages.
+export const DEBT_PURPOSE: PurposeRow[] = [
+  {
+    gov: "City of San Angelo",
+    short: "City",
+    total: 265_865_000,
+    asOf: "Aug 31, 2025",
+    slices: [
+      { k: "Transportation", v: 67_005_000, tone: 1 },
+      { k: "Water, revenue bonds", v: 57_855_000, tone: 2, note: "Repaid from water bills, not property taxes" },
+      { k: "Refunding older bonds", v: 53_800_000, tone: 3 },
+      { k: "Economic development", v: 41_660_000, tone: 4, note: "The 2025 Coliseum bonds" },
+      { k: "Water, tax-supported", v: 39_355_000, tone: 5 },
+      { k: "Public safety", v: 3_290_000, tone: 6 },
+      { k: "General purpose", v: 2_900_000, tone: 7 },
+    ],
+    note: "$208.0M is repaid from property taxes and $57.9M from water revenue.",
+    cite: ["brb-san-angelo"],
+  },
+  {
+    gov: "Tom Green County",
+    short: "County",
+    total: 49_200_000,
+    asOf: "Aug 31, 2025",
+    slices: [{ k: "General purpose", v: 49_200_000, tone: 1 }],
+    note: "The state lists all County debt as general purpose. After a Sept 2025 refunding and a year of payments, the County reports $43.95M owed as of Aug 31, 2026.",
+    cite: ["brb-tgc", "county-auditor-aug2026"],
+  },
+  {
+    gov: "San Angelo ISD",
+    short: "SAISD",
+    total: 447_884_994,
+    asOf: "Aug 31, 2025",
+    slices: [
+      { k: "2025 school bonds", v: 385_100_000, tone: 1, note: "Issued under Proposition A, the May 3, 2025 bond election" },
+      { k: "Earlier bonds", v: 62_784_994, tone: 3, note: "Total owed less the 2025 bonds, our arithmetic" },
+    ],
+    note: "School district debt pays for buildings and facilities. SAISD reports $446.8M owed after a Feb 2026 payment.",
+    cite: ["brb-saisd", "saisd-election-notice-2025", "saisd-hb1378", "our-analysis"],
+  },
+];
+
+// Debt per resident (per student in average daily attendance for SAISD), FY2025, against the
+// Bond Review Board's trend line for similar governments. The City figure counts tax-supported debt only.
+export const PER_PERSON = [
+  { label: "City, per resident", note: "Tax-supported debt only", v: 2076.8, peer: 2521, cite: ["brb-san-angelo"] },
+  { label: "County, per resident", note: "", v: 409.65, peer: 410.1, cite: ["brb-tgc"] },
+  { label: "SAISD, per student", note: "Per student in average daily attendance", v: 37943.85, peer: 28461.55, cite: ["brb-saisd"] },
+];

@@ -172,6 +172,44 @@ declare global {
 
   /* ---------- interest counters ---------- */
   const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  /* ---------- debt history chart readout ---------- */
+  $$<HTMLElement>("[data-lc]").forEach((fig) => {
+    const d = JSON.parse(fig.dataset.lc || "{}") as { first: number; last: number; now: number; max: number; s: Array<{ k: string; l: string; v: number[] }> };
+    const plot = fig.querySelector<HTMLElement>(".lc-plot");
+    const rule = fig.querySelector<HTMLElement>(".lc-rule");
+    const read = fig.querySelector<HTMLElement>(".lc-read");
+    if (!plot || !rule || !read || !d.s) return;
+    const money = (v: number) => (v >= 1e6 ? `$${(v / 1e6).toFixed(1)}M` : v > 0 ? `$${Math.round(v / 1e3)}K` : "Paid off");
+    const show = (clientX: number) => {
+      const r = plot.getBoundingClientRect();
+      const f = Math.min(1, Math.max(0, (clientX - r.left) / r.width));
+      const yr = Math.round(d.first + f * (d.last - d.first));
+      const x = ((yr - d.first) / (d.last - d.first)) * 100;
+      rule.style.left = `${x}%`;
+      rule.hidden = false;
+      const rows = d.s
+        .map((s) => {
+          const v = s.v[yr - d.first];
+          return v === undefined ? `<span class="k-${s.k}">${s.l}<i>Paid off</i></span>` : `<span class="k-${s.k}">${s.l}<i>${money(v)}</i></span>`;
+        })
+        .join("");
+      read.innerHTML = `<b>${yr}</b>${rows}<small>${yr > d.now ? "Scheduled, no new borrowing" : "Reported, as of Aug 31"}</small>`;
+      read.hidden = false;
+      const left = x > 60;
+      read.style.left = left ? "" : `calc(${x}% + 12px)`;
+      read.style.right = left ? `calc(${100 - x}% + 12px)` : "";
+    };
+    const hide = () => {
+      rule.hidden = true;
+      read.hidden = true;
+    };
+    plot.addEventListener("pointermove", (e) => show(e.clientX));
+    plot.addEventListener("pointerdown", (e) => show(e.clientX));
+    plot.addEventListener("pointerleave", (e) => {
+      if (e.pointerType === "mouse") hide();
+    });
+  });
+
   const tickers = $$<HTMLElement>("[data-ticker]");
   if (tickers.length) {
     const start = Date.now();
