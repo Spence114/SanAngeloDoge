@@ -576,7 +576,7 @@ sup.cite a:hover { text-decoration: underline; }
 .stance .aside-box { max-width: 76ch; }
 .aside-box.sapd { border-left: 3px solid var(--good); }
 /* Proposal: iPad tour */
-.tour { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(260px, 1fr); gap: 28px; align-items: start; }
+.tour { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(0, 1.7fr); gap: 28px; align-items: start; }
 .tour-ipad { position: sticky; top: calc(var(--top-h) + 20px); }
 .tour-screen { aspect-ratio: 1400 / 973; }
 .tour-screen img { animation: none !important; transform: none; }
@@ -586,12 +586,16 @@ sup.cite a:hover { text-decoration: underline; }
 .tour-list { display: flex; flex-direction: column; gap: 2px; }
 .tour-g { margin: 10px 0 4px; font-size: 11.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-4); }
 .tour-g:first-child { margin-top: 0; }
-.tour-list button { display: flex; flex-direction: column; gap: 1px; width: 100%; padding: 8px 12px; border: 0; border-left: 2px solid transparent; border-radius: 0 8px 8px 0; background: transparent; text-align: left; cursor: pointer; transition: background .2s, border-color .2s; }
-.tour-list button b { font-size: 14.5px; font-weight: 600; color: var(--ink-2); }
-.tour-list button span { font-size: 13px; color: var(--ink-3); }
-.tour-list button:hover { background: var(--raise); }
-.tour-list button[aria-selected="true"] { background: var(--raise); border-left-color: var(--accent); }
-.tour-list button[aria-selected="true"] b { color: var(--accent); }
+.tour-list button { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; margin-bottom: 6px; padding: 10px 12px 10px 14px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--raise); text-align: left; cursor: pointer; transition: background .2s, border-color .2s, transform .15s; }
+.tour-list .tl-t { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.tour-list button b { font-size: 14.5px; font-weight: 600; color: var(--ink); }
+.tour-list button .tl-t span { font-size: 13px; color: var(--ink-3); }
+.tour-list .tl-go { flex: none; color: var(--ink-4); transition: color .2s, transform .2s; }
+.tour-list button:hover { border-color: var(--accent); background: var(--bg); }
+.tour-list button:hover .tl-go { color: var(--accent); transform: translateX(3px); }
+.tour-list button:active { transform: scale(.99); }
+.tour-list button[aria-selected="true"] { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+.tour-list button[aria-selected="true"] b, .tour-list button[aria-selected="true"] .tl-go { color: var(--accent); }
 .disc-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 16px; }
 .btn-mosir { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px; border-radius: 8px; background: #C8611F; color: #FFF8F1; font-size: 13px; font-weight: 600; text-decoration: none; letter-spacing: .01em; transition: background .2s; }
 .btn-mosir:hover { background: #A94F17; color: #FFF8F1; }
@@ -633,7 +637,7 @@ sup.cite a:hover { text-decoration: underline; }
 }
 @media (max-width: 860px) {
   .tour { grid-template-columns: minmax(0, 1fr); }
-  .tour-ipad { position: static; }
+  .tour-ipad { position: static; order: -1; }
   .bor-grid { grid-template-columns: minmax(0, 1fr); }
   .hero-in, .two-col, .sp-grid, .split, .foot-top { grid-template-columns: minmax(0, 1fr); }
   .hero h1 { max-width: 18ch; }

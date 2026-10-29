@@ -73,6 +73,16 @@ export function proposalPage(ctx: Ctx): string {
   const flat = TOUR.flatMap((g) => g.items);
   let n = -1;
   const tour = `<div class="tour" data-tour>
+    <div class="tour-list" role="tablist" aria-label="Dashboard features">
+      ${TOUR.map(
+        (g) => `<p class="tour-g">${g.group}</p>${g.items
+          .map((x) => {
+            n++;
+            return `<button type="button" role="tab" aria-selected="${n === 0}" data-tour-i="${n}"><span class="tl-t"><b>${x.k}</b><span>${x.v}</span></span><svg class="tl-go" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button>`;
+          })
+          .join("")}`,
+      ).join("")}
+    </div>
     <figure class="ipad tour-ipad">
       <div class="ipad-body">
         <div class="ipad-screen tour-screen">
@@ -82,16 +92,6 @@ export function proposalPage(ctx: Ctx): string {
       </div>
       <figcaption>Prototype screens with sample figures. <b class="nv-text">Not validated</b> against the source documents yet.</figcaption>
     </figure>
-    <div class="tour-list" role="tablist" aria-label="Dashboard features">
-      ${TOUR.map(
-        (g) => `<p class="tour-g">${g.group}</p>${g.items
-          .map((x) => {
-            n++;
-            return `<button type="button" role="tab" aria-selected="${n === 0}" data-tour-i="${n}"><b>${x.k}</b><span>${x.v}</span></button>`;
-          })
-          .join("")}`,
-      ).join("")}
-    </div>
   </div>`;
 
   return `${pageHead({
@@ -101,7 +101,7 @@ export function proposalPage(ctx: Ctx): string {
     meta: [chip("Phase 0: research and design", "open"), chip("Dashboard not yet built", "hold"), `Updated ${SITE.updated}`],
   })}
 
-${section({ id: "tour", title: "Tour the prototype", note: "Pick a feature to see it on the iPad. These are design screens; the figures in them have not been checked.", body: tour })}
+${section({ id: "tour", title: "Tour the prototype", note: "Click a feature on the left to show it on the iPad. These are design screens; the figures in them have not been checked.", body: tour })}
 
 ${section({ id: "status", title: "Where it stands", note: "Phase 0 is the groundwork. The dashboard itself is not built yet.", body: status, band: true })}
 
