@@ -1,6 +1,6 @@
 import { SITE } from "../config.ts";
 import { chip, facts, pageHead, section } from "../render/components.ts";
-import { anchorLink, type Ctx } from "../render/html.ts";
+import { anchorLink, type Ctx, rich } from "../render/html.ts";
 
 const LATER = [
   "Data center updates",
@@ -106,7 +106,10 @@ export function alertsPage(ctx: Ctx): string {
   return `${pageHead({
     eyebrow: "Zoning alerts",
     title: "Know before they vote",
-    lede: "When the City posts a zoning change, we post it and email everyone who asked to hear about it. You choose the distance from your home: 250 feet, 1,000 feet, half a mile, or the whole city.",
+    lede: rich(
+      ctx,
+      "The City is only required to mail notice of a zoning change to property owners within 200 feet. {{c:tx-lgc-211007}} That is not enough. Some changes affect entire blocks or whole neighborhoods. So we created this. When the City posts a zoning change, we post it and email everyone who signed up, out to the distance they choose: 250 feet, 1,000 feet, half a mile, or the whole city.",
+    ),
     meta: [chip("Sign-up open", "good"), "Alerts are in development"],
   })}
 <section class="sec"><div class="wrap sec-in"><div class="two-col">${form}<div class="side">${radiusDiagram()}
