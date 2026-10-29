@@ -42,7 +42,7 @@ export function privacyPage(ctx: Ctx): string {
 
   const stance = `<div class="stance">
     ${prose(ctx, STANCE)}
-    <div class="aside-box sapd"><h3>Working with SAPD</h3>${SAPD_MEETINGS.map((x) => `<p>${x}</p>`).join("")}<p class="note">The author's own account of the meetings. Spencer builds AI systems and is helping SAPD set the selection criteria for a local company to build this system. ${anchorLink(ctx, "about", "disclosure", "Read the disclosure")}</p></div>
+    <div class="aside-box sapd"><h3>Working with SAPD</h3>${SAPD_MEETINGS.map((x) => `<p>${x}</p>`).join("")}<p class="note">The author's own account of the meetings. Spencer builds AI systems and is helping SAPD decide how to choose a local company to build this system. ${anchorLink(ctx, "about", "disclosure", "Read the disclosure")}</p></div>
     <h3 class="sub-h">How a local system would work</h3>
     ${plan}
     ${prose(ctx, STANCE_AFTER)}

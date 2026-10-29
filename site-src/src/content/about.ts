@@ -9,8 +9,8 @@ export const WHO = [
 ];
 
 export const DISCLOSURE = [
-  "Spencer Matthews, who writes this site, builds AI systems for companies and organizations through his firm, Mosir.",
-  "He is currently assisting the San Angelo Police Department in setting the selection criteria for bringing on a local company to build out the local plate camera system discussed on our Flock cameras page.",
+  "Spencer Matthews, who writes this site, builds AI systems for businesses and organizations through his company, Mosir.",
+  "He is also helping the San Angelo Police Department decide how to choose a local company to build the City-owned plate camera system described on our Flock cameras page.",
 ];
 
 export const STANDARDS: Fact[] = [
