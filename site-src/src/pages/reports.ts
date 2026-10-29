@@ -27,7 +27,7 @@ export function reportsPage(ctx: Ctx): string {
   return `${pageHead({
     eyebrow: "Reports",
     title: "Reports and analysis",
-    lede: "Analysis and opinion by Spencer Matthews, an independent journalist and San Angelo resident with no financial interest in the projects covered. The data pages stick to the public record; this is where the argument lives. Every report opens as a PDF or page you can save and share.",
+    lede: "Analysis and opinion by Spencer Matthews, an independent journalist and San Angelo resident with no financial interest in the data center projects covered. The data pages stick to the public record; this is where the argument lives. Every report opens as a PDF or page you can save and share.",
   })}
 
 ${group("Data centers", "Briefings and analysis on the three proposed campuses.", dc)}

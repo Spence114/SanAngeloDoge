@@ -1,4 +1,4 @@
-import { ABOUT_LEDE, CORRECTIONS, DISCLAIMER, SITE_PRIVACY, STANDARDS, WHO } from "../content/about.ts";
+import { ABOUT_LEDE, CORRECTIONS, DISCLAIMER, DISCLOSURE, SITE_PRIVACY, STANDARDS, WHO } from "../content/about.ts";
 import { facts, ICON, pageHead, prose, section, table } from "../render/components.ts";
 import { anchorLink, type Ctx, href } from "../render/html.ts";
 
@@ -19,13 +19,20 @@ export function aboutPage(ctx: Ctx): string {
 
 ${section({ id: "who", title: "Who runs it", body: prose(ctx, WHO) })}
 
-${section({ id: "building", title: "What we're working on", body: plan, band: true })}
+${section({
+  id: "disclosure",
+  title: "Disclosure",
+  body: `${prose(ctx, DISCLOSURE)}<div class="disc-acts">${anchorLink(ctx, "privacy", "stand", `Read the Flock cameras discussion ${ICON.arrow}`, "more")}<a class="btn-mosir" href="https://mosir.ai" target="_blank" rel="noopener">Mosir.ai ${ICON.out}</a></div>`,
+  band: true,
+})}
 
-${section({ id: "standards", title: "How we work", body: facts(ctx, STANDARDS) })}
+${section({ id: "building", title: "What we're working on", body: plan })}
 
-${section({ id: "corrections", title: "Corrections log", note: "Report an error through the tip line and we will check it against the source document.", body: corrections, band: true })}
+${section({ id: "standards", title: "How we work", body: facts(ctx, STANDARDS), band: true })}
 
-${section({ id: "site-privacy", title: "Your privacy on this site", body: prose(ctx, SITE_PRIVACY) })}
+${section({ id: "corrections", title: "Corrections log", note: "Report an error through the tip line and we will check it against the source document.", body: corrections })}
 
-${section({ id: "disclaimer", title: "Disclaimer", body: prose(ctx, DISCLAIMER), band: true })}`;
+${section({ id: "site-privacy", title: "Your privacy on this site", body: prose(ctx, SITE_PRIVACY), band: true })}
+
+${section({ id: "disclaimer", title: "Disclaimer", body: prose(ctx, DISCLAIMER) })}`;
 }

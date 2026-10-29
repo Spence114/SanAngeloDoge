@@ -4,8 +4,13 @@ export const ABOUT_LEDE =
   "An independent, citizen-run look at local government finances in San Angelo and Tom Green County: the City of San Angelo, Tom Green County, San Angelo ISD, and the Tom Green County Appraisal District.";
 
 export const WHO = [
-  "San Angelo DOGE is run by <strong>Spencer Matthews</strong>, a San Angelo resident and independent journalist. It has no political party and is not affiliated with any government, or with any organization using the name DOGE at the federal or state level. The author has no financial interest in the projects covered here.",
+  "San Angelo DOGE is run by <strong>Spencer Matthews</strong>, a San Angelo resident and independent journalist. It has no political party and is not affiliated with any government, or with any organization using the name DOGE at the federal or state level. The author has no financial interest in the data center projects covered here. His work building AI systems is disclosed below.",
   "The goal is simple: local government works better when residents can see the numbers. Budgets, debt, votes, and big projects are presented in plain words, with every figure linked to where it came from.",
+];
+
+export const DISCLOSURE = [
+  "Spencer Matthews, who writes this site, builds AI systems for companies and organizations through his firm, Mosir.",
+  "He is currently assisting the San Angelo Police Department in setting the selection criteria for bringing on a local company to build out the local plate camera system discussed on our Flock cameras page.",
 ];
 
 export const STANDARDS: Fact[] = [
