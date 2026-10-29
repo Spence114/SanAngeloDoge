@@ -1,0 +1,6 @@
+# Report PDFs: file name in reports/, then where to copy it from on first deploy.
+# The workflow fetches any file that is missing from reports/ and commits it to the repo.
+beacon-air-permit-briefing.pdf https://sanangelodoge.com/wp-content/uploads/2026/08/Westline_2335_Community_Brochure.pdf
+beacon-noise-screening.pdf https://sanangelodoge.com/wp-content/uploads/2026/08/beacon-sound-modeling.pdf
+data-center-due-diligence.pdf https://sanangelodoge.com/wp-content/uploads/2026/06/Due_Diligence_Data_Centers-June-16th.pdf
+saisd-bond-open-letter.pdf https://sanangelodoge.com/wp-content/uploads/2026/06/OPEN-LETTER-ON-SAN-ANGELO-SCHOOL-BOND-2025.pdf

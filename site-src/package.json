@@ -1,0 +1,16 @@
+{
+  "name": "sanangelodoge-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SanAngeloDOGE.com front-door website. Static TypeScript build.",
+  "type": "module",
+  "scripts": {
+    "build": "tsx build.ts",
+    "check": "tsc --noEmit -p ."
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  }
+}
