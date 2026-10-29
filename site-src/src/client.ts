@@ -102,60 +102,59 @@ declare global {
     show();
   }
 
-  /* ---------- hero: dashboard screens ---------- */
+  /* ---------- hero: dashboard screens on the iPad ---------- */
   for (const box of $$<HTMLElement>("[data-shots]")) {
-    const imgs = $$<HTMLImageElement>(".shot-view img", box);
+    const imgs = $$<HTMLImageElement>(".ipad-screen img", box);
     const tabs = $$<HTMLButtonElement>("[data-shot]", box);
+    const label = box.querySelector<HTMLElement>("[data-shot-label]");
+    if (imgs.length < 2) continue;
     const ms = 8000;
     let i = 0;
     let timer = 0;
-    let paused = false;
+    let hovering = false;
+
     const go = (n: number) => {
+      const prev = i;
       i = (n + imgs.length) % imgs.length;
       imgs.forEach((img, k) => {
-        img.classList.remove("on");
         if (k === i) {
-          void img.offsetWidth; // restart the pan
+          img.classList.remove("on", "out");
+          void img.offsetWidth; // restart the scroll from the top
           img.classList.add("on");
+        } else {
+          img.classList.remove("on");
+          // The screen fading out holds where it stopped instead of jumping back to the top.
+          img.classList.toggle("out", k === prev);
         }
       });
-      const label = box.querySelector<HTMLElement>("[data-shot-label]");
+      tabs.forEach((t, k) => t.setAttribute("aria-selected", String(k === i)));
       if (label) label.textContent = tabs[i]?.dataset.label ?? label.textContent;
-      tabs.forEach((t, k) => {
-        t.setAttribute("aria-selected", String(k === i));
-        const bar = t.querySelector("i");
-        if (bar && k === i) {
-          bar.style.animation = "none";
-          void bar.offsetWidth;
-          bar.style.animation = "";
-        }
-      });
     };
+    const stop = () => window.clearInterval(timer);
     const start = () => {
-      if (reduce || paused) return;
-      window.clearInterval(timer);
-      box.classList.add("auto");
-      box.style.setProperty("--shot-ms", `${ms}ms`);
+      stop();
+      if (reduce || hovering || document.hidden) return;
       timer = window.setInterval(() => go(i + 1), ms);
     };
-    const stop = () => {
-      window.clearInterval(timer);
-      box.classList.remove("auto");
-    };
+
     tabs.forEach((t, k) =>
       t.addEventListener("click", () => {
-        paused = true;
-        stop();
         go(k);
+        start();
       }),
     );
-    box.addEventListener("mouseenter", stop);
-    box.addEventListener("mouseleave", () => {
-      if (!paused) {
-        go(i);
-        start();
-      }
+    // Pause while a mouse is over the iPad. Touch devices never get a matching "leave", so ignore them.
+    box.addEventListener("pointerenter", (e) => {
+      if (e.pointerType !== "mouse") return;
+      hovering = true;
+      stop();
     });
+    box.addEventListener("pointerleave", (e) => {
+      if (e.pointerType !== "mouse") return;
+      hovering = false;
+      start();
+    });
+    document.addEventListener("visibilitychange", start);
     start();
   }
 

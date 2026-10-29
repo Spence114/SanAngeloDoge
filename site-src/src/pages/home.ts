@@ -37,7 +37,7 @@ export function homePage(ctx: Ctx): string {
   <div class="wrap hero-in">
     <div class="hero-copy">
       <p class="eyebrow">Independent and citizen-sponsored</p>
-      <h1>Analyzing and reporting on our local government</h1>
+      <h1>Local Government Transparency</h1>
       <p class="lede">San Angelo DOGE puts the city's critical data on screen: what the City, Tom Green County, and San Angelo ISD owe, spend, and decide. Modern AI tools let us turn the public record into quick reports that help citizens and officials with their research and move San Angelo toward its goals.</p>
       <div class="hero-acts">
         <a class="btn btn-lg" href="${href(ctx, "proposal")}">See the proposal ${ICON.arrow}</a>
