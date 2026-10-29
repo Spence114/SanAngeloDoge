@@ -134,14 +134,18 @@ export interface ReportCard {
   kind: string;
   length?: string;
   update?: string;
+  thumb?: string;
 }
 
 /** One report as a card with a download or read button. */
 export function reportCard(r: ReportCard, full = false, ctx?: Ctx): string {
   const pdf = r.format === "PDF";
   const meta = [r.date, r.kind, r.length].filter(Boolean).map((m) => `<span>${m}</span>`).join("");
-  return `<article class="rep${r.kind === "Opinion" ? " op" : ""}">
-  ${docIcon(pdf ? "PDF" : "WEB")}
+  const lead = r.thumb
+    ? `<a class="rep-thumb" href="${esc(r.url)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="${esc(r.thumb)}" alt="" width="360" height="466" loading="lazy" decoding="async"><b>${pdf ? "PDF" : "WEB"}</b></a>`
+    : docIcon(pdf ? "PDF" : "WEB");
+  return `<article class="rep${r.kind === "Opinion" ? " op" : ""}${r.thumb ? " has-thumb" : ""}${full ? " full" : ""}">
+  ${lead}
   <div class="rep-body">
     <p class="rep-meta">${meta}</p>
     <h3><a href="${esc(r.url)}" target="_blank" rel="noopener">${r.title}</a></h3>

@@ -5,23 +5,28 @@ import { ICON } from "../render/components.ts";
 import { reportsFor } from "./reports.ts";
 import { cite, type Ctx, href, usdM } from "../render/html.ts";
 
-/** Screens from the dashboard prototype, shown in an app frame that pans down each screen and
- *  cycles through them. Labeled as a prototype so it does not read as a finished product. */
+/** Screens from the dashboard prototype on an iPad. Each screen scrolls slowly, then the next
+ *  fades in. Labeled as a prototype so it does not read as a finished product. */
 const SHOTS = [
-  { file: "h-priorities.webp", tab: "Priorities", alt: "Dashboard prototype: local money matters ranked by size, cost per home, and deadline." },
-  { file: "h-issues.webp", tab: "Issue tracker", alt: "Dashboard prototype: public issues tracked from monitoring to follow-up." },
-  { file: "h-money.webp", tab: "Money in, money out", alt: "Dashboard prototype: where the County general fund gets its money and what it pays for." },
+  { file: "i-money.webp", tab: "Money in, money out", alt: "Dashboard prototype on an iPad: where the County general fund gets its money and what it pays for." },
+  { file: "i-priorities.webp", tab: "Priorities", alt: "Dashboard prototype on an iPad: local money matters ranked by size, cost per home, and deadline." },
+  { file: "i-issues.webp", tab: "Issue tracker", alt: "Dashboard prototype on an iPad: public issues tracked from monitoring to follow-up." },
 ];
 
 function appShots(ctx: Ctx): string {
   const base = ctx.mode === "artifact" ? `${SITE.origin}/assets/hero/` : "/assets/hero/";
-  return `<figure class="shot" data-shots>
-  <div class="shot-bar"><span class="shot-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="shot-url mono">app.sanangelodoge.com</span><span class="st st-open">Prototype</span></div>
-  <div class="shot-view">
-    ${SHOTS.map((x, i) => `<img${i === 0 ? ' class="on"' : ""} src="${base}${x.file}" alt="${x.alt}" width="1200" height="1250" decoding="async"${i === 0 ? "" : ' loading="lazy"'}>`).join("\n    ")}
+  return `<figure class="ipad" data-shots>
+  <div class="ipad-body">
+    <div class="ipad-screen">
+      ${SHOTS.map((x, i) => `<img${i === 0 ? ' class="on"' : ""} src="${base}${x.file}" alt="${x.alt}" width="1500" height="1780" decoding="async"${i === 0 ? "" : ' loading="lazy"'}>`).join("\n      ")}
+    </div>
   </div>
-  <div class="shot-tabs" role="tablist" aria-label="Dashboard screens">
-    ${SHOTS.map((x, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-shot="${i}"><span>${x.tab}</span><i aria-hidden="true"></i></button>`).join("")}
+  <div class="ipad-foot">
+    <span class="st st-open">Prototype</span>
+    <span class="ipad-label" data-shot-label aria-live="polite">${SHOTS[0].tab}</span>
+    <span class="ipad-dots" role="tablist" aria-label="Dashboard screens">${SHOTS.map(
+      (x, i) => `<button type="button" role="tab" aria-selected="${i === 0}" aria-label="${x.tab}" data-shot="${i}" data-label="${x.tab}"><i></i></button>`,
+    ).join("")}</span>
   </div>
   <figcaption>Screens from the dashboard prototype, in development. Some figures are samples. <a href="${href(ctx, "proposal")}">See the proposal</a></figcaption>
 </figure>`;
@@ -32,7 +37,7 @@ export function homePage(ctx: Ctx): string {
   <div class="wrap hero-in">
     <div class="hero-copy">
       <p class="eyebrow">Independent and citizen-sponsored</p>
-      <h1>Know San&nbsp;Angelo's numbers</h1>
+      <h1>Analyzing and reporting on our local government</h1>
       <p class="lede">San Angelo DOGE puts the city's critical data on screen: what the City, Tom Green County, and San Angelo ISD owe, spend, and decide. Modern AI tools let us turn the public record into quick reports that help citizens and officials with their research and move San Angelo toward its goals.</p>
       <div class="hero-acts">
         <a class="btn btn-lg" href="${href(ctx, "proposal")}">See the proposal ${ICON.arrow}</a>

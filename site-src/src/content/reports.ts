@@ -6,6 +6,8 @@ export type ReportTopic = "data-centers" | "beacon" | "skybox" | "cipher" | "fin
 
 export interface Report {
   id: string;
+  /** First-page preview image. */
+  thumb?: string;
   date: string;
   title: string;
   desc: string;
@@ -18,6 +20,7 @@ export interface Report {
 }
 
 const UP = "https://sanangelodoge.com/reports";
+const TH = "/assets/reports";
 
 export const REPORTS: Report[] = [
   {
@@ -26,9 +29,12 @@ export const REPORTS: Report[] = [
     title: "Beacon's gas plant: what the air permit asks for",
     desc: "Beacon's gas plant application in brief: scale, air, water, gas supply, and the steps residents can take in TCEQ's process.",
     url: `${UP}/beacon-air-permit-briefing.pdf`,
+    thumb: `${TH}/beacon-air-permit-briefing.webp`,
     format: "PDF",
     kind: "Briefing",
     topics: ["data-centers", "beacon"],
+    update:
+      "The applicant's own air modeling puts the plant at 2,409 megawatts net, enough for roughly 480,000 homes by our estimate. The 2.7 gigawatts and 600,000 homes in this briefing were our earlier estimates. {{c:westline-modeling-protocol,eip-0625,our-analysis}}",
   },
   {
     id: "beacon-noise",
@@ -36,6 +42,7 @@ export const REPORTS: Report[] = [
     title: "How loud would it be? Beacon noise screening",
     desc: "Calculated sound levels from the engine maker's data at the Boys Ranch, Foster Park, The Four56 Church, and the edge of town.",
     url: `${UP}/beacon-noise-screening.pdf`,
+    thumb: `${TH}/beacon-noise-screening.webp`,
     format: "PDF",
     kind: "Analysis",
     length: "2 pages",
@@ -47,6 +54,7 @@ export const REPORTS: Report[] = [
     title: "Data centers due diligence: a city, county, and state assessment",
     desc: "Financing, power, water, and governance for the Skybox, Cipher, and Beacon proposals, with actions for council, commissioners, and legislators.",
     url: `${UP}/data-center-due-diligence.pdf`,
+    thumb: `${TH}/data-center-due-diligence.webp`,
     format: "PDF",
     kind: "Analysis",
     topics: ["data-centers", "skybox", "cipher", "beacon"],
@@ -59,6 +67,7 @@ export const REPORTS: Report[] = [
     title: "Open letter on the San Angelo school bond",
     desc: "An analysis of the 2025 SAISD bond before the vote. Current bond figures are on the Finances page.",
     url: `${UP}/saisd-bond-open-letter.pdf`,
+    thumb: `${TH}/saisd-bond-open-letter.webp`,
     format: "PDF",
     kind: "Analysis",
     topics: ["finances"],

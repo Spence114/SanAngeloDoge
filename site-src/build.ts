@@ -218,15 +218,15 @@ RewriteRule ^wp-content/uploads/2026/08/The-Great-Bank-Robbery-6-Page-Guide\\.pd
 </IfModule>
 `;
 
-/** The preview is one self-contained file, so hero screens are inlined there. */
-function inlineHeroImages(html: string): string {
-  return html.replace(new RegExp(`${SITE.origin}/assets/hero/([\\w.-]+\\.webp)`, "g"), (_m, f: string) => {
-    const data = readFileSync(join(root, "src/assets/hero", f)).toString("base64");
+/** The preview is one self-contained file, so site images are inlined there. */
+function inlineImages(html: string): string {
+  return html.replace(new RegExp(`(?:${SITE.origin})?/assets/(hero|reports)/([\\w.-]+\\.webp)`, "g"), (_m, dir: string, f: string) => {
+    const data = readFileSync(join(root, "src/assets", dir, f)).toString("base64");
     return `data:image/webp;base64,${data}`;
   });
 }
 
-const preview = inlineHeroImages(buildPreview());
+const preview = inlineImages(buildPreview());
 checkCopy("preview", preview);
 write(join(root, "dist/preview/index.html"), preview);
 
@@ -238,8 +238,10 @@ for (const r of ROUTES) {
 }
 write(join(root, "dist/site/assets/site.css"), css);
 write(join(root, "dist/site/assets/site.js"), clientJs);
-mkdirSync(join(root, "dist/site/assets/hero"), { recursive: true });
-for (const f of readdirSync(join(root, "src/assets/hero"))) copyFileSync(join(root, "src/assets/hero", f), join(root, "dist/site/assets/hero", f));
+for (const dir of ["hero", "reports"]) {
+  mkdirSync(join(root, "dist/site/assets", dir), { recursive: true });
+  for (const f of readdirSync(join(root, "src/assets", dir))) copyFileSync(join(root, "src/assets", dir, f), join(root, "dist/site/assets", dir, f));
+}
 const notFound = build404();
 checkCopy("404", notFound);
 write(join(root, "dist/site/404.html"), notFound);

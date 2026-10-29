@@ -119,6 +119,8 @@
           img.classList.add("on");
         }
       });
+      const label = box.querySelector             ("[data-shot-label]");
+      if (label) label.textContent = tabs[i]?.dataset.label ?? label.textContent;
       tabs.forEach((t, k) => {
         t.setAttribute("aria-selected", String(k === i));
         const bar = t.querySelector("i");
