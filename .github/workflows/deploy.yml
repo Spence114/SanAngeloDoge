@@ -1,0 +1,67 @@
+name: Deploy to SiteGround
+
+# Manual only for now. Dry run is on by default, so nothing changes on the
+# server until Spencer unchecks it. After the first good live run, add
+# "push: branches: [main]" so every change publishes on its own.
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: list what would change, upload nothing"
+        type: boolean
+        default: true
+      remove_old_files:
+        description: "Delete files on the server that are not in this repo (clears SiteGround's placeholder page)"
+        type: boolean
+        default: false
+
+concurrency: deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      REMOTE_PATH: ${{ secrets.SG_PATH }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check secrets are set
+        env:
+          SG_SSH_KEY: ${{ secrets.SG_SSH_KEY }}
+          SG_HOST: ${{ secrets.SG_HOST }}
+          SG_USER: ${{ secrets.SG_USER }}
+          SG_PORT: ${{ secrets.SG_PORT }}
+        run: |
+          missing=""
+          [ -z "$SG_SSH_KEY" ] && missing="$missing SG_SSH_KEY"
+          [ -z "$SG_HOST" ] && missing="$missing SG_HOST"
+          [ -z "$SG_USER" ] && missing="$missing SG_USER"
+          [ -z "$SG_PORT" ] && missing="$missing SG_PORT"
+          [ -z "$REMOTE_PATH" ] && missing="$missing SG_PATH"
+          if [ -n "$missing" ]; then echo "Missing repository secrets:$missing"; exit 1; fi
+          echo "All secrets present."
+
+      - name: Load SSH key
+        env:
+          SG_SSH_KEY: ${{ secrets.SG_SSH_KEY }}
+          SG_SSH_PASSPHRASE: ${{ secrets.SG_SSH_PASSPHRASE }}
+          SG_HOST: ${{ secrets.SG_HOST }}
+          SG_PORT: ${{ secrets.SG_PORT }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$SG_SSH_KEY" > ~/.ssh/sg_key && chmod 600 ~/.ssh/sg_key
+          # SiteGround keys are passphrase protected; strip it inside this throwaway runner only.
+          if [ -n "$SG_SSH_PASSPHRASE" ]; then ssh-keygen -p -P "$SG_SSH_PASSPHRASE" -N "" -f ~/.ssh/sg_key >/dev/null; fi
+          ssh-keyscan -p "$SG_PORT" "$SG_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Check connection and target folder
+        run: |
+          ssh -i ~/.ssh/sg_key -p "${{ secrets.SG_PORT }}" "${{ secrets.SG_USER }}@${{ secrets.SG_HOST }}" \
+            "test -d '$REMOTE_PATH' && echo 'Target folder found' && ls -1 '$REMOTE_PATH' | head -40"
+
+      - name: Upload site
+        run: |
+          FLAGS="-rlvz --checksum --exclude=.git/ --exclude=.github/ --exclude=README.md --exclude=CLAUDE.md --exclude=.gitkeep"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then FLAGS="$FLAGS --dry-run"; echo "DRY RUN: nothing will be uploaded"; fi
+          if [ "${{ inputs.remove_old_files }}" = "true" ]; then FLAGS="$FLAGS --delete --exclude=.well-known/"; fi
+          rsync $FLAGS -e "ssh -i $HOME/.ssh/sg_key -p ${{ secrets.SG_PORT }}" ./ "${{ secrets.SG_USER }}@${{ secrets.SG_HOST }}:$REMOTE_PATH/"
