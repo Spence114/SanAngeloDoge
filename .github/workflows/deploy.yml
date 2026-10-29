@@ -96,3 +96,10 @@ jobs:
           if [ "${{ inputs.dry_run }}" = "true" ]; then FLAGS="$FLAGS --dry-run"; echo "DRY RUN: nothing will be uploaded"; fi
           if [ "${{ inputs.remove_old_files }}" = "true" ]; then FLAGS="$FLAGS --delete --exclude=.well-known/"; fi
           rsync $FLAGS -e "ssh -i $HOME/.ssh/sg_key -p ${{ secrets.SG_PORT }}" ./ "${{ secrets.SG_USER }}@${{ secrets.SG_HOST }}:$REMOTE_PATH/"
+
+      - name: Clear SiteGround's page cache
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          ssh -i ~/.ssh/sg_key -p "${{ secrets.SG_PORT }}" "${{ secrets.SG_USER }}@${{ secrets.SG_HOST }}" \
+            "cd '$REMOTE_PATH' && if command -v wp >/dev/null 2>&1; then wp sg purge || echo 'wp sg purge did not run'; else echo 'wp-cli not found'; fi" \
+            || echo "::warning::Could not clear the cache. Pages refresh on their own within 12 hours, or flush it in Site Tools under Speed, Caching."

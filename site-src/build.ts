@@ -193,6 +193,13 @@ DirectoryIndex index.html
 ErrorDocument 404 /404.html
 Options -Indexes
 
+# Let page updates show within five minutes (SiteGround's cache honors max-age).
+<IfModule mod_headers.c>
+<FilesMatch "\\.(html|xml|txt)$">
+Header set Cache-Control "public, max-age=300"
+</FilesMatch>
+</IfModule>
+
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
