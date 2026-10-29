@@ -1,0 +1,4 @@
+# Files from the old site to delete from the server on each deploy (paths relative to the site root).
+# Shell globs are allowed so generated thumbnails go too.
+wp-content/uploads/2026/08/Texas_Gold_Currency_Master_Plan_Final_Draft-2*
+wp-content/uploads/2026/08/The-Great-Bank-Robbery-6-Page-Guide*

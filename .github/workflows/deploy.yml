@@ -97,6 +97,14 @@ jobs:
           if [ "${{ inputs.remove_old_files }}" = "true" ]; then FLAGS="$FLAGS --delete --exclude=.well-known/"; fi
           rsync $FLAGS -e "ssh -i $HOME/.ssh/sg_key -p ${{ secrets.SG_PORT }}" ./ "${{ secrets.SG_USER }}@${{ secrets.SG_HOST }}:$REMOTE_PATH/"
 
+      - name: Remove retired files from the old site
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          patterns=$(grep -v '^#' .github/retired.txt | grep -v '^$' | tr '\n' ' ')
+          [ -z "$patterns" ] && exit 0
+          ssh -i ~/.ssh/sg_key -p "${{ secrets.SG_PORT }}" "${{ secrets.SG_USER }}@${{ secrets.SG_HOST }}" \
+            "cd '$REMOTE_PATH' && rm -fv $patterns"
+
       - name: Clear SiteGround's page cache
         if: ${{ inputs.dry_run != true }}
         run: |
