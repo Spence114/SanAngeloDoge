@@ -58,7 +58,7 @@ export const CORRECTIONS = [
 
 export const SITE_PRIVACY = [
   "<strong>What we collect.</strong> Only what you type into a form: your email, and if you choose, your name, phone, street address, topics, and messages. Tip line contact fields are optional.",
-  "<strong>Why.</strong> To send the bulletin and alerts you asked for, to match zoning cases to your address, and to answer you.",
+  "<strong>Why.</strong> To send the alerts you asked for, to measure zoning cases against your address, and to answer you.",
   "<strong>Who sees it.</strong> Forms are sent by email to Spencer@sanangelodoge.com. Only the San Angelo DOGE team reads them. We never sell or share your information, and we never publish a tipster's name without permission.",
   "<strong>Your choices.</strong> Every email has an unsubscribe link. To have your information deleted, email Spencer@sanangelodoge.com.",
 ];

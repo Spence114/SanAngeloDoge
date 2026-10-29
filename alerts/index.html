@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Get alerts | San Angelo DOGE</title>
-<meta name="description" content="Sign up for the monthly bulletin and free zoning alerts within 250 feet of your address.">
+<title>Zoning alerts | San Angelo DOGE</title>
+<meta name="description" content="Get an email when a zoning change is proposed near your home, at the distance you choose: 250 feet, 1,000 feet, half a mile, or the whole city.">
 <link rel="canonical" href="https://sanangelodoge.com/alerts/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="San Angelo DOGE">
-<meta property="og:title" content="Get alerts | San Angelo DOGE">
-<meta property="og:description" content="Sign up for the monthly bulletin and free zoning alerts within 250 feet of your address.">
+<meta property="og:title" content="Zoning alerts | San Angelo DOGE">
+<meta property="og:description" content="Get an email when a zoning change is proposed near your home, at the distance you choose: 250 feet, 1,000 feet, half a mile, or the whole city.">
 <meta property="og:url" content="https://sanangelodoge.com/alerts/">
 <meta name="theme-color" content="#F1EFEB">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23F1EFEB%22%2F%3E%3Cpath%20d%3D%22M4.5%2011%2016%204.5%2027.5%2011Z%22%20fill%3D%22%2322242A%22%2F%3E%3Crect%20x%3D%226.5%22%20y%3D%2217%22%20width%3D%225%22%20height%3D%2210%22%20fill%3D%22%2322242A%22%2F%3E%3Crect%20x%3D%2213.5%22%20y%3D%2214%22%20width%3D%225%22%20height%3D%2213%22%20fill%3D%22%2322242A%22%2F%3E%3Crect%20x%3D%2220.5%22%20y%3D%2212.5%22%20width%3D%225%22%20height%3D%2214.5%22%20fill%3D%22%233A5C8C%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2227.5%22%20width%3D%2224%22%20height%3D%223%22%20fill%3D%22%2322242A%22%2F%3E%3C%2Fsvg%3E">
@@ -38,10 +38,10 @@
 <main id="content" tabindex="-1">
 <header class="phead wrap">
   
-  <p class="eyebrow">Get alerts</p>
-  <h1>Know before the vote</h1>
-  <p class="lede">A monthly bulletin of facts from the public record, alerts on the topics you pick, and a free notice when a rezoning case lands within 250 feet of your address.</p>
-  
+  <p class="eyebrow">Zoning alerts</p>
+  <h1>Know before they vote</h1>
+  <p class="lede">When the City posts a zoning change, we post it and email everyone who asked to hear about it. You choose the distance from your home: 250 feet, 1,000 feet, half a mile, or the whole city.</p>
+  <p class="meta"><span><span class="st st-good">Sign-up open</span></span><span>Alerts are in development</span></p>
 </header>
 <section class="sec"><div class="wrap sec-in"><div class="two-col"><form class="form form-wide" id="alerts-form" data-form="subscribe" novalidate>
   <div class="hp" aria-hidden="true"><label for="al-hp">Leave this empty</label><input id="al-hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off"></div>
@@ -49,28 +49,68 @@
     <div class="fld"><label for="al-email">Email</label><input id="al-email" name="email" type="email" autocomplete="email" required></div>
     <div class="fld"><label for="al-name">Name <span class="opt">(optional)</span></label><input id="al-name" name="name" type="text" autocomplete="name"></div>
   </div>
+  <div class="fld"><label for="al-address">Street address in San Angelo <span class="opt">(needed for distance alerts)</span></label><input id="al-address" name="address" type="text" autocomplete="street-address"></div>
+  <fieldset class="fld"><legend>How far from your address?</legend><div class="radios"><label class="ck" for="al-d0"><input id="al-d0" type="radio" name="distance" value="250 feet" checked><span>250 feet</span></label><label class="ck" for="al-d1"><input id="al-d1" type="radio" name="distance" value="1,000 feet"><span>1,000 feet</span></label><label class="ck" for="al-d2"><input id="al-d2" type="radio" name="distance" value="Half a mile"><span>Half a mile</span></label><label class="ck" for="al-d3"><input id="al-d3" type="radio" name="distance" value="The whole city"><span>The whole city</span></label></div></fieldset>
   <div class="f2">
-    <div class="fld"><label for="al-address">Street address in San Angelo <span class="opt">(optional, for the 250-foot zoning alert)</span></label><input id="al-address" name="address" type="text" autocomplete="street-address"></div>
     <div class="fld"><label for="al-phone">Mobile <span class="opt">(optional, for text alerts)</span></label><input id="al-phone" name="phone" type="tel" autocomplete="tel"></div>
+    <fieldset class="fld"><legend>I am</legend><div class="radios"><label class="ck" for="al-r0"><input id="al-r0" type="radio" name="role" value="A resident" checked><span>A resident</span></label><label class="ck" for="al-r1"><input id="al-r1" type="radio" name="role" value="A business owner"><span>A business owner</span></label><label class="ck" for="al-r2"><input id="al-r2" type="radio" name="role" value="Both"><span>Both</span></label></div></fieldset>
   </div>
-  <fieldset class="fld"><legend>Send me</legend><div class="checkgrid"><label class="ck" for="al-t0"><input id="al-t0" type="checkbox" name="topics" value="Monthly bulletin" checked><span>Monthly bulletin</span></label><label class="ck" for="al-t1"><input id="al-t1" type="checkbox" name="topics" value="Data centers"><span>Data centers</span></label><label class="ck" for="al-t2"><input id="al-t2" type="checkbox" name="topics" value="City of San Angelo"><span>City of San Angelo</span></label><label class="ck" for="al-t3"><input id="al-t3" type="checkbox" name="topics" value="Tom Green County"><span>Tom Green County</span></label><label class="ck" for="al-t4"><input id="al-t4" type="checkbox" name="topics" value="San Angelo ISD"><span>San Angelo ISD</span></label><label class="ck" for="al-t5"><input id="al-t5" type="checkbox" name="topics" value="Appraisals and property tax"><span>Appraisals and property tax</span></label><label class="ck" for="al-t6"><input id="al-t6" type="checkbox" name="topics" value="Plate cameras and drones"><span>Plate cameras and drones</span></label><label class="ck" for="al-t7"><input id="al-t7" type="checkbox" name="topics" value="Zoning near my address"><span>Zoning near my address</span></label></div></fieldset>
-  <fieldset class="fld"><legend>I am</legend><div class="radios"><label class="ck" for="al-r0"><input id="al-r0" type="radio" name="role" value="A resident" checked><span>A resident</span></label><label class="ck" for="al-r1"><input id="al-r1" type="radio" name="role" value="A business owner"><span>A business owner</span></label><label class="ck" for="al-r2"><input id="al-r2" type="radio" name="role" value="Both"><span>Both</span></label></div></fieldset>
+  <fieldset class="fld later"><legend>Other alerts we could add <span class="opt">(not running yet)</span></legend><div class="checkgrid"><label class="ck" for="al-t0"><input id="al-t0" type="checkbox" name="interest" value="Data center updates"><span>Data center updates</span></label><label class="ck" for="al-t1"><input id="al-t1" type="checkbox" name="interest" value="City budget and votes"><span>City budget and votes</span></label><label class="ck" for="al-t2"><input id="al-t2" type="checkbox" name="interest" value="County budget and votes"><span>County budget and votes</span></label><label class="ck" for="al-t3"><input id="al-t3" type="checkbox" name="interest" value="San Angelo ISD"><span>San Angelo ISD</span></label><label class="ck" for="al-t4"><input id="al-t4" type="checkbox" name="interest" value="Appraisals and property tax"><span>Appraisals and property tax</span></label><label class="ck" for="al-t5"><input id="al-t5" type="checkbox" name="interest" value="Flock cameras and drones"><span>Flock cameras and drones</span></label><label class="ck" for="al-t6"><input id="al-t6" type="checkbox" name="interest" value="A monthly summary"><span>A monthly summary</span></label></div><p class="fine">Tick any you would use. We will build the most requested next.</p></fieldset>
   <button class="btn" type="submit">Sign up</button>
-  <p class="fine">We use your email to send what you pick, and your address only to match zoning cases near it. We never sell or share your information. Unsubscribe anytime. <a href="/about/#site-privacy">Site privacy</a></p>
-</form><div class="side"><div class="bulletin">
-  <p class="bl-h"><span>Example bulletin</span><span class="mono">Monthly</span></p>
-  <ul>
-    <li>County adopted its FY2027 budget, 4-1. General Fund reserves drop from $39.4M to $21.9M.</li>
-    <li>Governor paused TCEQ permits for data centers until state audits finish.</li>
-    <li>Coming up: ERCOT's audit of data center grid requests, expected in December.</li>
-    <li>Trending: the street fee, first billed in January.</li>
+  <p class="fine">We use your address only to measure zoning cases against it. We never sell or share your information. Unsubscribe anytime. <a href="/about/#site-privacy">Site privacy</a></p>
+</form><div class="side"><figure class="radius">
+  <svg viewBox="0 0 420 300" role="img" aria-label="Rings around a home: the City mails letters within 200 feet. You can choose alerts at 250 feet, 1,000 feet, half a mile, or the whole city. A zoning case about 700 feet away gets no letter but is inside a 1,000-foot alert.">
+    <rect class="rd-city" x="6" y="6" width="408" height="288" rx="10"/>
+    <text class="rd-l rd-strong" x="20" y="282">The whole city</text>
+    <circle class="rd-ring" cx="210" cy="150" r="134"/>
+    <circle class="rd-ring rd-on" cx="210" cy="150" r="92"/>
+    <circle class="rd-ring" cx="210" cy="150" r="42"/>
+    <circle class="rd-state" cx="210" cy="150" r="33"/>
+    <circle class="rd-home" cx="210" cy="150" r="6"/>
+    <rect class="rd-case" x="141" y="85" width="14" height="14" rx="2"/>
+    <path class="rd-lead" d="M141 85L102 58"/>
+    <text class="rd-l rd-strong" x="20" y="46">Zoning case</text>
+    <text class="rd-l" x="20" y="60">700 ft away</text>
+    <text class="rd-l" x="257" y="176">250 ft</text>
+    <text class="rd-l rd-on-l" x="306" y="202">1,000 ft</text>
+    <text class="rd-l" x="314" y="262">Half mile</text>
+    <text class="rd-l" x="195" y="138">Home</text>
+  </svg>
+  <ul class="rd-key">
+    <li><i class="k-state" aria-hidden="true"></i>200 ft: the City mails letters to owners</li>
+    <li><i class="k-on" aria-hidden="true"></i>Your alert distance (1,000 ft shown)</li>
   </ul>
-  <p class="fine">Facts only, with the pros and cons on the record and a link to each source.</p>
-</div>
-  <div class="aside-box"><h3>Zoning alerts</h3><p>When a rezoning, variance, or similar case on a city agenda falls within 250 feet of your address, we email you the case, the hearing date, and how to speak at it. Free.</p></div>
+  <figcaption>Not to scale. A case 700 feet away gets no letter from the City. With a 1,000-foot alert, you hear about it.</figcaption>
+</figure>
   <div class="aside-box"><h3>Coming in 2027</h3><p>An appraisal check that compares your home's value with your neighborhood, so you know whether a protest is worth filing.</p></div>
 </div></div></div></section>
 
+<section class="sec band" id="how" aria-labelledby="how-h">
+  <div class="wrap sec-in">
+    <div class="sec-h">
+      <div class="sec-t"><h2 id="how-h">How it works</h2><p>Before, notice meant a postcard and a legal ad in the newspaper. Now, when the City posts a case on its website, we post it and email you.</p></div>
+      
+    </div>
+    <ol class="flow f4"><li><span class="fl-n mono">1</span><h3>The City posts it</h3><p>Zoning cases and ordinances go up on the City's agendas and website before the hearings.</p></li><li><span class="fl-n mono">2</span><h3>Our agent reads it</h3><p>Software picks up each new case, reads the documents, scanned ones included, and records the address, the change asked for, and the hearing dates.</p></li><li><span class="fl-n mono">3</span><h3>We map it</h3><p>Each case goes on the map and is measured against every subscriber's address.</p></li><li><span class="fl-n mono">4</span><h3>You get an email</h3><p>What would change, where, the hearing dates, and how to speak. The case is posted on this site too.</p></li></ol>
+  <p class="note">In development. Sign up now and you will be on the list when the first alerts go out.</p>
+  </div>
+</section>
+
+<section class="sec" id="why" aria-labelledby="why-h">
+  <div class="wrap sec-in">
+    <div class="sec-h">
+      <div class="sec-t"><h2 id="why-h">Why the legal notice is not enough</h2><p>What Texas law requires a city to do before a zoning vote.</p></div>
+      
+    </div>
+    <dl class="facts"><div class="frow"><dt>Letters</dt><dd><span class="v">Mailed only to owners of property within 200 feet, as listed on the tax roll, at least 10 days before the zoning commission hearing. Renters do not get one.<sup class="cite"><a href="#src-alerts-1" title="Texas Local Government Code, Section 211.007 (zoning commission notice to owners within 200 feet)">1</a></sup></span></dd></div><div class="frow"><dt>Published notice</dt><dd><span class="v">In a newspaper and on the City's website, before the 15th day before the City Council hearing.<sup class="cite"><a href="#src-alerts-2" title="H.B. 24, 89th Legislature, enrolled (zoning notice, signs, and protests; amends Local Government Code Chapter 211)">2</a></sup></span></dd></div><div class="frow"><dt>Signs</dt><dd><span class="v">Since September 2025, a sign at least 24 by 48 inches on the property, or in the right-of-way when the City proposes a change covering many properties, at least 10 days before the zoning commission hearing.<sup class="cite"><a href="#src-alerts-2" title="H.B. 24, 89th Legislature, enrolled (zoning notice, signs, and protests; amends Local Government Code Chapter 211)">2</a></sup></span></dd></div><div class="frow"><dt>Large changes</dt><dd><span class="v">For a comprehensive change, such as a new zoning code, a new zoning map, or an overlay district, the published notices are the only ones the law requires. No letters.<sup class="cite"><a href="#src-alerts-2" title="H.B. 24, 89th Legislature, enrolled (zoning notice, signs, and protests; amends Local Government Code Chapter 211)">2</a></sup></span></dd></div></dl><p class="note">Large rezonings have caught San Angelo neighborhoods off guard before, and residents have had to organize on short notice to be heard. Everyone near a change should know about it in time to speak.</p>
+  </div>
+</section>
+<section class="sec sources" aria-labelledby="sources-alerts-h">
+  <div class="wrap sec-in">
+    <div class="sec-h"><div class="sec-t"><h2 id="sources-alerts-h">Sources</h2><p>Each number on this page points to the source below. Checked against the source documents on Oct 29, 2026. Items in <span class="unv">pink</span> are not yet verified against a source document.</p></div></div>
+    <ol class="srcs"><li id="src-alerts-1"><span class="sn mono">1</span><div class="sb"><a href="https://texas.public.law/statutes/tex._local_gov't_code_section_211.007" target="_blank" rel="noopener">Texas Local Government Code, Section 211.007 (zoning commission notice to owners within 200 feet)</a><span class="sp">Texas Public Law (text of the statute), last amended 2023 · <span class="sh">texas.public.law</span></span></div><span class="skind">Statute or rule</span></li><li id="src-alerts-2"><span class="sn mono">2</span><div class="sb"><a href="https://capitol.texas.gov/tlodocs/89R/billtext/html/HB00024F.htm" target="_blank" rel="noopener">H.B. 24, 89th Legislature, enrolled (zoning notice, signs, and protests; amends Local Government Code Chapter 211)</a><span class="sp">Texas Legislature Online, effective Sep 1, 2025 · <span class="sh">capitol.texas.gov</span></span></div><span class="skind">Statute or rule</span></li></ol>
+  </div>
+</section>
 </main>
 <footer class="foot">
   <div class="wrap foot-in">

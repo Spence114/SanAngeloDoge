@@ -102,6 +102,61 @@ declare global {
     show();
   }
 
+  /* ---------- hero: dashboard screens ---------- */
+  for (const box of $$<HTMLElement>("[data-shots]")) {
+    const imgs = $$<HTMLImageElement>(".shot-view img", box);
+    const tabs = $$<HTMLButtonElement>("[data-shot]", box);
+    const ms = 8000;
+    let i = 0;
+    let timer = 0;
+    let paused = false;
+    const go = (n: number) => {
+      i = (n + imgs.length) % imgs.length;
+      imgs.forEach((img, k) => {
+        img.classList.remove("on");
+        if (k === i) {
+          void img.offsetWidth; // restart the pan
+          img.classList.add("on");
+        }
+      });
+      tabs.forEach((t, k) => {
+        t.setAttribute("aria-selected", String(k === i));
+        const bar = t.querySelector("i");
+        if (bar && k === i) {
+          bar.style.animation = "none";
+          void bar.offsetWidth;
+          bar.style.animation = "";
+        }
+      });
+    };
+    const start = () => {
+      if (reduce || paused) return;
+      window.clearInterval(timer);
+      box.classList.add("auto");
+      box.style.setProperty("--shot-ms", `${ms}ms`);
+      timer = window.setInterval(() => go(i + 1), ms);
+    };
+    const stop = () => {
+      window.clearInterval(timer);
+      box.classList.remove("auto");
+    };
+    tabs.forEach((t, k) =>
+      t.addEventListener("click", () => {
+        paused = true;
+        stop();
+        go(k);
+      }),
+    );
+    box.addEventListener("mouseenter", stop);
+    box.addEventListener("mouseleave", () => {
+      if (!paused) {
+        go(i);
+        start();
+      }
+    });
+    start();
+  }
+
   /* ---------- interest counters ---------- */
   const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const tickers = $$<HTMLElement>("[data-ticker]");

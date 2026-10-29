@@ -3,7 +3,7 @@
 //   dist/site/               one folder per page with clean URLs, for sanangelodoge.com
 // Run with: npm run build
 
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { stripTypeScriptTypes } from "node:module";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -60,7 +60,7 @@ const PAGES: Record<Route, { title: string; desc: string; render: (ctx: Ctx) => 
     render: proposalPage,
   },
   about: { title: "About", desc: "Who runs San Angelo DOGE, what we're building, how to sponsor it, and how we work.", render: aboutPage },
-  alerts: { title: "Get alerts", desc: "Sign up for the monthly bulletin and free zoning alerts within 250 feet of your address.", render: alertsPage },
+  alerts: { title: "Zoning alerts", desc: "Get an email when a zoning change is proposed near your home, at the distance you choose: 250 feet, 1,000 feet, half a mile, or the whole city.", render: alertsPage },
   tips: { title: "Tip line", desc: "Report waste, wrongdoing, or an error in our data.", render: tipsPage },
 };
 
@@ -218,7 +218,15 @@ RewriteRule ^wp-content/uploads/2026/08/The-Great-Bank-Robbery-6-Page-Guide\\.pd
 </IfModule>
 `;
 
-const preview = buildPreview();
+/** The preview is one self-contained file, so hero screens are inlined there. */
+function inlineHeroImages(html: string): string {
+  return html.replace(new RegExp(`${SITE.origin}/assets/hero/([\\w.-]+\\.webp)`, "g"), (_m, f: string) => {
+    const data = readFileSync(join(root, "src/assets/hero", f)).toString("base64");
+    return `data:image/webp;base64,${data}`;
+  });
+}
+
+const preview = inlineHeroImages(buildPreview());
 checkCopy("preview", preview);
 write(join(root, "dist/preview/index.html"), preview);
 
@@ -230,6 +238,8 @@ for (const r of ROUTES) {
 }
 write(join(root, "dist/site/assets/site.css"), css);
 write(join(root, "dist/site/assets/site.js"), clientJs);
+mkdirSync(join(root, "dist/site/assets/hero"), { recursive: true });
+for (const f of readdirSync(join(root, "src/assets/hero"))) copyFileSync(join(root, "src/assets/hero", f), join(root, "dist/site/assets/hero", f));
 const notFound = build404();
 checkCopy("404", notFound);
 write(join(root, "dist/site/404.html"), notFound);
