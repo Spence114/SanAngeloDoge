@@ -11,6 +11,7 @@ import {
 } from "../content/proposal.ts";
 import { chip, ICON, moduleChip, pageHead, section } from "../render/components.ts";
 import { type Ctx, rich, usd } from "../render/html.ts";
+import { TOUR } from "../content/proposal.ts";
 
 export function proposalPage(ctx: Ctx): string {
   const status = `<div class="split">
@@ -68,6 +69,31 @@ export function proposalPage(ctx: Ctx): string {
   </div>
 </section>`;
 
+  const base = ctx.mode === "artifact" ? `${SITE.origin}/assets/tour/` : "/assets/tour/";
+  const flat = TOUR.flatMap((g) => g.items);
+  let n = -1;
+  const tour = `<div class="tour" data-tour>
+    <figure class="ipad tour-ipad">
+      <div class="ipad-body">
+        <div class="ipad-screen tour-screen">
+          ${flat.map((x, i) => `<img${i === 0 ? ' class="on"' : ""} src="${base}${x.file}" alt="Dashboard prototype: ${x.k}" width="1400" height="973" decoding="async"${i === 0 ? "" : ' loading="lazy"'}>`).join("\n          ")}
+          <span class="nv-mark" aria-hidden="true">Not validated</span>
+        </div>
+      </div>
+      <figcaption>Prototype screens with sample figures. <b class="nv-text">Not validated</b> against the source documents yet.</figcaption>
+    </figure>
+    <div class="tour-list" role="tablist" aria-label="Dashboard features">
+      ${TOUR.map(
+        (g) => `<p class="tour-g">${g.group}</p>${g.items
+          .map((x) => {
+            n++;
+            return `<button type="button" role="tab" aria-selected="${n === 0}" data-tour-i="${n}"><b>${x.k}</b><span>${x.v}</span></button>`;
+          })
+          .join("")}`,
+      ).join("")}
+    </div>
+  </div>`;
+
   return `${pageHead({
     eyebrow: "Proposal",
     title: "A public finance dashboard for San Angelo",
@@ -75,13 +101,15 @@ export function proposalPage(ctx: Ctx): string {
     meta: [chip("Phase 0: research and design", "open"), chip("Dashboard not yet built", "hold"), `Updated ${SITE.updated}`],
   })}
 
-${section({ id: "status", title: "Where it stands", note: "Phase 0 is the groundwork. The dashboard itself is not built yet.", body: status })}
+${section({ id: "tour", title: "Tour the prototype", note: "Pick a feature to see it on the iPad. These are design screens; the figures in them have not been checked.", body: tour })}
 
-${section({ id: "works", title: "How it would work", note: "Public records go in one end, and checked figures come out the other, on a schedule, with little hand work.", body: flow, band: true })}
+${section({ id: "status", title: "Where it stands", note: "Phase 0 is the groundwork. The dashboard itself is not built yet.", body: status, band: true })}
 
-${section({ id: "modules", title: "What the dashboard would do", note: "Ten parts, built in phases. Most of it is not built yet.", body: modules })}
+${section({ id: "works", title: "How it would work", note: "Public records go in one end, and checked figures come out the other, on a schedule, with little hand work.", body: flow })}
 
-${section({ id: "rollout", title: "Rollout", body: rollout, band: true })}
+${section({ id: "modules", title: "What the dashboard would do", note: "Ten parts, built in phases. Most of it is not built yet.", body: modules, band: true })}
+
+${section({ id: "rollout", title: "Rollout", body: rollout })}
 
 ${sponsor}`;
 }

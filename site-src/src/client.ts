@@ -158,6 +158,18 @@ declare global {
     start();
   }
 
+  /* ---------- proposal: iPad tour ---------- */
+  for (const box of $$<HTMLElement>("[data-tour]")) {
+    const imgs = $$<HTMLImageElement>(".tour-screen img", box);
+    const tabs = $$<HTMLButtonElement>("[data-tour-i]", box);
+    tabs.forEach((t, k) =>
+      t.addEventListener("click", () => {
+        imgs.forEach((img, j) => img.classList.toggle("on", j === k));
+        tabs.forEach((x, j) => x.setAttribute("aria-selected", String(j === k)));
+      }),
+    );
+  }
+
   /* ---------- interest counters ---------- */
   const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const tickers = $$<HTMLElement>("[data-ticker]");

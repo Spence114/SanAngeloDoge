@@ -85,3 +85,47 @@ export const SPONSOR = {
     "San Angelo DOGE is not a nonprofit, so sponsorships are not tax-deductible.",
   ],
 };
+
+/** Screens from the dashboard prototype, shown on the proposal page's iPad tour. */
+export const TOUR: Array<{ group: string; items: Array<{ file: string; k: string; v: string }> }> = [
+  {
+    group: "Start",
+    items: [
+      { file: "priorities.webp", k: "Priorities", v: "The biggest public money matters, ranked by published rules." },
+      { file: "ask.webp", k: "Research assistant", v: "Ask a question in plain words; answers cite the record." },
+    ],
+  },
+  {
+    group: "Money",
+    items: [
+      { file: "clock.webp", k: "Debt clock", v: "City, County, and school district debt, with interest adding up live." },
+      { file: "money.webp", k: "Money in, money out", v: "Where each budget's money comes from and where it goes." },
+      { file: "midyear.webp", k: "Mid-year money", v: "Spending changes made outside the adopted budget." },
+    ],
+  },
+  {
+    group: "Decisions",
+    items: [
+      { file: "votes.webp", k: "Recorded votes", v: "How each council member and commissioner voted." },
+      { file: "radar.webp", k: "Meeting radar", v: "What is coming up on the next agendas." },
+      { file: "issues.webp", k: "Issue tracker", v: "Major local decisions, from first mention to follow-up." },
+    ],
+  },
+  {
+    group: "Place",
+    items: [
+      { file: "map.webp", k: "City map", v: "Projects, tax breaks, and zoning cases on the map." },
+      { file: "appraisal.webp", k: "Appraisal check", v: "Your home's value against comparable homes nearby." },
+      { file: "alerts.webp", k: "Zoning alerts", v: "Zoning cases near your address, at the distance you choose." },
+    ],
+  },
+  {
+    group: "Context",
+    items: [
+      { file: "economy.webp", k: "Economy", v: "Jobs, wages, and growth in Tom Green County." },
+      { file: "business.webp", k: "Business view", v: "Taxes, fees, and the big needs a business would want to know." },
+      { file: "bulletin.webp", k: "Monthly summary", v: "What changed this month, generated from the record." },
+      { file: "sources.webp", k: "Sources and methods", v: "Every source, how often it is checked, and the rules we follow." },
+    ],
+  },
+];

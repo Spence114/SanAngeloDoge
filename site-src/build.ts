@@ -220,7 +220,7 @@ RewriteRule ^wp-content/uploads/2026/08/The-Great-Bank-Robbery-6-Page-Guide\\.pd
 
 /** The preview is one self-contained file, so site images are inlined there. */
 function inlineImages(html: string): string {
-  return html.replace(new RegExp(`(?:${SITE.origin})?/assets/(hero|reports)/([\\w.-]+\\.webp)`, "g"), (_m, dir: string, f: string) => {
+  return html.replace(new RegExp(`(?:${SITE.origin})?/assets/(hero|reports|tour)/([\\w.-]+\\.webp)`, "g"), (_m, dir: string, f: string) => {
     const data = readFileSync(join(root, "src/assets", dir, f)).toString("base64");
     return `data:image/webp;base64,${data}`;
   });
@@ -238,7 +238,7 @@ for (const r of ROUTES) {
 }
 write(join(root, "dist/site/assets/site.css"), css);
 write(join(root, "dist/site/assets/site.js"), clientJs);
-for (const dir of ["hero", "reports"]) {
+for (const dir of ["hero", "reports", "tour"]) {
   mkdirSync(join(root, "dist/site/assets", dir), { recursive: true });
   for (const f of readdirSync(join(root, "src/assets", dir))) copyFileSync(join(root, "src/assets", dir, f), join(root, "dist/site/assets", dir, f));
 }

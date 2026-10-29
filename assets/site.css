@@ -575,6 +575,23 @@ sup.cite a:hover { text-decoration: underline; }
 .stance .sub-h { margin-top: 4px; }
 .stance .aside-box { max-width: 76ch; }
 .aside-box.sapd { border-left: 3px solid var(--good); }
+/* Proposal: iPad tour */
+.tour { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(260px, 1fr); gap: 28px; align-items: start; }
+.tour-ipad { position: sticky; top: calc(var(--top-h) + 20px); }
+.tour-screen { aspect-ratio: 1400 / 973; }
+.tour-screen img { animation: none !important; transform: none; }
+.tour-screen img.on { opacity: 1; }
+.nv-mark { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-16deg); padding: 6px 18px; border: 3px solid rgba(196, 32, 32, .75); border-radius: 8px; color: rgba(196, 32, 32, .75); background: rgba(255, 255, 255, .35); font-family: var(--f-mono); font-size: clamp(20px, 3.4vw, 40px); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; pointer-events: none; }
+.nv-text { color: #C42020; font-weight: 600; }
+.tour-list { display: flex; flex-direction: column; gap: 2px; }
+.tour-g { margin: 10px 0 4px; font-size: 11.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-4); }
+.tour-g:first-child { margin-top: 0; }
+.tour-list button { display: flex; flex-direction: column; gap: 1px; width: 100%; padding: 8px 12px; border: 0; border-left: 2px solid transparent; border-radius: 0 8px 8px 0; background: transparent; text-align: left; cursor: pointer; transition: background .2s, border-color .2s; }
+.tour-list button b { font-size: 14.5px; font-weight: 600; color: var(--ink-2); }
+.tour-list button span { font-size: 13px; color: var(--ink-3); }
+.tour-list button:hover { background: var(--raise); }
+.tour-list button[aria-selected="true"] { background: var(--raise); border-left-color: var(--accent); }
+.tour-list button[aria-selected="true"] b { color: var(--accent); }
 .disc-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 16px; }
 .btn-mosir { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px; border-radius: 8px; background: #C8611F; color: #FFF8F1; font-size: 13px; font-weight: 600; text-decoration: none; letter-spacing: .01em; transition: background .2s; }
 .btn-mosir:hover { background: #A94F17; color: #FFF8F1; }
@@ -615,6 +632,8 @@ sup.cite a:hover { text-decoration: underline; }
   .flow li:not(:last-child)::after { top: auto; bottom: -11px; right: 50%; transform: translateX(50%) rotate(135deg); }
 }
 @media (max-width: 860px) {
+  .tour { grid-template-columns: minmax(0, 1fr); }
+  .tour-ipad { position: static; }
   .bor-grid { grid-template-columns: minmax(0, 1fr); }
   .hero-in, .two-col, .sp-grid, .split, .foot-top { grid-template-columns: minmax(0, 1fr); }
   .hero h1 { max-width: 18ch; }
