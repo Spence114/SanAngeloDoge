@@ -13,7 +13,7 @@ export interface Report {
   desc: string;
   url: string;
   format: "PDF" | "Web page";
-  kind: "Analysis" | "Briefing" | "Opinion";
+  kind: "Analysis" | "Briefing" | "Opinion" | "Letter";
   length?: string;
   topics: ReportTopic[];
   update?: string;
@@ -23,6 +23,18 @@ const UP = "https://sanangelodoge.com/reports";
 const TH = "/assets/reports";
 
 export const REPORTS: Report[] = [
+  {
+    id: "beacon-darby-letter",
+    date: "Nov 3, 2026",
+    title: "Letter to Rep. Drew Darby on Beacon's October 21 response",
+    desc: "Beacon's reply to Rep. Darby gave no emissions figures. This letter lays out what its own TCEQ filings show on ammonia, particulates, and engine count, and asks that the power plant be sited away from San Angelo.",
+    url: `${UP}/beacon-letter-to-rep-darby.pdf`,
+    thumb: `${TH}/beacon-letter-to-rep-darby.webp`,
+    format: "PDF",
+    kind: "Letter",
+    length: "1 page",
+    topics: ["data-centers", "beacon"],
+  },
   {
     id: "westline-brief",
     date: "Jun 2026",
