@@ -3,6 +3,7 @@
 //   dist/site/               one folder per page with clean URLs, for sanangelodoge.com
 // Run with: npm run build
 
+import { createHash } from "node:crypto";
 import { copyFileSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { stripTypeScriptTypes } from "node:module";
 import { dirname, join } from "node:path";
@@ -75,11 +76,15 @@ const pageTitle = (r: Route) => (r === "home" ? "San Angelo DOGE" : `${PAGES[r].
 const css = readFileSync(join(root, "src/styles.css"), "utf8");
 const clientTs = readFileSync(join(root, "src/client.ts"), "utf8");
 const clientJs = stripTypeScriptTypes(clientTs, { mode: "strip" }).replace(/^\s*export\s*\{\s*\};?\s*$/m, "");
+// Each build stamps the asset URLs with a content hash, so a cached old stylesheet never pairs with new pages.
+const stamp = (s: string) => createHash("sha256").update(s).digest("hex").slice(0, 10);
+const CSS_URL = `/assets/site.css?v=${stamp(css)}`;
+const JS_URL = `/assets/site.js?v=${stamp(clientJs)}`;
 
 const FAVICON = `<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,${encodeURIComponent(FAVICON_SVG)}">`;
 
 const FONTS =
-  '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap">';
+  '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap">';
 
 function script(mode: BuildMode): string {
   const cfg = { mode, forms: FORMS, contact: SITE.contactEmail };
@@ -128,7 +133,7 @@ function buildSitePage(r: Route): string {
 <meta name="theme-color" content="#F1EFEB">
 ${FAVICON}
 ${FONTS}
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="${CSS_URL}">
 </head>
 <body>
 ${header(ctx)}
@@ -137,7 +142,7 @@ ${renderWithSources(ctx)}
 </main>
 ${footer(ctx)}
 <script>window.SITE_CONFIG=${JSON.stringify({ mode: "site", forms: FORMS, contact: SITE.contactEmail })};</script>
-<script src="/assets/site.js" defer></script>
+<script src="${JS_URL}" defer></script>
 </body>
 </html>
 `;
@@ -171,7 +176,7 @@ function build404(): string {
 <meta name="theme-color" content="#F1EFEB">
 ${FAVICON}
 ${FONTS}
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="${CSS_URL}">
 </head>
 <body>
 ${header(ctx)}
@@ -181,7 +186,7 @@ ${header(ctx)}
 </main>
 ${footer(ctx)}
 <script>window.SITE_CONFIG=${JSON.stringify({ mode: "site", forms: FORMS, contact: SITE.contactEmail })};</script>
-<script src="/assets/site.js" defer></script>
+<script src="${JS_URL}" defer></script>
 </body>
 </html>
 `;

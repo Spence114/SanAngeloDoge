@@ -7,6 +7,8 @@ export const ICON = {
   menu: `<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 6h13M3.5 10h13M3.5 14h13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
   close: `<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
   check: `<svg class="ic" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 6.5 12 13 4.5"/></svg>`,
+  chev: `<svg class="ic" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 7 9 11.5 13.5 7"/></svg>`,
+  heart: `<svg class="ic" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13.5S2.5 10.2 2.5 6.3A2.8 2.8 0 0 1 8 5.2a2.8 2.8 0 0 1 5.500 1.1C13.500 10.2 8 13.500 8 13.500Z"/></svg>`,
   dash: `<svg class="ic" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3.5 8h9"/></svg>`,
 };
 
@@ -28,8 +30,19 @@ export function pageHead(o: { eyebrow: string; title: string; lede: string; meta
 </header>`;
 }
 
-export function section(o: { id?: string; title: string; note?: string; body: string; aside?: string; band?: boolean }): string {
+export function section(o: { id?: string; title: string; note?: string; body: string; aside?: string; band?: boolean; fold?: boolean }): string {
   const hid = o.id ? `${o.id}-h` : "";
+  if (o.fold) {
+    // Detail a reader can open. The summary carries the heading, so the page reads as a short outline.
+    return `<section class="sec fold${o.band ? " band" : ""}"${o.id ? ` id="${o.id}" aria-labelledby="${hid}"` : ""}>
+  <div class="wrap">
+    <details class="fold-d">
+      <summary><span class="fold-t"><h2${hid ? ` id="${hid}"` : ""}>${o.title}</h2>${o.note ? `<span class="fold-n">${o.note}</span>` : ""}</span><span class="fold-go" aria-hidden="true"><span class="fold-w">Open</span>${ICON.chev}</span></summary>
+      <div class="fold-b">${o.body}</div>
+    </details>
+  </div>
+</section>`;
+  }
   return `<section class="sec${o.band ? " band" : ""}"${o.id ? ` id="${o.id}" aria-labelledby="${hid}"` : ""}>
   <div class="wrap sec-in">
     <div class="sec-h">
@@ -37,6 +50,37 @@ export function section(o: { id?: string; title: string; note?: string; body: st
       ${o.aside ?? ""}
     </div>
     ${o.body}
+  </div>
+</section>`;
+}
+
+export interface KeyPoint {
+  /** The figure or two-word fact, set large. */
+  big: string;
+  /** One short sentence. */
+  text: string;
+  tone?: "city" | "county" | "saisd" | "ink" | "alert";
+  cite?: string[];
+  /** Ready-made link HTML. */
+  link?: string;
+  kicker?: string;
+}
+
+/** "The short version": the few things a reader should leave with, set large. */
+export function keyPoints(ctx: Ctx, items: KeyPoint[], label = "The short version"): string {
+  return `<section class="keys-sec" aria-label="${esc(label)}">
+  <div class="wrap">
+    <p class="keys-label">${label}</p>
+    <div class="keys n${items.length}">${items
+      .map(
+        (k) => `<div class="key tone-${k.tone ?? "ink"}">
+      ${k.kicker ? `<span class="key-k">${k.kicker}</span>` : ""}
+      <span class="key-big">${k.big}</span>
+      <p class="key-t">${rich(ctx, k.text)}${k.cite?.length ? ctx.cites.ref(k.cite) : ""}</p>
+      ${k.link ?? ""}
+    </div>`,
+      )
+      .join("")}</div>
   </div>
 </section>`;
 }
@@ -177,18 +221,20 @@ export function sourcesSection(ctx: Ctx, checked: string): string {
       return "";
     }
   };
-  return `<section class="sec sources" aria-labelledby="sources-${ctx.route}-h">
-  <div class="wrap sec-in">
-    <div class="sec-h"><div class="sec-t"><h2 id="sources-${ctx.route}-h">Sources</h2><p>Each number on this page points to the source below. Checked against the source documents on ${checked}. Items in <span class="unv">pink</span> are not yet verified against a source document.</p></div></div>
-    <ol class="srcs">${list
-      .map(
-        ({ n, s }) => `<li id="${ctx.cites.anchorId(n)}"><span class="sn mono">${n}</span><div class="sb">${
-          s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${s.title}</a>` : `<span class="st-t">${s.title}</span>`
-        }<span class="sp">${[s.publisher, s.date].filter(Boolean).join(", ")}${s.url ? ` · <span class="sh">${host(s.url)}</span>` : ""}</span>${
-          s.note ? `<span class="snote">${s.note}</span>` : ""
-        }</div><span class="skind">${s.kind}</span></li>`,
-      )
-      .join("")}</ol>
+  return `<section class="sec fold sources" id="sources-${ctx.route}" aria-labelledby="sources-${ctx.route}-h">
+  <div class="wrap">
+    <details class="fold-d">
+      <summary><span class="fold-t"><h2 id="sources-${ctx.route}-h">Sources (${list.length})</h2><span class="fold-n">Each number on this page points to a source here. Checked against the source documents on ${checked}. Items in <span class="unv">pink</span> are not yet verified.</span></span><span class="fold-go" aria-hidden="true"><span class="fold-w">Open</span>${ICON.chev}</span></summary>
+      <div class="fold-b"><ol class="srcs">${list
+        .map(
+          ({ n, s }) => `<li id="${ctx.cites.anchorId(n)}"><span class="sn mono">${n}</span><div class="sb">${
+            s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${s.title}</a>` : `<span class="st-t">${s.title}</span>`
+          }<span class="sp">${[s.publisher, s.date].filter(Boolean).join(", ")}${s.url ? ` · <span class="sh">${host(s.url)}</span>` : ""}</span>${
+            s.note ? `<span class="snote">${s.note}</span>` : ""
+          }</div><span class="skind">${s.kind}</span></li>`,
+        )
+        .join("")}</ol></div>
+    </details>
   </div>
 </section>`;
 }

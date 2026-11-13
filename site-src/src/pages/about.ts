@@ -4,8 +4,8 @@ import { anchorLink, type Ctx, href } from "../render/html.ts";
 
 export function aboutPage(ctx: Ctx): string {
   const plan = `<div class="cta-card">
-    <div><h3>A public finance dashboard, in development</h3><p>The proposal lays out what the dashboard would do, how it would gather and check the public record, the rollout order, and what it takes to build. We are looking for sponsors.</p></div>
-    <div class="cta-acts"><a class="btn" href="${href(ctx, "proposal")}">See the proposal ${ICON.arrow}</a>${anchorLink(ctx, "proposal", "sponsor", "Sponsor the build", "btn btn-ghost")}</div>
+    <div><h3>A public finance dashboard, in development</h3><p>One screen for San Angelo's public money: debt, budgets, votes, and alerts, built from the public record. Citizens are paying for it.</p></div>
+    <div class="cta-acts"><a class="btn btn-give" href="${href(ctx, "proposal")}">${ICON.heart} Support Transparency</a>${anchorLink(ctx, "proposal", "tour", "Tour the prototype", "btn btn-ghost")}</div>
   </div>
   <p class="note">Published reports and the ones in progress are on the <a href="${href(ctx, "reports")}">Reports</a> page. Analysis and opinion are labeled and kept apart from the data pages.</p>`;
 
@@ -30,9 +30,9 @@ ${section({ id: "building", title: "What we're working on", body: plan })}
 
 ${section({ id: "standards", title: "How we work", body: facts(ctx, STANDARDS), band: true })}
 
-${section({ id: "corrections", title: "Corrections log", note: "Report an error through the tip line and we will check it against the source document.", body: corrections })}
+${section({ id: "corrections", title: "Corrections log", note: "Report an error through the tip line and we will check it against the source document.", body: corrections, fold: true })}
 
-${section({ id: "site-privacy", title: "Your privacy on this site", body: prose(ctx, SITE_PRIVACY), band: true })}
+${section({ id: "site-privacy", title: "Your privacy on this site", body: prose(ctx, SITE_PRIVACY), fold: true })}
 
-${section({ id: "disclaimer", title: "Disclaimer", body: prose(ctx, DISCLAIMER) })}`;
+${section({ id: "disclaimer", title: "Disclaimer", body: prose(ctx, DISCLAIMER), fold: true })}`;
 }

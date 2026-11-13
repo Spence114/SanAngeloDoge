@@ -23,7 +23,7 @@ import {
   STANCE_AFTER,
   SUPPORTERS,
 } from "../content/privacy.ts";
-import { bullets, chip, docs, facts, ICON, pageHead, prose, questions, section, timeline } from "../render/components.ts";
+import { bullets, chip, docs, facts, ICON, keyPoints, pageHead, prose, questions, section, timeline } from "../render/components.ts";
 import { anchorLink, type Ctx, rich } from "../render/html.ts";
 
 export function privacyPage(ctx: Ctx): string {
@@ -68,23 +68,28 @@ export function privacyPage(ctx: Ctx): string {
     lede: PV_LEDE,
     meta: [`Updated ${SITE.updated}`, chip("Contract approved Oct 2025", "plain")],
   })}
-${stanceBar}
+${keyPoints(ctx, [
+  { kicker: "The contract", big: "$309,050", text: "The spending limit for Flock plate cameras and police drones. Council approved it 7 to 0 on Oct 7, 2025.", tone: "city", cite: ["cc-agenda-2025-10-07", "cc-minutes-2025-10-07"] },
+  { kicker: "How it works", big: "Every plate", text: "Each camera photographs passing vehicles and reads the plate. A match to a hotlist alerts officers.", tone: "ink", cite: ["npr-2026-02-17", "flock-lpr-product"], link: anchorLink(ctx, "privacy", "how", `How the system works ${ICON.arrow}`, "key-go") },
+  { kicker: "Who pays", big: "Mostly grants", text: "Two state awards total $464,961. The local match is $77,495.", tone: "county", cite: ["cc-packet-2025-10-07"] },
+  { kicker: "Our view", big: "Own it locally", text: "We support cameras the City owns, kept off the internet, and searched only for an APB or a warrant.", tone: "saisd", link: anchorLink(ctx, "privacy", "stand", `Where we stand ${ICON.arrow}`, "key-go") },
+])}
 
 ${section({ id: "glance", title: "At a glance", note: "From the City's agenda, packet, and minutes for Oct 7, 2025, unless marked. Pink text rests on news coverage only.", body: facts(ctx, PV_FACTS) })}
 
-${section({ id: "how", title: "How the system works", body: prose(ctx, HOW_IT_WORKS), band: true })}
+${section({ id: "stand", title: "Where we stand", note: "This section is our opinion, labeled as such. The rest of this page sticks to the record.", body: stance, aside: chip("Opinion", "plain"), band: true })}
 
-${section({ id: "constitution", title: "The constitutional questions", note: CONSTITUTION_NOTE, body: `${prose(ctx, CONSTITUTION_INTRO)}<h3 class="sub-h">How the courts have ruled</h3>${timeline(ctx, COURTS)}` })}
-
-${section({ id: "sides", title: "The case for and against", note: "The arguments as each side makes them in the national debate over Flock. Our own view follows in the next section.", body: sides, band: true })}
-
-${section({ id: "stand", title: "Where we stand", note: "This section is our opinion, labeled as such. The rest of this page sticks to the record.", body: stance, aside: chip("Opinion", "plain") })}
-
-${section({ id: "rights", title: "A Technology Bill of Rights", note: "Our proposal for the City of San Angelo and Tom Green County.", body: rights, aside: chip("Proposal", "plain"), band: true })}
-
-${section({ id: "open", title: "Questions residents ask", note: PV_QUESTIONS_NOTE, body: questions(PV_QUESTIONS) })}
+${section({ id: "rights", title: "A Technology Bill of Rights", note: "Our proposal for the City of San Angelo and Tom Green County.", body: rights, aside: chip("Proposal", "plain") })}
 
 ${section({ id: "act", title: "What you can do", body: bullets(ctx, PV_TODO), band: true })}
 
-${section({ id: "docs", title: "Documents and coverage", body: docs(PV_DOCS) })}`;
+${section({ id: "how", title: "How the system works", note: "What the cameras record, how long it is kept, and who can search it.", body: prose(ctx, HOW_IT_WORKS), fold: true })}
+
+${section({ id: "constitution", fold: true, title: "The constitutional questions", note: CONSTITUTION_NOTE, body: `${prose(ctx, CONSTITUTION_INTRO)}<h3 class="sub-h">How the courts have ruled</h3>${timeline(ctx, COURTS)}` })}
+
+${section({ id: "sides", title: "The case for and against", note: "The arguments as each side makes them in the national debate over Flock. Our own view is above, under Where we stand.", body: sides, fold: true })}
+
+${section({ id: "open", title: "Questions residents ask", note: PV_QUESTIONS_NOTE, body: questions(PV_QUESTIONS), fold: true })}
+
+${section({ id: "docs", title: "Documents and coverage", note: "The agenda, packet, minutes, court rulings, and news coverage behind this page.", body: docs(PV_DOCS), fold: true })}`;
 }

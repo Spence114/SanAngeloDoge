@@ -20,7 +20,7 @@ export const PV_SRC = {
 const S = PV_SRC;
 
 export const PV_LEDE =
-  "In October 2025 the City Council approved a contract with Flock Group Inc. for license plate reader cameras and a drone program for the San Angelo Police Department. This page sets out what was approved, how the system works, the constitutional questions, what supporters and critics say, and where this site stands, including a proposed Technology Bill of Rights for the City and County.";
+  "In October 2025 the City Council approved Flock license plate cameras and a drone program for the police. Here is what was bought, how it works, the legal questions, and where we stand.";
 
 /** Short statement shown near the top of the page, linking to the full position. */
 export const PV_STANCE_SHORT =

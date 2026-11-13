@@ -11,7 +11,7 @@ export interface Module {
 }
 
 export const PROPOSAL_LEDE =
-  "A dashboard that tracks the finances of the City of San Angelo, Tom Green County, San Angelo ISD, and the Appraisal District, gathered from the public record on a schedule and checked against the source documents. This page lays out what it would do, how it would work, what it takes to build, and how sponsors can help.";
+  "We are building one screen for San Angelo's public money: debt, budgets, votes, and alerts, taken from the public record and checked against the source documents. Citizens pay for it. Here is what your support builds and how to give.";
 
 export const DONE_SO_FAR = [
   "Mapped the public records of all four governments: websites, document centers, meeting portals, and state reports. More than 30 public data systems identified. {{c:internal-data-catalog}}",
@@ -65,24 +65,25 @@ export const MODULES: Module[] = [
 ];
 
 export const SPONSOR = {
-  lede: "We are looking for project sponsors to build it. The work ahead is a few months of development and data validation.",
+  lede: "The groundwork is done: the research, the design, and a prototype. What is left is a few months of building and checking. That takes money, and we are asking San Angelo to help pay for it.",
   why: [
-    "Most of the cost is development. The goal is a system that runs itself: databases that take in large volumes of public records on a regular schedule, check them automatically, and keep the dashboards current without someone updating them by hand. Building that ingest and validation, and proving every figure matches its source document, takes a lot of work.",
-    "The rest is a dedicated local AI machine to run it. It keeps the records archive and the databases on a machine we control, and lets AI prompts feed the dashboards and answer residents' research questions from the public record.",
+    "Most of the cost is development: databases that take in public records on a schedule, check each figure against its source, and keep the dashboard current without hand work.",
+    "The rest is a dedicated local AI machine. It keeps the records and databases on equipment we control and answers residents' questions from the public record.",
   ],
   low: 10_000,
   high: 20_000,
   pays: [
-    "Databases built for large, regular ingest of public records",
-    "Automatic validation that checks each figure against its source document",
-    "A dedicated local AI machine to run the system, feed the dashboards, and power citizen research",
-    "Building the debt clock, budgets, votes, and alerts for launch",
+    "Databases that take in public records on a schedule",
+    "Automatic checks of each figure against its source document",
+    "A local AI machine to run it and answer research questions",
+    "The debt clock, budgets, votes, and alerts for launch",
   ],
   terms: [
-    "Sponsors above a set amount are listed publicly.",
-    "Sponsors have no say over what we cover or how we cover it.",
-    "Once the tools are live, subscriptions are meant to cover upkeep, so the project does not depend on any one backer.",
-    "San Angelo DOGE is not a nonprofit, so sponsorships are not tax-deductible.",
+    "<b>Any amount helps.</b> Contact us and we will reply with how to give.",
+    "<b>No strings.</b> Supporters have no say over what we cover or how we cover it.",
+    "<b>Not tax-deductible.</b> San Angelo DOGE is independent journalism, not a nonprofit, so contributions are not charitable donations.",
+    "<b>In the open.</b> Supporters above a set amount are listed publicly.",
+    "<b>Built to stand alone.</b> Once the tools are live, subscriptions are meant to cover upkeep.",
   ],
 };
 

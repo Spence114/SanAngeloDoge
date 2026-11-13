@@ -9,8 +9,8 @@ import {
   STILL_TO_BUILD,
   WHY_HARD,
 } from "../content/proposal.ts";
-import { chip, ICON, moduleChip, pageHead, section } from "../render/components.ts";
-import { type Ctx, rich, usd } from "../render/html.ts";
+import { chip, ICON, keyPoints, moduleChip, pageHead, section } from "../render/components.ts";
+import { anchorLink, type Ctx, rich, usd } from "../render/html.ts";
 import { TOUR } from "../content/proposal.ts";
 
 export function proposalPage(ctx: Ctx): string {
@@ -38,12 +38,12 @@ export function proposalPage(ctx: Ctx): string {
   <div class="wrap sec-in">
     <div class="sp-grid">
       <div class="sp-copy">
-        <p class="eyebrow">Sponsor the build</p>
-        <h2 id="sponsor-h">What it takes to build</h2>
+        <p class="eyebrow">How to give</p>
+        <h2 id="sponsor-h">Help pay for the build</h2>
         <p class="sp-lede">${SPONSOR.lede}</p>
         ${SPONSOR.why.map((p) => `<p>${p}</p>`).join("")}
-        <h3>How sponsorship works</h3>
-        <ul class="plain">${SPONSOR.terms.map((t) => `<li>${t}</li>`).join("")}</ul>
+        <h3>How giving works</h3>
+        <ul class="plain terms">${SPONSOR.terms.map((t) => `<li>${t}</li>`).join("")}</ul>
       </div>
       <aside class="sp-card" aria-label="Estimated cost to build">
         <p class="sp-k">Estimated cost to build</p>
@@ -58,10 +58,10 @@ export function proposalPage(ctx: Ctx): string {
             <div class="fld"><label for="sp-email">Email</label><input id="sp-email" name="email" type="email" autocomplete="email" required></div>
           </div>
           <div class="fld"><label for="sp-org">Business or organization <span class="opt">(optional)</span></label><input id="sp-org" name="organization" type="text" autocomplete="organization"></div>
-          <div class="fld"><label for="sp-amt">Level you are considering</label>
-            <select id="sp-amt" name="level"><option>Not sure yet</option><option>Under $1,000</option><option>$1,000 to $5,000</option><option>$5,000 to $10,000</option><option>$10,000 or more</option></select></div>
+          <div class="fld"><label for="sp-amt">Amount you are considering</label>
+            <select id="sp-amt" name="level"><option>Not sure yet</option><option>Under $100</option><option>$100 to $500</option><option>$500 to $1,000</option><option>$1,000 to $5,000</option><option>$5,000 or more</option></select></div>
           <div class="fld"><label for="sp-msg">Message <span class="opt">(optional)</span></label><textarea id="sp-msg" name="message" rows="3"></textarea></div>
-          <button class="btn btn-block" type="submit">Tell us you're interested</button>
+          <button class="btn btn-block btn-give" type="submit">${ICON.heart} Contact us to give</button>
         </form>
         <p class="fine">Or email <span class="sel mono">${SITE.contactEmail}</span> <button class="copy" type="button" data-copy="${SITE.contactEmail}">Copy</button></p>
       </aside>
@@ -95,21 +95,28 @@ export function proposalPage(ctx: Ctx): string {
   </div>`;
 
   return `${pageHead({
-    eyebrow: "Proposal",
-    title: "A public finance dashboard for San Angelo",
+    eyebrow: "Support Transparency",
+    title: "Help build San Angelo's public finance dashboard",
     lede: PROPOSAL_LEDE,
     meta: [chip("Phase 0: research and design", "open"), chip("Dashboard not yet built", "hold"), `Updated ${SITE.updated}`],
   })}
+<div class="wrap give-acts">${anchorLink(ctx, "proposal", "sponsor", `${ICON.heart} How to give`, "btn btn-give btn-lg")}${anchorLink(ctx, "proposal", "tour", "Tour the prototype", "btn btn-ghost btn-lg")}</div>
 
-${section({ id: "tour", title: "Tour the prototype", note: "Click a feature on the left to show it on the iPad. These are design screens; the figures in them have not been checked.", body: tour })}
+${keyPoints(ctx, [
+  { kicker: "The goal", big: "One screen", text: "Debt, budgets, votes, and alerts for the City, the County, the school district, and the Appraisal District.", tone: "city" },
+  { kicker: "The cost", big: `${usd(SPONSOR.low / 1000)}K to ${usd(SPONSOR.high / 1000)}K`, text: "Our estimate for a few months of building and checking, plus a local AI machine to run it.", tone: "county" },
+  { kicker: "The rule", big: "No strings", text: "Supporters have no say over coverage. Contributions are not tax-deductible.", tone: "saisd" },
+], "Why give")}
 
-${section({ id: "status", title: "Where it stands", note: "Phase 0 is the groundwork. The dashboard itself is not built yet.", body: status, band: true })}
+${sponsor}
 
-${section({ id: "works", title: "How it would work", note: "Public records go in one end, and checked figures come out the other, on a schedule, with little hand work.", body: flow })}
+${section({ id: "tour", title: "Tour the prototype", note: "Pick a feature on the left to show it on the iPad. These are design screens; the figures in them have not been checked.", body: tour, band: true })}
 
-${section({ id: "modules", title: "What the dashboard would do", note: "Ten parts, built in phases. Most of it is not built yet.", body: modules, band: true })}
+${section({ id: "status", title: "Where it stands", note: "What is done, and what is still to build.", body: status, fold: true })}
 
-${section({ id: "rollout", title: "Rollout", body: rollout })}
+${section({ id: "works", title: "How it would work", note: "Public records go in. Checked figures come out, on a schedule.", body: flow, fold: true })}
 
-${sponsor}`;
+${section({ id: "modules", title: "What the dashboard would do", note: "Ten parts, built in phases.", body: modules, fold: true })}
+
+${section({ id: "rollout", title: "Rollout", note: "One government at a time.", body: rollout, fold: true })}`;
 }

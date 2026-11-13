@@ -56,10 +56,30 @@
   const views = $$             ("main.view");
   let pendingScroll                = null;
 
+  /** A link to a folded section opens it first. */
+  const openFold = (el                ) => {
+    if (!el) return;
+    const d = el.matches("section.fold") ? el.querySelector("details") : el.closest("details");
+    if (d) (d                      ).open = true;
+  };
+  const openFromHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const el = id ? document.getElementById(id) : null;
+    if (!el) return;
+    const d = el.matches("section.fold") ? el.querySelector("details") : el.closest("details");
+    if (d && !d.open) {
+      d.open = true;
+      el.scrollIntoView({ block: "start" });
+    }
+  };
+  openFromHash();
+  window.addEventListener("hashchange", openFromHash);
+
   const scrollToTarget = () => {
     const id = pendingScroll;
     pendingScroll = null;
     const el = id ? document.getElementById(id) : null;
+    openFold(el);
     if (el) {
       el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
       if (el.matches(".srcs li")) {
@@ -172,6 +192,44 @@
 
   /* ---------- interest counters ---------- */
   const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  /* ---------- debt history chart readout ---------- */
+  $$             ("[data-lc]").forEach((fig) => {
+    const d = JSON.parse(fig.dataset.lc || "{}")                                                                                                              ;
+    const plot = fig.querySelector             (".lc-plot");
+    const rule = fig.querySelector             (".lc-rule");
+    const read = fig.querySelector             (".lc-read");
+    if (!plot || !rule || !read || !d.s) return;
+    const money = (v        ) => (v >= 1e6 ? `$${(v / 1e6).toFixed(1)}M` : v > 0 ? `$${Math.round(v / 1e3)}K` : "Paid off");
+    const show = (clientX        ) => {
+      const r = plot.getBoundingClientRect();
+      const f = Math.min(1, Math.max(0, (clientX - r.left) / r.width));
+      const yr = Math.round(d.first + f * (d.last - d.first));
+      const x = ((yr - d.first) / (d.last - d.first)) * 100;
+      rule.style.left = `${x}%`;
+      rule.hidden = false;
+      const rows = d.s
+        .map((s) => {
+          const v = s.v[yr - d.first];
+          return v === undefined ? `<span class="k-${s.k}">${s.l}<i>Paid off</i></span>` : `<span class="k-${s.k}">${s.l}<i>${money(v)}</i></span>`;
+        })
+        .join("");
+      read.innerHTML = `<b>${yr}</b>${rows}<small>${yr > d.now ? "Scheduled, no new borrowing" : "Reported, as of Aug 31"}</small>`;
+      read.hidden = false;
+      const left = x > 60;
+      read.style.left = left ? "" : `calc(${x}% + 12px)`;
+      read.style.right = left ? `calc(${100 - x}% + 12px)` : "";
+    };
+    const hide = () => {
+      rule.hidden = true;
+      read.hidden = true;
+    };
+    plot.addEventListener("pointermove", (e) => show(e.clientX));
+    plot.addEventListener("pointerdown", (e) => show(e.clientX));
+    plot.addEventListener("pointerleave", (e) => {
+      if (e.pointerType === "mouse") hide();
+    });
+  });
+
   const tickers = $$             ("[data-ticker]");
   if (tickers.length) {
     const start = Date.now();

@@ -6,7 +6,7 @@ export const SITE = {
   name: "San Angelo DOGE",
   domain: "sanangelodoge.com",
   origin: "https://sanangelodoge.com",
-  updated: "Oct 29, 2026",
+  updated: "Nov 13, 2026",
   /** Date every cited data point was last checked against its source. */
   checked: "Oct 29, 2026",
   contactEmail: "Spencer@sanangelodoge.com",

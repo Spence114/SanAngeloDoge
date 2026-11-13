@@ -21,6 +21,7 @@ import {
   docs,
   facts,
   ICON,
+  keyPoints,
   pageHead,
   prose,
   questions,
@@ -28,7 +29,7 @@ import {
   table,
   timeline,
 } from "../render/components.ts";
-import { type Ctx, cite, href, rich } from "../render/html.ts";
+import { anchorLink, type Ctx, cite, href, rich } from "../render/html.ts";
 import { byTopic } from "../content/reports.ts";
 import { reportsFor } from "./reports.ts";
 
@@ -55,9 +56,16 @@ export function dataCentersPage(ctx: Ctx): string {
   return `${pageHead({
     eyebrow: "Data center guide",
     title: "Data centers in Tom Green County",
-    lede: "Three companies have proposed data center campuses around San Angelo. This guide explains what a data center is, when one helps a community and when it costs one, who has the power to say yes or no, and where each project stands today.",
+    lede: "Three companies want to build data center campuses around San Angelo. Here is where each one stands, what it would mean for us, and who decides.",
     meta: [`Updated ${SITE.updated}`, "3 proposals", "All waiting on state audits"],
   })}
+
+${keyPoints(ctx, [
+  { kicker: "Proposals", big: "3 campuses", text: "Skybox / Emergent, Cipher, and Beacon. All three are waiting on state reviews.", tone: "ink", cite: ["gov-0803", "gov-0921"], link: anchorLink(ctx, "data-centers", "where", `Where each stands ${ICON.arrow}`, "key-go") },
+  { kicker: "Beacon", big: "2,409 MW", text: "Beacon would run on its own gas power plant with 240 engines, southwest of town.", tone: "county", cite: ["westline-modeling-protocol"], link: `<a class="key-go" href="${href(ctx, "beacon")}">The Beacon page ${ICON.arrow}</a>` },
+  { kicker: "City rules", big: "1 of 3", text: "Only Skybox is inside city limits, where City zoning, noise, and water rules apply.", tone: "city", cite: ["city-dc-page"] },
+  { kicker: "Who decides", big: "Mostly Austin", text: "On county land, state agencies make most of the decisions, not local officials.", tone: "saisd", link: anchorLink(ctx, "data-centers", "who", `Who decides what ${ICON.arrow}`, "key-go") },
+])}
 
 ${reportsFor(ctx, byTopic("data-centers"))}
 
@@ -70,6 +78,8 @@ ${section({
 
 ${section({
   id: "what",
+  fold: true,
+  note: "A plain explanation, and how AI data centers differ from older ones.",
   title: "What a data center is",
   body: prose(ctx, WHAT_IT_IS) + table(ctx, TYPES_TABLE, "Traditional and AI data centers compared") + `<p class="note">${TYPES_NOTE}</p>`,
   band: true,
@@ -80,6 +90,7 @@ ${section({
   title: "When a data center helps a community, and when it costs one",
   note: "The same building can be either. The terms decide which.",
   body: signs + `<p class="note">${rich(ctx, SIGNS_NOTE)}</p>`,
+  band: true,
 })}
 
 ${section({
@@ -87,7 +98,7 @@ ${section({
   title: "The three projects against those tests",
   note: "From public records and the companies' own statements. Pink cells come from company statements not yet confirmed in a filing or agreement.",
   body: table(ctx, SCORECARD, "Scorecard for the three projects"),
-  band: true,
+  fold: true,
 })}
 
 ${section({
@@ -95,15 +106,17 @@ ${section({
   title: "Who decides what",
   note: "Inside city limits, the City Council has real tools. On county land, most of the decisions are in Austin.",
   body: table(ctx, WHO_DECIDES, "Who decides each question"),
+  fold: true,
 })}
 
-${section({ id: "timeline", title: "2026 timeline", note: "Local and state actions that shape all three projects.", body: timeline(ctx, TIMELINE_2026), band: true })}
+${section({ id: "timeline", title: "2026 timeline", note: "Local and state actions that shape all three projects.", body: timeline(ctx, TIMELINE_2026), fold: true })}
 
 ${section({
   id: "ask",
   title: "Questions to bring to any data center proposal",
   note: "Use these at City Council, Commissioners Court, or a community meeting.",
   body: `<ol class="asklist">${ASK_ANY_PROPOSAL.map((q) => `<li>${q}</li>`).join("")}</ol>`,
+  fold: true,
 })}`;
 }
 
@@ -135,11 +148,11 @@ ${section({ id: "glance", title: "At a glance", note: p.factsNote, body: facts(c
 
 ${extra}
 
-${section({ id: "history", title: "How we got here", body: timeline(ctx, p.timeline), band: !p.extra })}
+${section({ id: "history", title: "How we got here", note: "The timeline, step by step.", body: timeline(ctx, p.timeline), fold: true })}
 
-${section({ id: "open", title: "Open questions", note: "What the public record does not answer yet.", body: questions(p.questions), band: !!p.extra })}
+${section({ id: "open", title: "Open questions", note: "What the public record does not answer yet.", body: questions(p.questions), fold: true })}
 
-${section({ id: "act", title: "What you can do", note: p.doNote, body: bullets(ctx, p.todo) + (p.todoNote ? `<p class="note">${p.todoNote}</p>` : ""), band: !p.extra })}
+${section({ id: "act", title: "What you can do", note: p.doNote, body: bullets(ctx, p.todo) + (p.todoNote ? `<p class="note">${p.todoNote}</p>` : "") })}
 
-${section({ id: "docs", title: "Documents", body: docs(p.docs), band: !!p.extra })}`;
+${section({ id: "docs", title: "Documents", note: "Filings, agendas, and coverage behind this page.", body: docs(p.docs), fold: true })}`;
 }

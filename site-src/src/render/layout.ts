@@ -25,14 +25,14 @@ export function header(ctx: Ctx): string {
     <nav class="nav" aria-label="Main">${navLinks(ctx, "nl")}</nav>
     <div class="top-r">
       <a class="alerts-link" href="${href(ctx, "alerts")}" data-nav="alerts">Get alerts</a>
-      <a class="btn btn-sm" href="${href(ctx, "proposal")}" data-nav="proposal">See the proposal</a>
+      <a class="btn btn-sm btn-give" href="${href(ctx, "proposal")}" data-nav="proposal">${ICON.heart} Support Transparency</a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span class="i-open">${ICON.menu}</span><span class="i-close">${ICON.close}</span></button>
     </div>
   </div>
   <div class="menu" id="menu" hidden>
     <div class="wrap menu-in">
       <nav aria-label="Main">${navLinks(ctx, "ml")}<a class="ml" href="${href(ctx, "alerts")}" data-nav="alerts">Get alerts</a><a class="ml" href="${href(ctx, "tips")}" data-nav="tips">Tip line</a></nav>
-      <a class="btn btn-block" href="${href(ctx, "proposal")}">See the proposal ${ICON.arrow}</a>
+      <a class="btn btn-block btn-give" href="${href(ctx, "proposal")}">${ICON.heart} Support Transparency</a>
     </div>
   </div>
 </header>`;
@@ -44,12 +44,12 @@ export function footer(ctx: Ctx): string {
     <div class="foot-top">
       <div class="foot-brand">
         <a class="brand" href="${href(ctx, "home")}" data-nav="home">${mark(26)}<span>San Angelo DOGE</span></a>
-        <p>Local government finances for San Angelo and Tom Green County, from the public record.</p>
+        <p>Local government finances and issues for San Angelo and Tom Green County, from the public record. Independent journalism, paid for by citizens.</p>
       </div>
       <nav class="foot-links" aria-label="Footer">
         <div><h3>Read</h3><a href="${href(ctx, "finances")}">Finances</a><a href="${href(ctx, "data-centers")}">Data centers</a><a href="${href(ctx, "privacy")}">Flock cameras</a><a href="${href(ctx, "reports")}">Reports</a></div>
         <div><h3>Take part</h3><a href="${href(ctx, "alerts")}">Get alerts</a><a href="${href(ctx, "tips")}">Tip line</a>${anchorLink(ctx, "tips", "tip-form", "Report a data error")}</div>
-        <div><h3>About</h3><a href="${href(ctx, "about")}">Who we are</a><a href="${href(ctx, "proposal")}">The proposal</a>${anchorLink(ctx, "proposal", "sponsor", "Sponsor the build")}${anchorLink(ctx, "about", "standards", "Sources and corrections")}${anchorLink(ctx, "about", "site-privacy", "Site privacy")}</div>
+        <div><h3>About</h3><a href="${href(ctx, "about")}">Who we are</a><a href="${href(ctx, "proposal")}">Support Transparency</a>${anchorLink(ctx, "proposal", "tour", "Tour the prototype")}${anchorLink(ctx, "about", "standards", "Sources and corrections")}${anchorLink(ctx, "about", "site-privacy", "Site privacy")}</div>
       </nav>
     </div>
     <div class="disc">
