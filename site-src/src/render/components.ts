@@ -18,7 +18,7 @@ export function mark(size = 26): string {
 }
 
 /** Same mark as a standalone SVG string for the browser tab icon. */
-export const FAVICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#F1EFEB"/><path d="M4.5 11 16 4.5 27.5 11Z" fill="#22242A"/><rect x="6.5" y="17" width="5" height="10" fill="#22242A"/><rect x="13.5" y="14" width="5" height="13" fill="#22242A"/><rect x="20.5" y="12.5" width="5" height="14.5" fill="#3A5C8C"/><rect x="4" y="27.5" width="24" height="3" fill="#22242A"/></svg>`;
+export const FAVICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#F1EFEB"/><path d="M4.5 11 16 4.5 27.5 11Z" fill="#22242A"/><rect x="6.5" y="17" width="5" height="10" fill="#22242A"/><rect x="13.5" y="14" width="5" height="13" fill="#22242A"/><rect x="20.5" y="12.5" width="5" height="14.5" fill="#D2621A"/><rect x="4" y="27.5" width="24" height="3" fill="#22242A"/></svg>`;
 
 export function pageHead(o: { eyebrow: string; title: string; lede: string; meta?: string[]; back?: string }): string {
   return `<header class="phead wrap">

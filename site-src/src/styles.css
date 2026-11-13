@@ -13,7 +13,11 @@
   --ink-2: #45484E;
   --ink-3: #6B6E74;
   --ink-4: #8E9197;
-  --accent: #3A5C8C;
+  --accent: #3A5C8C;    /* blue: sub-headings, eyebrows, links */
+  --action: #B3510F;    /* orange: logo, buttons, active menu */
+  --action-deep: #943F08;
+  --action-soft: rgba(179, 81, 15, 0.10);
+  --logo: #D2621A;
   --accent-deep: #2E4A72;
   --accent-soft: rgba(58, 92, 140, 0.09);
   --on-accent: #F3F1ED;
@@ -27,7 +31,7 @@
   --c2: #AEAAA2;        /* chart: revenue */
   --c3: #CECAC3;        /* chart: interest, debt share */
   --city: #2F5FA0;      /* City of San Angelo, everywhere it is charted */
-  --county: #B5722A;    /* Tom Green County */
+  --county: #5E8A3E;    /* Tom Green County */
   --saisd: #1F7A8C;     /* San Angelo ISD */
   --give: #2E6B4E;      /* the support button */
   --give-deep: #245640;
@@ -74,19 +78,19 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* ---------- buttons ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  min-height: 44px; padding: 0 18px; border-radius: 8px; border: 1px solid var(--accent);
-  background: var(--accent); color: var(--on-accent); font-size: 15px; font-weight: 600;
+  min-height: 44px; padding: 0 18px; border-radius: 8px; border: 1px solid var(--action);
+  background: var(--action); color: #FFF8F2; font-size: 15px; font-weight: 600;
   text-decoration: none; white-space: nowrap; cursor: pointer;
   transition: background .18s, border-color .18s, color .18s, transform .18s;
 }
-.btn:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: var(--on-accent); }
+.btn:hover { background: var(--action-deep); border-color: var(--action-deep); color: #FFF8F2; }
 .btn:active { transform: translateY(1px); }
 .btn .ic { transition: transform .2s; }
 .btn:hover .ic { transform: translateX(2px); }
 .btn-sm { min-height: 36px; padding: 0 14px; font-size: 13.5px; }
 .btn-lg { min-height: 52px; padding: 0 24px; font-size: 16px; }
 .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-2); font-weight: 500; }
-.btn-ghost:hover { background: var(--raise); color: var(--accent); border-color: var(--accent); }
+.btn-ghost:hover { background: var(--raise); color: var(--action); border-color: var(--action); }
 .btn-block { width: 100%; }
 .copy { border: 1px solid var(--line-2); background: transparent; border-radius: 6px; padding: 2px 9px; font-size: 12.5px; cursor: pointer; color: var(--ink-2); }
 .copy:hover { border-color: var(--accent); color: var(--accent); }
@@ -102,14 +106,14 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .brand:hover { color: var(--ink); }
 .mark { color: var(--ink); flex: none; }
 .mark .m-c { fill: currentColor; }
-.mark .m-hi { fill: var(--accent); transition: fill .2s; }
+.mark .m-hi { fill: var(--logo); transition: fill .2s; }
 .mark .m-roof { transition: stroke .2s; }
-.brand:hover .mark .m-roof { stroke: var(--accent); }
+.brand:hover .mark .m-roof { stroke: var(--logo); }
 .nav { display: flex; gap: 4px; flex: 1; }
 .nl { position: relative; padding: 8px 10px; border-radius: 6px; font-size: 14.5px; color: var(--ink-2); text-decoration: none; }
 .nl:hover { color: var(--accent); background: var(--raise); }
 .nl[aria-current="page"] { color: var(--ink); font-weight: 600; }
-.nl[aria-current="page"]::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: 2px; height: 2px; border-radius: 2px; background: var(--accent); }
+.nl[aria-current="page"]::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: 2px; height: 2px; border-radius: 2px; background: var(--action); }
 .top-r { display: flex; align-items: center; gap: 14px; margin-left: auto; }
 .alerts-link { font-size: 14px; color: var(--ink-2); text-decoration: none; }
 .alerts-link:hover { color: var(--accent); }
@@ -121,7 +125,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .menu-in { display: flex; flex-direction: column; gap: 14px; padding-block: 12px 20px; }
 .menu nav { display: flex; flex-direction: column; }
 .ml { padding: 12px 4px; border-bottom: 1px solid var(--line); text-decoration: none; font-size: 17px; color: var(--ink); }
-.ml[aria-current="page"] { color: var(--accent); font-weight: 600; }
+.ml[aria-current="page"] { color: var(--action); font-weight: 600; }
 
 /* ---------- views ---------- */
 .view[hidden] { display: none !important; }
@@ -151,7 +155,7 @@ main { display: block; }
 .ipad-dots button { display: inline-grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; background: transparent; cursor: pointer; }
 .ipad-dots i { display: block; width: 8px; height: 8px; border-radius: 4px; background: var(--line-2); transition: width .3s, background .3s; }
 .ipad-dots button:hover i { background: var(--ink-4); }
-.ipad-dots button[aria-selected="true"] i { width: 22px; background: var(--accent); }
+.ipad-dots button[aria-selected="true"] i { width: 22px; background: var(--action); }
 .ipad figcaption { padding: 0 6px; font-size: 12.5px; color: var(--ink-3); }
 .ipad figcaption a { color: var(--accent); font-weight: 600; text-decoration: none; margin-left: 4px; }
 .ipad figcaption a:hover { text-decoration: underline; }
@@ -840,8 +844,8 @@ table { font-size: 15.5px; }
 
 .tone-city { --tone: var(--city); } .tone-county { --tone: var(--county); } .tone-saisd { --tone: var(--saisd); } .tone-ink { --tone: var(--ink); } .tone-alert { --tone: var(--pink); }
 
-.btn-give { background: var(--give); border-color: var(--give); color: #F4F7F2; }
-.btn-give:hover { background: var(--give-deep); border-color: var(--give-deep); color: #F4F7F2; }
+.btn-give { background: var(--action); border-color: var(--action); color: #FFF8F2; }
+.btn-give:hover { background: var(--action-deep); border-color: var(--action-deep); color: #FFF8F2; }
 .btn-give:hover .ic { transform: scale(1.12); }
 .give-acts { display: flex; flex-wrap: wrap; gap: 10px; padding-bottom: clamp(24px, 4vw, 40px); }
 
