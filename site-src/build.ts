@@ -12,8 +12,10 @@ import { fileURLToPath } from "node:url";
 import { type BuildMode, FORMS, SITE } from "./src/config.ts";
 import { aboutPage } from "./src/pages/about.ts";
 import { dataCentersPage, projectPage } from "./src/pages/datacenters.ts";
-import { financesPage } from "./src/pages/finances.ts";
-import { alertsPage, tipsPage } from "./src/pages/forms.ts";
+import { budgetsPage, debtPage, financesPage, schoolsPage, taxesPage } from "./src/pages/money.ts";
+import { govPage } from "./src/pages/government.ts";
+import { questionsPage } from "./src/pages/questions.ts";
+import { alertsPage, appraisalCheckPage, tipsPage } from "./src/pages/forms.ts";
 import { homePage } from "./src/pages/home.ts";
 import { privacyPage } from "./src/pages/privacy.ts";
 import { type Ctx, esc, type Route, ROUTES } from "./src/render/html.ts";
@@ -33,10 +35,20 @@ const PAGES: Record<Route, { title: string; desc: string; render: (ctx: Ctx) => 
     render: homePage,
   },
   finances: {
-    title: "Finances",
-    desc: "Debt, budgets, and property tax rates for the City of San Angelo, Tom Green County, and San Angelo ISD, from their own reports.",
+    title: "Money",
+    desc: "Debt, taxes, budgets, and school spending for the City of San Angelo, Tom Green County, and San Angelo ISD, from their own reports.",
     render: financesPage,
   },
+  debt: { title: "Debt", desc: "What the City, County, and San Angelo ISD owe, how it grew, what it pays for, and when it is paid off.", render: debtPage },
+  taxes: { title: "Taxes", desc: "Property tax rates for San Angelo, and why a lower rate can still mean a bigger bill.", render: taxesPage },
+  budgets: { title: "Budgets", desc: "This year's budgets for the City, County, and San Angelo ISD, and the big costs coming.", render: budgetsPage },
+  schools: { title: "Schools: spending per student", desc: "What San Angelo ISD spends per student, next to the state average, and how enrollment is changing.", render: schoolsPage },
+  questions: { title: "Open Questions", desc: "What the public record does not answer yet, who can answer it, and their replies.", render: questionsPage },
+  city: { title: "City of San Angelo", desc: "The City of San Angelo's debt, budget, taxes, records, and open questions.", render: (c) => govPage(c, "city") },
+  county: { title: "Tom Green County", desc: "Tom Green County's debt, budget, taxes, records, and open questions.", render: (c) => govPage(c, "county") },
+  saisd: { title: "San Angelo ISD", desc: "San Angelo ISD's debt, the 2025 school bonds, spending per student, records, and open questions.", render: (c) => govPage(c, "saisd") },
+  appraisal: { title: "Appraisal District", desc: "What the Tom Green County Appraisal District does, its budget, its records, and our coming appraisal check.", render: (c) => govPage(c, "appraisal") },
+  devcorp: { title: "Development Corporation", desc: "The City of San Angelo Development Corporation's half-cent sales tax and where it goes.", render: (c) => govPage(c, "devcorp") },
   "data-centers": {
     title: "Data centers",
     desc: "A guide to the three data center campuses proposed around San Angelo: what they are, when they help, who decides, and where each stands.",
@@ -56,12 +68,13 @@ const PAGES: Record<Route, { title: string; desc: string; render: (ctx: Ctx) => 
     render: reportsPage,
   },
   proposal: {
-    title: "The dashboard proposal",
+    title: "Support Transparency",
     desc: "The proposed San Angelo public finance dashboard: what it would do, how it would work, the rollout, and what it takes to build.",
     render: proposalPage,
   },
   about: { title: "About", desc: "Who runs San Angelo DOGE, what we're building, how to sponsor it, and how we work.", render: aboutPage },
   alerts: { title: "Zoning alerts", desc: "Get an email when a zoning change is proposed near your home, at the distance you choose: 250 feet, 1,000 feet, half a mile, or the whole city.", render: alertsPage },
+  "appraisal-check": { title: "Appraisal check", desc: "Coming in 2027: see if your property value is in line with similar properties nearby, before the protest deadline. Join the list for early access.", render: appraisalCheckPage },
   tips: { title: "Tip line", desc: "Report waste, wrongdoing, or an error in our data.", render: tipsPage },
 };
 

@@ -4,6 +4,16 @@ import type { Citations } from "./cite.ts";
 export const ROUTES = [
   "home",
   "finances",
+  "debt",
+  "taxes",
+  "budgets",
+  "schools",
+  "questions",
+  "city",
+  "county",
+  "saisd",
+  "appraisal",
+  "devcorp",
   "data-centers",
   "skybox",
   "cipher",
@@ -13,6 +23,7 @@ export const ROUTES = [
   "proposal",
   "about",
   "alerts",
+  "appraisal-check",
   "tips",
 ] as const;
 

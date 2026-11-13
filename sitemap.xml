@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://sanangelodoge.com/</loc></url>
   <url><loc>https://sanangelodoge.com/finances/</loc></url>
+  <url><loc>https://sanangelodoge.com/debt/</loc></url>
+  <url><loc>https://sanangelodoge.com/taxes/</loc></url>
+  <url><loc>https://sanangelodoge.com/budgets/</loc></url>
+  <url><loc>https://sanangelodoge.com/schools/</loc></url>
+  <url><loc>https://sanangelodoge.com/questions/</loc></url>
+  <url><loc>https://sanangelodoge.com/city/</loc></url>
+  <url><loc>https://sanangelodoge.com/county/</loc></url>
+  <url><loc>https://sanangelodoge.com/saisd/</loc></url>
+  <url><loc>https://sanangelodoge.com/appraisal/</loc></url>
+  <url><loc>https://sanangelodoge.com/devcorp/</loc></url>
   <url><loc>https://sanangelodoge.com/data-centers/</loc></url>
   <url><loc>https://sanangelodoge.com/skybox/</loc></url>
   <url><loc>https://sanangelodoge.com/cipher/</loc></url>
@@ -11,5 +21,6 @@
   <url><loc>https://sanangelodoge.com/proposal/</loc></url>
   <url><loc>https://sanangelodoge.com/about/</loc></url>
   <url><loc>https://sanangelodoge.com/alerts/</loc></url>
+  <url><loc>https://sanangelodoge.com/appraisal-check/</loc></url>
   <url><loc>https://sanangelodoge.com/tips/</loc></url>
 </urlset>

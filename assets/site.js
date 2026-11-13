@@ -41,8 +41,63 @@
     if (e.key === "Escape") setMenu(false);
   });
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 1020) setMenu(false);
+    if (window.innerWidth > 1180) setMenu(false);
   });
+
+  /* ---------- dropdown menus (desktop) ---------- */
+  const dds = $$             ("[data-dd]");
+  let ddTimer = 0;
+  const closeAll = (except              ) => {
+    for (const d of dds) {
+      if (d === except) continue;
+      d.querySelector(".dd-b")?.setAttribute("aria-expanded", "false");
+      const p = d.querySelector             (".mm");
+      if (p) p.hidden = true;
+      d.classList.remove("open");
+    }
+  };
+  const openDd = (d             ) => {
+    closeAll(d);
+    d.querySelector(".dd-b")?.setAttribute("aria-expanded", "true");
+    const p = d.querySelector             (".mm");
+    if (p) p.hidden = false;
+    d.classList.add("open");
+  };
+  for (const d of dds) {
+    const b = d.querySelector                   (".dd-b");
+    b?.addEventListener("click", () => (d.classList.contains("open") ? closeAll() : openDd(d)));
+    d.addEventListener("pointerenter", (e) => {
+      if (e.pointerType !== "mouse") return;
+      window.clearTimeout(ddTimer);
+      openDd(d);
+    });
+    d.addEventListener("pointerleave", (e) => {
+      if (e.pointerType !== "mouse") return;
+      ddTimer = window.setTimeout(() => closeAll(), 160);
+    });
+    d.addEventListener("focusout", (e) => {
+      if (!d.contains(e.relatedTarget               )) closeAll();
+    });
+    d.addEventListener("click", (e) => {
+      if ((e.target           ).closest(".mm a")) closeAll();
+    });
+  }
+  document.addEventListener("click", (e) => {
+    if (!(e.target           ).closest("[data-dd]")) closeAll();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeAll();
+  });
+
+  /* ---------- open questions filter ---------- */
+  const qbtns = $$                   ("[data-qf]");
+  for (const b of qbtns) {
+    b.addEventListener("click", () => {
+      const want = b.dataset.qf ?? "all";
+      qbtns.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      for (const w of $$             (".qwrap")) w.hidden = want !== "all" && !(w.dataset.gov ?? "").split(" ").includes(want);
+    });
+  }
 
   /* ---------- skip link: focus the visible page without touching the hash ---------- */
   document.querySelector(".skip")?.addEventListener("click", (e) => {
@@ -96,6 +151,10 @@
     if (!view) return;
     const route = view.dataset.route ?? "home";
     for (const v of views) v.hidden = v !== view;
+    for (const b of $$                   (".dd-b")) {
+      if ((b.dataset.group ?? "").split(" ").includes(route)) b.setAttribute("aria-current", "page");
+      else b.removeAttribute("aria-current");
+    }
     for (const a of $$                   ("[data-nav]")) {
       const navRoute = a.dataset.nav ?? "";
       const on = navRoute === route || (navRoute === "data-centers" && ["skybox", "cipher", "beacon"].includes(route));
@@ -341,7 +400,7 @@
   };
 
   const showEmailHandoff = (form                 , kind          ) => {
-    const href = `mailto:${cfg.contact}?subject=${encodeURIComponent(SUBJECT[kind])}&body=${encodeURIComponent(composeBody(form))}`;
+    const href = `mailto:${cfg.contact}?subject=${encodeURIComponent(form.dataset.subject ?? SUBJECT[kind])}&body=${encodeURIComponent(composeBody(form))}`;
     let box = form.querySelector             (".form-msg");
     if (!box) {
       box = document.createElement("div");

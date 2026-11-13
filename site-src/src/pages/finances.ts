@@ -24,7 +24,7 @@ import { anchorLink, cite, type Ctx, href, rich, usd, usdM } from "../render/htm
 import { byTopic } from "../content/reports.ts";
 import { reportsFor } from "./reports.ts";
 
-export function financesPage(ctx: Ctx): string {
+export function finParts(ctx: Ctx) {
   const total = DEBT_TOTAL.principal + DEBT_TOTAL.interest;
   const all = DEBT.flatMap((d) => d.cite);
 
@@ -149,17 +149,6 @@ export function financesPage(ctx: Ctx): string {
   ).join("")}</ul>`;
 
   const tot = debtTotals();
-  const jump = `<nav class="wrap fin-jump" aria-label="On this page">${[
-    ["debt", "Debt"],
-    ["purpose", "What it pays for"],
-    ["students", "Per student"],
-    ["budgets", "Budgets"],
-    ["rates", "Tax rates"],
-    ["base", "Tax base"],
-    ["books", "Also on the books"],
-  ]
-    .map(([a, l]) => anchorLink(ctx, "finances", a, l, "fj"))
-    .join("")}</nav>`;
 
   const debtSide = `<div class="fin-card"><h3 class="fc-t">Who owes the most</h3><p class="fc-s">Principal plus the interest still scheduled.</p>${debtChart}
     <h3 class="fc-t fc-gap">When it is paid off</h3><p class="fc-s">The last scheduled payment, if nothing new is borrowed.</p>
@@ -178,61 +167,5 @@ export function financesPage(ctx: Ctx): string {
     ${sBar("SAISD", TEACHER_PAY.saisd, TEACHER_PAY.state, "b-us")}${sBar("State average", TEACHER_PAY.state, TEACHER_PAY.state, "b-state")}${sBar("Peer districts", TEACHER_PAY.peer, TEACHER_PAY.state, "b-peer")}</div>
   <p class="note">${rich(ctx, STUDENT_SPEND_NOTE)}</p>`;
 
-  return `<div class="pg-wide">${pageHead({
-    eyebrow: "Basic finances",
-    title: "What our local governments owe, spend, and tax",
-    lede: "The City, Tom Green County, and San Angelo ISD: what they owe, what it pays for, what they spend, and what they tax. Each figure shows its date and its source.",
-    meta: [`Updated ${SITE.updated}`, "Three governments", "Same rules for each"],
-  })}
-${jump}
-
-<section class="lead-chart"><div class="wrap"><div class="fin-card">${debtTotalChart(ctx)}</div></div></section>
-
-${keyPoints(ctx, [
-  { kicker: "All three together", big: `$${Math.round(tot[tot.length - 1].total / 1e6)}M`, text: `Owed on Aug 31, 2025. One year earlier: $${Math.round(tot[tot.length - 2].total / 1e6)} million.`, tone: "ink", cite: ["brb-san-angelo", "brb-tgc", "brb-saisd", "our-analysis"] },
-  { kicker: "School district", big: "$385M", text: "New bonds San Angelo ISD sold in 2025. That is why the total jumped.", tone: "saisd", cite: ["brb-saisd"] },
-  { kicker: "Per student", big: "$10,882", text: "What SAISD spent to operate per student in 2022-23. The state average was $12,382.", tone: "city", cite: ["saisd-efficiency-audit-2024"] },
-  { kicker: "Payoff", big: "2055", text: "When the last school bond payment comes due, if nothing new is borrowed.", tone: "county", cite: ["brb-saisd"] },
-])}
-
-${reportsFor(ctx, byTopic("finances"))}
-
-${section({
-  id: "debt",
-  title: "Debt",
-  note: "What each government borrowed and still owes, how that changed over twenty years, and when it is scheduled to be paid off.",
-  body: `${summary}
-  <div class="fin-grid">
-    <div class="fin-card fc-wide">${debtHistory(ctx)}</div>
-    ${debtSide}
-  </div>
-  ${debtTable}
-  <div class="fin-notes"><p class="note">"Due this fiscal year" is scheduled principal plus interest: City FY2027, County FY2027, SAISD 2026-27.</p><p class="note">${rich(ctx, CITY_DEBT_NOTE)}</p><p class="note">${rich(ctx, "The history chart uses the Texas Bond Review Board's figures as of each Aug 31. Its County payoff line predates the County's Sept 2025 refunding, so the County's own schedule, in the table, runs slightly differently. {{c:brb-tgc,county-afr-2025}}")}</p></div>`,
-})}
-
-${section({ id: "purpose", title: "What the debt pays for", note: "Debt owed on Aug 31, 2025, by the purpose each government reported to the state. Bars share one scale, so their lengths compare across governments.", body: debtPurpose(ctx), band: true })}
-
-${section({ id: "students", title: "School spending per student", note: "What San Angelo ISD spends on each student, next to the state average.", body: students })}
-
-${section({ id: "budgets", title: "This year's budgets", note: "General Fund revenue and spending as adopted. The General Fund pays for day-to-day operations.", body: `<div class="fin-card">${budgetChart}</div><div class="callout"><b>Adopted is not final.</b> ${rich(ctx, "These are the plans passed at the start of the year. Councils, courts, and boards amend them during the year as they vote on projects and spending, so a budget adopted in balance can end the year out of balance. The City's FY2026 budget, after revisions, spent $6.1 million more than it took in. {{c:city-budget-fy2027}} Tracking those mid-year votes is part of the dashboard we are building.")}</div>` + budgetNotes, band: true })}
-
-${section({ id: "rates", title: "Property tax rates", note: "Per $100 of taxable value. Each rate has two parts: one for operations and one for debt payments.", body: `<div class="fin-card">${rateChart}</div>` + rateNotes })}
-
-${section({ id: "base", title: "Tax base and credit ratings", note: "Taxable value is what the rates are applied to. Ratings come from the agencies that rate each government's bonds.", body: baseTable, fold: true })}
-
-${section({ id: "books", title: "Also on the books", note: "Large costs and commitments beyond bonded debt. Pink text rests on news coverage until we check the source document.", body: also, fold: true })}
-
-${section({
-  id: "how",
-  fold: true,
-  title: "How to read these numbers",
-  body: `<div class="prose"><p><strong>Owed</strong> is what was borrowed and not yet repaid. <strong>Interest still to pay</strong> is the interest on the repayment schedule from the report date to the last payment. Together they are the total future payments.</p><p>Local debt does not grow every second the way the federal debt does. Principal goes down as payments are made and jumps when new bonds are sold. The interest counter spreads this year's scheduled interest evenly across the year so you can see the pace.</p><p>Some official documents disagree with each other. The proposed dashboard would show both figures and the question for the office that published them.</p></div>`,
-})}
-
-<section class="cta-band">
-  <div class="wrap cta-in">
-    <div><h2>Next: payment schedules, budget history, and votes</h2><p>Part of the dashboard we are raising money to build.</p></div>
-    <a class="btn btn-give btn-lg" href="${href(ctx, "proposal")}">${ICON.heart} Support Transparency</a>
-  </div>
-</section></div>`;
+  return { summary, debtChart, debtTable, budgetChart, budgetNotes, rateChart, rateNotes, baseTable, also, debtSide, students, tot };
 }

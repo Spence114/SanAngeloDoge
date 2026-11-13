@@ -2,6 +2,9 @@ import { SITE } from "../config.ts";
 import { DEBT } from "../content/finances.ts";
 import { byId } from "../content/reports.ts";
 import { ICON, keyPoints } from "../render/components.ts";
+import { GI } from "../render/icons.ts";
+import { GOVERNMENTS } from "../content/nav.ts";
+import { tiles } from "../render/tiles.ts";
 import { debtTotalChart, debtTotals } from "../render/totalchart.ts";
 import { reportsFor } from "./reports.ts";
 import { anchorLink, cite, type Ctx, href, usdM } from "../render/html.ts";
@@ -48,12 +51,33 @@ export function homePage(ctx: Ctx): string {
       <h1>Local Government Transparency</h1>
       <p class="lede">What the City, Tom Green County, and San Angelo ISD owe, spend, and decide. In plain words. Every number links to its source.</p>
       <div class="hero-acts">
-        <a class="btn btn-lg" href="${href(ctx, "finances")}">See the finances ${ICON.arrow}</a>
+        <a class="btn btn-ghost btn-lg" href="${href(ctx, "finances")}">See the money ${ICON.arrow}</a>
         <a class="btn btn-give btn-lg" href="${href(ctx, "proposal")}">${ICON.heart} Support Transparency</a>
       </div>
       <p class="hero-meta">Updated ${SITE.updated}. Pink marks figures not yet verified.</p>
     </div>
     <div class="hero-chart">${debtTotalChart(ctx, { compact: true })}</div>
+  </div>
+</section>
+
+
+<section class="explore" aria-labelledby="explore-h">
+  <div class="wrap">
+    <h2 id="explore-h" class="explore-h">Find what you need</h2>
+    <div class="ex-grid">
+      ${[
+        { r: "debt", i: "debt", k: "Debt", v: "What is owed, and when it is paid off" },
+        { r: "taxes", i: "taxes", k: "Taxes", v: "Rates, and why bills rise" },
+        { r: "budgets", i: "budget", k: "Budgets", v: "What they plan to spend" },
+        { r: "schools", i: "school", k: "Schools", v: "Spending per student" },
+        { r: "data-centers", i: "server", k: "Data centers", v: "Three proposals, who decides" },
+        { r: "privacy", i: "camera", k: "Flock cameras", v: "Plate cameras and drones" },
+        { r: "questions", i: "question", k: "Open Questions", v: "What the record leaves out" },
+        { r: "alerts", i: "alert", k: "Zoning alerts", v: "Know before they vote" },
+      ]
+        .map((x) => `<a class="ex" href="${href(ctx, x.r as Parameters<typeof href>[1])}"><span class="ex-ic">${GI[x.i as keyof typeof GI]}</span><b>${x.k}</b><span>${x.v}</span></a>`)
+        .join("")}
+    </div>
   </div>
 </section>
 
@@ -66,7 +90,7 @@ ${keyPoints(
       text: `Owed by our three local governments. A year earlier it was $${Math.round(prev.total / 1e6)} million.`,
       tone: "saisd",
       cite: ["brb-san-angelo", "brb-tgc", "brb-saisd", "our-analysis"],
-      link: more("finances", "Debt, budgets, and taxes"),
+      link: more("debt", "How the debt grew"),
     },
     {
       kicker: "Data centers",
@@ -108,7 +132,9 @@ ${keyPoints(
     </div>`,
     ).join("")}
     </div>
-    <a class="figs-more" href="${href(ctx, "finances")}">See how it grew and what it pays for ${ICON.arrow}</a>
+    <a class="figs-more" href="${href(ctx, "debt")}">See how it grew and what it pays for ${ICON.arrow}</a>
+    <p class="sub-h gov-others">Each government's page</p>
+    ${tiles(ctx, GOVERNMENTS.items, "t5")}
   </div>
 </section>
 
