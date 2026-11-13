@@ -66,8 +66,8 @@ export const PROJECTS: ProjectCard[] = [
       { k: "Power", v: "AEP grid, Red Creek substation", cite: ["sal-20260923", "cipher-10k-2025"] },
       { k: "Water", v: "Closed loop; fill water trucked in, per Cipher", cite: ["sal-20260923"], unv: true },
     ],
-    status: "Grid request on hold",
-    statusCite: ["sal-20260923", "gov-0803"],
+    status: "Conditional grid approval",
+    statusCite: ["cipher-8k-20261102-pr"],
   },
   {
     id: "beacon",
@@ -168,7 +168,7 @@ export const SCORECARD: Table = {
     [
       "State status",
       "ERCOT request on hold for the state audit {{c:sal-20260923,gov-0803}}",
-      "ERCOT request on hold for the state audit {{c:sal-20260923,gov-0803}}",
+      "Conditional ERCOT approval for 1 GW; final expected in December {{c:cipher-8k-20261102-pr,cipher-q3-2026-call}}",
       "Air permit application pending; issuance paused Sep 21 {{c:tceq-nori-184380,gov-0921}}",
     ],
     [
@@ -220,7 +220,7 @@ export const TIMELINE_2026: TimelineItem[] = [
   { d: "Sep 22", e: "<b>Cipher briefs the Commissioners Court</b> on its project. No vote. {{c:sal-20260923}}" },
   { d: "Sep 24", e: "<b>Attorney General opens an investigation</b> into water-use reporting by hundreds of data center developments. <span class=\"unv\">KERA News reported Tom Green County among the counties in the first round.</span> {{c:foley-0924,kera-0928}}" },
   { d: "Oct 8", e: "<b>Darby asks Beacon to withdraw</b> its permit applications. {{c:sal-20261008}}" },
-  { d: "December", e: "<b>ERCOT audit report due Dec 10</b>, with a PUC meeting Dec 17. Cipher expects word on its grid request around Dec 7. {{c:ercot-0820,sal-20260923}}", next: true },
+  { d: "December", e: "<b>ERCOT audit report due Dec 10</b>, with a PUC meeting Dec 17. Cipher expects its final grid classification in December. {{c:ercot-0820,cipher-q3-2026-call}}", next: true },
   { d: "Jan 2027", e: "<b>Legislature convenes Jan 12.</b> The Governor says he will ask lawmakers to end financial incentives for data centers. {{c:tx-gov-301001,gov-0921}}", next: true },
 ];
 
@@ -320,7 +320,7 @@ export const PROJECT_PAGES: Record<ProjectId, ProjectPage> = {
     eyebrow: "Data center · County jurisdiction",
     title: "Cipher data center",
     lede: "A 1-gigawatt data center proposed by Cipher Digital on private land just east of the Skybox site, running south along City Farm Road to the Red Creek substation. It is under county jurisdiction, so no city ordinance applies and the county has no zoning power.",
-    chips: ["Grid request on hold", "No tenant"],
+    chips: ["Conditional grid approval", "No tenant"],
     factsNote: "Much of what is known about this site comes from Cipher's Sep 22 briefing to the Commissioners Court. Those statements are shown in pink until they appear in a filing or agreement.",
     facts: [
       { k: "Developer", v: "Cipher Digital Inc. (Nasdaq: CIFR), through Colchis LLC. Cipher bought 53% of Colchis LLC in late 2025 and raised its stake to 76% in early 2026 through capital contributions. The partner holding the remaining 24% is not named. Cipher's filings say clauses in the agreement could require it to buy out the partner's share after events Cipher does not control.", cite: ["cipher-10k-2025-note8-detail", "cipher-10q-2026q1", "cipher-10q-2026q2-jv"] },
@@ -328,7 +328,7 @@ export const PROJECT_PAGES: Record<ProjectId, ProjectPage> = {
       { k: "Site", v: "Private land off US 67 North, running south down City Farm Road to the Red Creek substation, which sits in the middle of Cipher's land. \"A few hundred acres\" bought, with options toward about 600 acres. Price not disclosed.", cite: ["sal-20260923", "cipher-10k-2025"] },
       { k: "Size", v: "1 GW requested from ERCOT.", cite: ["sal-20260923", "cipher-8k-20260804-deck"] },
       { k: "Power", v: "AEP Texas grid at Red Creek. Cipher says it paid AEP a $17 million interconnection fee and holds a conditional utility approval.", cite: ["sal-20260923", "cipher-10k-2025", "cipher-8k-20260804-deck"] },
-      { k: "Grid status", v: "In ERCOT's \"Batch Zero\" group; on hold until the state audit is done. Cipher expects word around Dec 7.", cite: ["sal-20260923", "cipher-8k-20260804-deck", "gov-0803"] },
+      { k: "Grid status", v: "Conditional approval. ERCOT gave the site a conditional base load classification for 1 GW in its first review round (\"Batch Zero\"). Cipher says it expects the final classification in December, after the state audit. A conditional classification is not a final grid connection.", cite: ["cipher-8k-20261102-pr", "cipher-q3-2026-call"] },
       { k: "Cooling and water", v: "Closed loop with air-cooled chillers. About 2 million gallons of non-potable water (produced or brackish) trucked in to fill the loop, then about 5 gallons a day per employee. No drinking water for cooling, construction, or dust control. Cipher said it is not drilling drinking-water wells. Loop water treated and hauled off when changed.", cite: ["sal-20260923"], src: "Cipher at Commissioners Court, Sep 22, 2026", unv: true },
       { k: "Backup power", v: "Four-hour batteries, per Cipher. No TCEQ power plant application on file.", cite: ["sal-20260923", "tceq-nsr-pending"] },
       { k: "Tenant", v: "None signed for this site. Cipher's $5.5 billion, 15-year Amazon Web Services lease is for its Black Pearl site near Wink, in Winkler County, not this one.", cite: ["cipher-10k-2025", "cipher-8k-20251103-pr", "texas-almanac-winkler"] },
@@ -357,7 +357,8 @@ export const PROJECT_PAGES: Record<ProjectId, ProjectPage> = {
       { d: "Aug 4, 2026", e: "<b>Cipher tells investors</b> it expects the project to be included in ERCOT's Batch Zero. {{c:cipher-8k-20260804-deck}}" },
       { d: "Aug 19, 2026", e: "<b>Petition</b> asks the Lipan-Kickapoo Water Conservation District to require Cipher's water plan before any well permit. {{c:petition-cipher-water}}" },
       { d: "Sep 22, 2026", e: "<b>Commissioners Court briefing.</b> No vote. {{c:sal-20260923}}" },
-      { d: "December", e: "<b>ERCOT decision</b> expected after the audit, due Dec 10. Construction would follow in 2027 if cleared. {{c:ercot-0820,sal-20260923}}", next: true },
+      { d: "Nov 2, 2026", e: "<b>Conditional grid approval.</b> Cipher reports a conditional ERCOT base load classification for 1 GW at the site and says it has expanded the site to 622 acres. {{c:cipher-8k-20261102-pr,cipher-q3-2026-call}}" },
+      { d: "December", e: "<b>Final ERCOT classification</b> expected after the audit, due Dec 10. Cipher says a tenant lease would likely wait for the grid connection. {{c:ercot-0820,cipher-q3-2026-call}}", next: true },
     ],
     questions: [
       { q: "Who owns the other 24% of Colchis LLC?", why: "Cipher's filings do not name the partner." },
