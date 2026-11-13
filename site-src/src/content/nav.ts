@@ -29,9 +29,9 @@ export const MONEY: NavGroup = {
   icon: "money",
   covers: ["finances", "debt", "taxes", "budgets"],
   items: [
-    { route: "debt", label: "Debt", desc: "What is owed, and when it is paid off", icon: "debt", step: 1 },
-    { route: "taxes", label: "Taxes", desc: "Why a lower rate can still mean a bigger bill", icon: "taxes", step: 2 },
-    { route: "budgets", label: "Budgets", desc: "What each government plans to spend", icon: "budget", step: 3 },
+    { route: "debt", label: "Debt", desc: "What is owed, and when it is paid off", icon: "debt" },
+    { route: "taxes", label: "Taxes", desc: "Why a lower rate can still mean a bigger bill", icon: "taxes" },
+    { route: "budgets", label: "Budgets", desc: "What each government plans to spend", icon: "budget" },
   ],
   foot: { route: "finances", label: "Money overview", desc: "", icon: "money" },
 };
@@ -42,8 +42,8 @@ export const ISSUES: NavGroup = {
   icon: "issues",
   covers: ["data-centers", "skybox", "cipher", "beacon", "privacy"],
   items: [
-    { route: "data-centers", label: "Data centers", desc: "Three proposals near San Angelo, and who decides", icon: "server", step: 4 },
-    { route: "privacy", label: "Flock cameras", desc: "Police plate cameras, and what we propose", icon: "camera", step: 5 },
+    { route: "data-centers", label: "Data centers", desc: "Three proposals near San Angelo, and who decides", icon: "server" },
+    { route: "privacy", label: "Flock cameras", desc: "Police plate cameras, and what we propose", icon: "camera" },
     { route: "saisd", anchor: "bonds", label: "School bonds", desc: "$385M borrowed in 2025, repaid through 2055", icon: "bond" },
   ],
 };

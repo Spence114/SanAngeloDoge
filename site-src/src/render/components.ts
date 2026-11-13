@@ -67,20 +67,29 @@ export interface KeyPoint {
 }
 
 /** "The short version": the few things a reader should leave with, set large. */
-export function keyPoints(ctx: Ctx, items: KeyPoint[], label = "The short version"): string {
-  return `<section class="keys-sec" aria-label="${esc(label)}">
-  <div class="wrap">
-    <p class="keys-label">${label}</p>
-    <div class="keys n${items.length}">${items
-      .map(
-        (k) => `<div class="key tone-${k.tone ?? "ink"}">
+export function keyPoints(ctx: Ctx, items: KeyPoint[], label = "The short version", bottom?: string): string {
+  const cards = items
+    .map(
+      (k) => `<div class="key tone-${k.tone ?? "ink"}">
       ${k.kicker ? `<span class="key-k">${k.kicker}</span>` : ""}
       <span class="key-big">${k.big}</span>
       <p class="key-t">${rich(ctx, k.text)}${k.cite?.length ? ctx.cites.ref(k.cite) : ""}</p>
       ${k.link ?? ""}
     </div>`,
-      )
-      .join("")}</div>
+    )
+    .join("");
+  if (bottom) {
+    return `<section class="keys-sec lead" aria-label="${esc(label)}">
+  <div class="wrap lead-in">
+    <div class="bl"><span class="bl-k">The bottom line</span><p>${rich(ctx, bottom)}</p></div>
+    <div class="keys k${items.length}">${cards}</div>
+  </div>
+</section>`;
+  }
+  return `<section class="keys-sec" aria-label="${esc(label)}">
+  <div class="wrap">
+    <p class="keys-label">${label}</p>
+    <div class="keys n${items.length}">${cards}</div>
   </div>
 </section>`;
 }

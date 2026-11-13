@@ -150,9 +150,9 @@ export function finParts(ctx: Ctx) {
 
   const tot = debtTotals();
 
-  const debtSide = `<div class="fin-card"><h3 class="fc-t">Who owes the most</h3><p class="fc-s">Principal plus the interest still scheduled.</p>${debtChart}
-    <h3 class="fc-t fc-gap">When it is paid off</h3><p class="fc-s">The last scheduled payment, if nothing new is borrowed.</p>
-    <ul class="po-list">${PAYOFF.map((r) => `<li class="tone-${r.tone}"><span class="po-g"><i class="dot"></i>${r.gov}${cite(ctx, ...r.cite)}<small>${r.note}</small></span><b class="mono">${r.year}</b></li>`).join("")}</ul></div>`;
+  const debtSide = `<div class="fin-card ds"><div class="ds-a"><h3 class="fc-t">Who owes the most</h3><p class="fc-s">Principal plus the interest still scheduled.</p>${debtChart}</div>
+    <div class="ds-b"><h3 class="fc-t fc-gap">When it is paid off</h3><p class="fc-s">The last scheduled payment, if nothing new is borrowed.</p>
+    <ul class="po-list">${PAYOFF.map((r) => `<li class="tone-${r.tone}"><span class="po-g"><i class="dot"></i>${r.gov}${cite(ctx, ...r.cite)}<small>${r.note}</small></span><b class="mono">${r.year}</b></li>`).join("")}</ul></div></div>`;
 
   const sMax = Math.max(...STUDENT_SPEND.map((r) => Math.max(r.saisd, r.state, r.peer)));
   const sBar = (label: string, v: number, hi: number, cls: string) => `<div class="ss-b"><span class="ss-l">${label}</span><span class="ss-track"><i class="${cls}" style="width:${((v / hi) * 100).toFixed(1)}%"></i></span><b class="mono">${usd(v)}</b></div>`;

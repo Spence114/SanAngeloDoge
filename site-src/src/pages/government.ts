@@ -113,9 +113,8 @@ export function govPage(ctx: Ctx, id: GovId): string {
 <nav class="wrap gov-switch" aria-label="Governments">${(Object.values(GOV_PAGES) as GovPage[])
     .map((x) => `<a class="tone-${x.tone}" href="${href(ctx, x.id)}"${x.id === id ? ' aria-current="page"' : ""}><span class="gs-ic">${GI[x.icon]}</span>${x.short}</a>`)
     .join("")}</nav>
-${bottomLine(ctx, g.bottom)}
 
-${keyPoints(ctx, g.keys, "Key numbers")}
+${keyPoints(ctx, g.keys, "Key numbers", g.bottom)}
 
 ${section({ id: "watch", title: "What to know", body: watch })}
 

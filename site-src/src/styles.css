@@ -1322,3 +1322,35 @@ table { font-size: 15.5px; }
 .mnav .ml .mm-step { margin-left: auto; margin-right: 0; }
 .mm-in.n6 { grid-template-columns: repeat(2, 290px); }
 .foot-links { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* ---------- tighter layout, Nov 13 ---------- */
+.phead { padding-block: clamp(22px, 3.6vw, 40px) clamp(14px, 2.2vw, 24px); gap: 10px; }
+.phead .lede { max-width: 72ch; }
+.sec-in { padding-block: clamp(24px, 3.6vw, 40px); gap: 18px; }
+.keys-sec { padding-block: 0 clamp(22px, 3vw, 36px); }
+.subnav, .gov-switch, .switch { padding-bottom: clamp(14px, 2vw, 22px); }
+.lead-chart { padding-bottom: clamp(18px, 2.6vw, 30px); }
+.next-in { padding-block: clamp(26px, 3.6vw, 40px); }
+.more-h { padding-top: clamp(18px, 2.6vw, 30px); }
+.fold-d > summary { padding: 15px 0; }
+.home-hero .hero-in { padding-block: clamp(24px, 4.5vw, 52px); }
+.start-path { padding-block: clamp(24px, 4vw, 48px); }
+.bl-wrap .bl { max-width: none; }
+/* bottom line beside the key numbers */
+.lead-in { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr); gap: 16px; align-items: stretch; }
+.lead .bl { max-width: none; justify-content: center; }
+.lead .bl p { font-size: clamp(21px, 2.1vw, 27px); }
+.lead .keys { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.lead .keys.k3 .key:first-child { grid-column: 1 / -1; }
+.lead .key { padding: 16px 18px; gap: 4px; }
+.lead .key-big { font-size: clamp(26px, 2.4vw, 34px); }
+.lead .key-t { font-size: 15px; }
+@media (max-width: 1020px) { .lead-in { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) { .lead .keys { grid-template-columns: minmax(0, 1fr); } }
+.fin-grid.one { grid-template-columns: minmax(0, 1fr); }
+.ds { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px 44px; }
+.ds-a, .ds-b { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+@media (min-width: 900px) { .ds .fc-gap { margin-top: 0; padding-top: 0; border-top: 0; } }
+@media (max-width: 899px) { .ds { grid-template-columns: minmax(0, 1fr); } }
+#act .bul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 40px; max-width: none; }
+@media (max-width: 760px) { #act .bul { grid-template-columns: minmax(0, 1fr); } }

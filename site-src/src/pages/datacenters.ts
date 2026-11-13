@@ -55,18 +55,17 @@ export function dataCentersPage(ctx: Ctx): string {
   </div>`;
 
   return `${pageHead({
-    eyebrow: "Step 4 of 5 · Issues",
+    eyebrow: "Issues",
     title: "Data centers in Tom Green County",
     lede: "Three companies want to build data center campuses around San Angelo.",
     meta: [`Updated ${SITE.updated}`],
   })}
-${bottomLine(ctx, "Two of the three would draw power from the grid. The third, Beacon, would burn natural gas in its own power plant. Only one is inside city limits, so for the other two, state agencies make most of the decisions, not local voters.")}
 
 ${keyPoints(ctx, [
   { kicker: "Beacon", big: "2,409 MW", text: "Beacon would run on its own gas power plant with 240 engines, southwest of town.", tone: "county", cite: ["westline-modeling-protocol"], link: `<a class="key-go" href="${href(ctx, "beacon")}">The Beacon page ${ICON.arrow}</a>` },
   { kicker: "City rules", big: "1 of 3", text: "Only Skybox is inside city limits, where City zoning, noise, and water rules apply.", tone: "city", cite: ["city-dc-page"] },
   { kicker: "Who decides", big: "Mostly Austin", text: "On county land, state agencies make most of the decisions, not local officials.", tone: "saisd", link: anchorLink(ctx, "data-centers", "who", `Who decides what ${ICON.arrow}`, "key-go") },
-])}
+], "The short version", "Two of the three would draw power from the grid. The third, Beacon, would burn natural gas in its own power plant. Only one is inside city limits, so for the other two, state agencies make most of the decisions, not local voters.")}
 
 ${section({
   id: "where",
@@ -121,7 +120,7 @@ ${section({
 
 ${reportsFor(ctx, byTopic("data-centers"))}
 
-${nextStep(ctx, { step: "Step 5 of 5", title: "The police cameras", text: "What the City bought, how it works, and what we propose.", route: "privacy", label: "Next: Flock cameras" })}`;
+${nextStep(ctx, { step: "Up next", title: "The police cameras", text: "What the City bought, how it works, and what we propose.", route: "privacy", label: "Next: Flock cameras" })}`;
 }
 
 export function projectPage(ctx: Ctx, id: ProjectId): string {

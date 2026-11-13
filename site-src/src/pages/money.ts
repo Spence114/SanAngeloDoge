@@ -37,7 +37,7 @@ ${bottomLine(ctx, "Together they owe $763 million, more than twice what they owe
 
 <section class="sec band"><div class="wrap sec-in"><div class="sec-h"><div class="sec-t"><h2>Or pick a government</h2></div></div>${tiles(ctx, GOVERNMENTS.items, "t5")}</div></section>
 
-${nextStep(ctx, { step: "Start with step 1", title: "The debt", text: "How it more than doubled, what it pays for, and when it is paid off.", route: "debt", label: "See the debt" })}</div>`;
+${nextStep(ctx, { step: "Start here", title: "The debt", text: "How it more than doubled, what it pays for, and when it is paid off.", route: "debt", label: "See the debt" })}</div>`;
 }
 
 export function debtPage(ctx: Ctx): string {
@@ -47,21 +47,21 @@ export function debtPage(ctx: Ctx): string {
     "Bonds need an election. Certificates of obligation and tax notes do not: the City or County publishes a notice, and an election is required only if at least 5% of registered voters sign a petition. {{c:tx-lgc-271-049}} Since 2020 the City has issued certificates of obligation in 2020, 2022, 2023, and 2024, and tax notes in 2023, 2025, and 2026. <span class=\"unv\">We are matching each issue to the debt still owed, to show how much was voted on.</span> {{c:city-record-review}}",
   )}</div>`;
   return `<div class="pg-wide">${pageHead({
-    eyebrow: "Step 1 of 5 · Money",
+    eyebrow: "Money",
     title: "Debt",
     lede: "What our local governments borrowed, and when they pay it back.",
     meta: [`Updated ${SITE.updated}`],
   })}
 ${moneyNav(ctx, "debt")}
-${bottomLine(ctx, "Our three local governments owe $763 million, more than double a year earlier. Most of the jump is the school district's 2025 bonds, which carry $424 million in interest and run until 2055. {{c:brb-san-angelo,brb-tgc,brb-saisd,saisd-hb1378,our-analysis}}")}
 
-<section class="lead-chart"><div class="wrap"><div class="fin-card">${debtJump(ctx)}</div></div></section>
 
 ${keyPoints(ctx, [
   { kicker: "School district", big: "$385M", text: "New bonds sold in 2025. That is the jump.", tone: "saisd", cite: ["brb-saisd"] },
   { kicker: "Interest", big: "$535M", text: "Interest still to pay on all three governments' debt.", tone: "ink", cite: ["brb-san-angelo", "county-auditor-aug2026", "saisd-hb1378", "our-analysis"] },
   { kicker: "Paid off", big: "2055", text: "The last school bond payment, if nothing new is borrowed.", tone: "city", cite: ["brb-saisd"] },
-])}
+], "The short version", "Our three local governments owe $763 million, more than double a year earlier. Most of the jump is the school district's 2025 bonds, which carry $424 million in interest and run until 2055. {{c:brb-san-angelo,brb-tgc,brb-saisd,saisd-hb1378,our-analysis}}")}
+
+<section class="lead-chart"><div class="wrap"><div class="fin-card">${debtJump(ctx)}</div></div></section>
 
 ${section({ id: "who", title: "By government", body: `<div class="fin-grid one">${debtSide}</div>` })}
 
@@ -71,7 +71,7 @@ ${section({ id: "purpose", fold: true, title: "What the debt pays for", note: "R
 ${section({ id: "vote", fold: true, title: "Debt that skips a vote", note: "Certificates of obligation and tax notes need no election.", body: notVoted })}
 ${section({ id: "table", fold: true, title: "The numbers in a table", note: "Owed, interest, this year's payment, and the last payment.", body: `${summary}${debtTable}<div class="fin-notes"><p class="note">${rich(ctx, CITY_DEBT_NOTE)}</p><p class="note">${rich(ctx, "The history chart uses the Texas Bond Review Board's figures as of each Aug 31. Its County payoff line predates the County's Sept 2025 refunding. {{c:brb-tgc,county-afr-2025}}")}</p></div>` })}
 
-${nextStep(ctx, { step: "Step 2 of 5", title: "Your taxes", text: "Why a lower tax rate can still mean a bigger bill.", route: "taxes", label: "Next: taxes" })}</div>`;
+${nextStep(ctx, { step: "Up next", title: "Your taxes", text: "Why a lower tax rate can still mean a bigger bill.", route: "taxes", label: "Next: taxes" })}</div>`;
 }
 
 export function taxesPage(ctx: Ctx): string {
@@ -101,19 +101,18 @@ export function taxesPage(ctx: Ctx): string {
   <p class="note">The City and San Angelo ISD publish the same figures each year. We are adding them.</p>`;
 
   return `<div class="pg-wide">${pageHead({
-    eyebrow: "Step 2 of 5 · Money",
+    eyebrow: "Money",
     title: "Taxes",
     lede: "Why a lower tax rate can still mean a bigger bill.",
     meta: [`Updated ${SITE.updated}`],
   })}
 ${moneyNav(ctx, "taxes")}
-${bottomLine(ctx, "Your bill is your property's value times each government's rate. Values went up, so even where rates held or fell, the City and the County collect more this year. {{c:city-budget-fy2027,county-budget-fy2027}}")}
 
 ${keyPoints(ctx, [
   { kicker: "City", big: `$${RATES[0].rate}`, text: "Per $100 of value for FY2027. The same rate as last year.", tone: "city", cite: RATES[0].cite },
   { kicker: "County", big: `$${RATES[1].rate}`, text: "Per $100 for FY2027, down from $0.47075.", tone: "county", cite: RATES[1].cite },
   { kicker: "San Angelo ISD", big: `$${RATES[2].rate}`, text: "Per $100 for 2026-27, down from $1.0706. About a third pays for debt.", tone: "saisd", cite: RATES[2].cite },
-])}
+], "The short version", "Your bill is your property's value times each government's rate. Values went up, so even where rates held or fell, the City and the County collect more this year. {{c:city-budget-fy2027,county-budget-fy2027}}")}
 
 ${section({ id: "nnr", title: "Why a lower rate can cost you more", note: "The one idea that explains most tax-rate debates.", body: explainer })}
 
@@ -122,25 +121,24 @@ ${section({ id: "rates", fold: true, title: "This year's rates, in detail", note
 
 ${section({ id: "base", title: "Tax base and credit ratings", note: "Taxable value is what the rates are applied to.", body: baseTable, fold: true })}
 
-${nextStep(ctx, { step: "Step 3 of 5", title: "The budgets", text: "What each government plans to spend, and how those plans change.", route: "budgets", label: "Next: budgets" })}`;
+${nextStep(ctx, { step: "Up next", title: "The budgets", text: "What each government plans to spend, and how those plans change.", route: "budgets", label: "Next: budgets" })}`;
 }
 
 export function budgetsPage(ctx: Ctx): string {
   const { budgetChart, budgetNotes, also } = finParts(ctx);
   return `<div class="pg-wide">${pageHead({
-    eyebrow: "Step 3 of 5 · Money",
+    eyebrow: "Money",
     title: "Budgets",
     lede: "What each government plans to spend this year.",
     meta: [`Updated ${SITE.updated}`],
   })}
 ${moneyNav(ctx, "budgets")}
-${bottomLine(ctx, "Each government passes a spending plan, then changes it during the year. This year the County plans to spend $17.4 million more than it takes in, and the school district $3.3 million more. {{c:county-budget-fy2027,saisd-budget-2026-27}}")}
 
 ${keyPoints(ctx, [
   { kicker: "City", big: "Balanced as adopted", text: "But last year's budget, after changes, spent $6.1 million more than it took in.", tone: "city", cite: ["city-budget-fy2027"] },
   { kicker: "County", big: "-$17.4M", text: "Planned spending over revenue this year. Reserves fall from $39.4 million to $21.9 million.", tone: "county", cite: ["county-budget-fy2027"] },
   { kicker: "San Angelo ISD", big: "-$3.3M", text: "Planned spending over revenue for 2026-27, covered from savings.", tone: "saisd", cite: ["saisd-budget-2026-27"] },
-])}
+], "The short version", "Each government passes a spending plan, then changes it during the year. This year the County plans to spend $17.4 million more than it takes in, and the school district $3.3 million more. {{c:county-budget-fy2027,saisd-budget-2026-27}}")}
 
 ${section({ id: "change", title: "Adopted is not final", body: `<div class="callout"><b>Adopted is not final.</b> ${rich(ctx, "These are the plans passed at the start of the year. Councils, courts, and boards amend them during the year as they vote on projects and spending, so a budget adopted in balance can end the year out of balance. The City's FY2026 budget, after revisions, spent $6.1 million more than it took in. {{c:city-budget-fy2027}} Tracking those mid-year votes is part of the dashboard we are building.")}</div>` })}
 
@@ -149,7 +147,7 @@ ${section({ id: "budgets", fold: true, title: "This year's budgets, side by side
 
 ${section({ id: "books", fold: true, title: "Big costs coming", note: "Pensions, water plants, the Coliseum, health insurance, and the new street fee.", body: also })}
 
-${nextStep(ctx, { step: "Step 4 of 5", title: "The data centers", text: "Three proposals near San Angelo, and who decides.", route: "data-centers", label: "Next: data centers" })}</div>`;
+${nextStep(ctx, { step: "Up next", title: "The data centers", text: "Three proposals near San Angelo, and who decides.", route: "data-centers", label: "Next: data centers" })}</div>`;
 }
 
 /** Spending per student and the enrollment trend, shown on the San Angelo ISD page. */

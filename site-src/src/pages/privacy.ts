@@ -64,18 +64,17 @@ export function privacyPage(ctx: Ctx): string {
   </div>`;
 
   return `${pageHead({
-    eyebrow: "Step 5 of 5 · Issues",
+    eyebrow: "Issues",
     title: "License plate cameras and police drones",
     lede: PV_LEDE,
     meta: [`Updated ${SITE.updated}`],
   })}
-${bottomLine(ctx, "In 2025 the City bought cameras that read every passing license plate, plus police drones. We support catching criminals. We believe the City should own the system, keep the data here, and search it only for an alert or a warrant.")}
 ${keyPoints(ctx, [
   { kicker: "The contract", big: "$309,050", text: "The spending limit for Flock plate cameras and police drones. Council approved it 7 to 0 on Oct 7, 2025.", tone: "city", cite: ["cc-agenda-2025-10-07", "cc-minutes-2025-10-07"] },
   { kicker: "How it works", big: "Every plate", text: "Each camera photographs passing vehicles and reads the plate. A match to a hotlist alerts officers.", tone: "ink", cite: ["npr-2026-02-17", "flock-lpr-product"], link: anchorLink(ctx, "privacy", "how", `How the system works ${ICON.arrow}`, "key-go") },
   { kicker: "Who pays", big: "Mostly grants", text: "Two state awards total $464,961. The local match is $77,495.", tone: "county", cite: ["cc-packet-2025-10-07"] },
   { kicker: "Our view", big: "Own it locally", text: "We support cameras the City owns, kept off the internet, and searched only for an APB or a warrant.", tone: "saisd", link: anchorLink(ctx, "privacy", "stand", `Where we stand ${ICON.arrow}`, "key-go") },
-])}
+], "The short version", "In 2025 the City bought cameras that read every passing license plate, plus police drones. We support catching criminals. We believe the City should own the system, keep the data here, and search it only for an alert or a warrant.")}
 
 ${section({ id: "act", title: "What you can do", body: bullets(ctx, PV_TODO) })}
 
@@ -96,5 +95,5 @@ ${section({ id: "open", title: "Questions residents ask", note: PV_QUESTIONS_NOT
 
 ${section({ id: "docs", title: "Documents and coverage", note: "The agenda, packet, minutes, court rulings, and news coverage behind this page.", body: docs(PV_DOCS), fold: true })}
 
-${nextStep(ctx, { step: "You made it through", title: "Help keep this going", text: "This site is paid for by citizens. Help us build the live dashboard: debt, budgets, votes, and alerts.", route: "proposal", label: "Support Transparency" })}`;
+${nextStep(ctx, { step: "One more thing", title: "Help keep this going", text: "This site is paid for by citizens. Help us build the live dashboard: debt, budgets, votes, and alerts.", route: "proposal", label: "Support Transparency" })}`;
 }
