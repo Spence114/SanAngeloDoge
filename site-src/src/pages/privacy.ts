@@ -64,7 +64,7 @@ export function privacyPage(ctx: Ctx): string {
   </div>`;
 
   return `${pageHead({
-    eyebrow: "Flock cameras",
+    eyebrow: "Step 5 of 5 · Issues",
     title: "License plate cameras and police drones",
     lede: PV_LEDE,
     meta: [`Updated ${SITE.updated}`],

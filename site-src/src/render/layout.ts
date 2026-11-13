@@ -9,7 +9,7 @@ const itemHref = (ctx: Ctx, n: NavItem, cls: string, inner: string) =>
 
 function panel(ctx: Ctx, g: NavGroup): string {
   const items = g.items
-    .map((n) => itemHref(ctx, n, `mm-i${n.tone ? ` tone-${n.tone}` : ""}`, `<span class="mm-ic">${GI[n.icon]}</span><span class="mm-t"><b>${n.label}</b><span>${n.desc}</span></span>`))
+    .map((n) => itemHref(ctx, n, `mm-i${n.tone ? ` tone-${n.tone}` : ""}`, `<span class="mm-ic">${GI[n.icon]}</span><span class="mm-t"><b>${n.step ? `<i class="mm-step">Step ${n.step}</i>` : ""}${n.label}</b><span>${n.desc}</span></span>`))
     .join("");
   const foot = g.foot ? `<a class="mm-foot" href="${href(ctx, g.foot.route)}" data-nav="${g.foot.route}">${g.foot.label} ${ICON.arrow}</a>` : "";
   return `<div class="mm" id="mm-${g.key}" hidden><div class="mm-in n${g.items.length}">${items}</div>${foot}</div>`;
@@ -30,7 +30,7 @@ function desktopNav(ctx: Ctx): string {
 function mobileNav(ctx: Ctx): string {
   const groups = MENU_GROUPS.map(
     (g) => `<div class="mg"><p class="mg-h">${g.label}</p>${g.items
-      .map((n) => itemHref(ctx, n, `ml${n.tone ? ` tone-${n.tone}` : ""}`, `<span class="mm-ic">${GI[n.icon]}</span><span>${n.label}</span>`))
+      .map((n) => itemHref(ctx, n, `ml${n.tone ? ` tone-${n.tone}` : ""}`, `<span class="mm-ic">${GI[n.icon]}</span><span>${n.label}</span>${n.step ? `<i class="mm-step">Step ${n.step}</i>` : ""}`))
       .join("")}${g.foot ? `<a class="ml" href="${href(ctx, g.foot.route)}" data-nav="${g.foot.route}"><span class="mm-ic">${GI[g.foot.icon]}</span><span>${g.foot.label}</span></a>` : ""}</div>`,
   ).join("");
   const links = MENU_LINKS.length ? `<div class="mg"><p class="mg-h">More</p>${MENU_LINKS.map((n) => `<a class="ml" href="${href(ctx, n.route)}" data-nav="${n.route}"><span class="mm-ic">${GI[n.icon]}</span><span>${n.label}</span></a>`).join("")}</div>` : "";

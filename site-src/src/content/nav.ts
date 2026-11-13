@@ -8,6 +8,8 @@ export interface NavItem {
   icon: IconName;
   anchor?: string;
   tone?: "city" | "county" | "saisd" | "ink";
+  /** Position in the guided path (Debt 1 through Flock cameras 5). */
+  step?: number;
 }
 
 export interface NavGroup {
@@ -27,11 +29,9 @@ export const MONEY: NavGroup = {
   icon: "money",
   covers: ["finances", "debt", "taxes", "budgets"],
   items: [
-    { route: "debt", label: "Debt", desc: "What is owed, how it grew, and when it is paid off", icon: "debt" },
-    { route: "taxes", label: "Taxes", desc: "Tax rates, and why a lower rate can still mean a bigger bill", icon: "taxes" },
-    { route: "budgets", label: "Budgets", desc: "What each government plans to spend, and how plans change", icon: "budget" },
-    { route: "saisd", anchor: "students", label: "School spending", desc: "What San Angelo ISD spends per student, on its page", icon: "school" },
-    { route: "devcorp", label: "Sales tax and incentives", desc: "The half-cent sales tax and who receives awards", icon: "sales" },
+    { route: "debt", label: "Debt", desc: "What is owed, and when it is paid off", icon: "debt", step: 1 },
+    { route: "taxes", label: "Taxes", desc: "Why a lower rate can still mean a bigger bill", icon: "taxes", step: 2 },
+    { route: "budgets", label: "Budgets", desc: "What each government plans to spend", icon: "budget", step: 3 },
   ],
   foot: { route: "finances", label: "Money overview", desc: "", icon: "money" },
 };
@@ -42,9 +42,9 @@ export const ISSUES: NavGroup = {
   icon: "issues",
   covers: ["data-centers", "skybox", "cipher", "beacon", "privacy"],
   items: [
-    { route: "data-centers", label: "Data centers", desc: "Three proposed campuses and who decides", icon: "server" },
-    { route: "privacy", label: "Flock cameras", desc: "Plate cameras, police drones, and our view", icon: "camera" },
-    { route: "saisd", anchor: "bonds", label: "School bonds", desc: "Prop A: $385M borrowed, repaid through 2055, on the SAISD page", icon: "bond" },
+    { route: "data-centers", label: "Data centers", desc: "Three proposals near San Angelo, and who decides", icon: "server", step: 4 },
+    { route: "privacy", label: "Flock cameras", desc: "Police plate cameras, and what we propose", icon: "camera", step: 5 },
+    { route: "saisd", anchor: "bonds", label: "School bonds", desc: "$385M borrowed in 2025, repaid through 2055", icon: "bond" },
   ],
 };
 
@@ -54,39 +54,30 @@ export const GOVERNMENTS: NavGroup = {
   icon: "county",
   covers: ["city", "county", "saisd", "appraisal", "devcorp"],
   items: [
-    { route: "city", label: "City of San Angelo", desc: "City Council, the City Manager, and city services", icon: "city", tone: "city" },
+    { route: "city", label: "City of San Angelo", desc: "City Council and city services", icon: "city", tone: "city" },
     { route: "county", label: "Tom Green County", desc: "Commissioners Court, courts, jail, and roads", icon: "county", tone: "county" },
-    { route: "saisd", label: "San Angelo ISD", desc: "The school board and the public schools", icon: "isd", tone: "saisd" },
-    { route: "appraisal", label: "Appraisal District", desc: "Sets the property values every tax bill starts from", icon: "appraisal", tone: "ink" },
-    { route: "devcorp", label: "Development Corporation", desc: "Spends the half-cent sales tax on economic development", icon: "devcorp", tone: "ink" },
+    { route: "saisd", label: "San Angelo ISD", desc: "Schools, spending per student, and bonds", icon: "isd", tone: "saisd" },
+    { route: "appraisal", label: "Appraisal District", desc: "Sets the value every tax bill starts from", icon: "appraisal", tone: "ink" },
+    { route: "devcorp", label: "Development Corporation", desc: "The half-cent sales tax for economic development", icon: "devcorp", tone: "ink" },
   ],
 };
 
-export const TOOLS: NavGroup = {
-  key: "tools",
-  label: "Alerts",
-  icon: "alert",
-  covers: ["alerts", "appraisal-check"],
-  items: [
-    { route: "alerts", label: "Zoning alerts", desc: "Know about a zoning change near you before the vote", icon: "alert" },
-    { route: "appraisal-check", label: "Appraisal check", desc: "See if your property value is fair. Coming in 2027", icon: "appraisal" },
-  ],
-};
-
-export const ABOUT: NavGroup = {
-  key: "about",
-  label: "About",
+export const MORE: NavGroup = {
+  key: "more",
+  label: "More",
   icon: "about",
-  covers: ["questions", "reports", "about", "tips"],
+  covers: ["questions", "alerts", "appraisal-check", "reports", "tips", "about"],
   items: [
     { route: "questions", label: "Open Questions", desc: "What the record does not answer yet", icon: "question" },
-    { route: "reports", label: "Reports", desc: "Our analysis, as PDFs you can save", icon: "reports" },
+    { route: "alerts", label: "Zoning alerts", desc: "Know about a zoning change near you", icon: "alert" },
+    { route: "appraisal-check", label: "Appraisal check", desc: "Is your property value fair? Coming 2027", icon: "appraisal" },
+    { route: "reports", label: "Reports", desc: "Our analysis, as PDFs", icon: "reports" },
+    { route: "tips", label: "Tip line", desc: "Report waste, wrongdoing, or an error", icon: "doc" },
     { route: "about", label: "Who we are", desc: "Who runs this site and how we check facts", icon: "about" },
-    { route: "tips", label: "Tip line", desc: "Report waste, wrongdoing, or an error", icon: "question" },
   ],
 };
 
-export const MENU_GROUPS = [MONEY, ISSUES, GOVERNMENTS, TOOLS, ABOUT];
+export const MENU_GROUPS = [MONEY, ISSUES, GOVERNMENTS, MORE];
 
 /** Plain links in the top menu after the dropdowns. */
 export const MENU_LINKS: NavItem[] = [];

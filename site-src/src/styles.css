@@ -1318,3 +1318,7 @@ table { font-size: 15.5px; }
 }
 .dd:last-child .mm { left: auto; right: -14px; }
 .fin-grid.one { grid-template-columns: minmax(0, 720px); }
+.mm-step { display: inline-block; margin-right: 8px; padding: 1px 7px; border-radius: 999px; background: var(--action); color: #FFF8F2; font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .03em; vertical-align: 2px; }
+.mnav .ml .mm-step { margin-left: auto; margin-right: 0; }
+.mm-in.n6 { grid-template-columns: repeat(2, 290px); }
+.foot-links { grid-template-columns: repeat(4, minmax(0, 1fr)); }

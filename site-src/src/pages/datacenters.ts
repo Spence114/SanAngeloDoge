@@ -55,7 +55,7 @@ export function dataCentersPage(ctx: Ctx): string {
   </div>`;
 
   return `${pageHead({
-    eyebrow: "Data center guide",
+    eyebrow: "Step 4 of 5 · Issues",
     title: "Data centers in Tom Green County",
     lede: "Three companies want to build data center campuses around San Angelo.",
     meta: [`Updated ${SITE.updated}`],
