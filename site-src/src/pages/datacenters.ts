@@ -32,6 +32,7 @@ import {
 import { anchorLink, type Ctx, cite, href, rich } from "../render/html.ts";
 import { byTopic } from "../content/reports.ts";
 import { reportsFor } from "./reports.ts";
+import { bottomLine, moreHead, nextStep } from "../render/guide.ts";
 
 function projectCards(ctx: Ctx): string {
   // Cards are not links as a whole: they hold citation links, and anchors cannot nest.
@@ -56,25 +57,25 @@ export function dataCentersPage(ctx: Ctx): string {
   return `${pageHead({
     eyebrow: "Data center guide",
     title: "Data centers in Tom Green County",
-    lede: "Three companies want to build data center campuses around San Angelo. Here is where each one stands, what it would mean for us, and who decides.",
-    meta: [`Updated ${SITE.updated}`, "3 proposals", "All waiting on state audits"],
+    lede: "Three companies want to build data center campuses around San Angelo.",
+    meta: [`Updated ${SITE.updated}`],
   })}
+${bottomLine(ctx, "Two of the three would draw power from the grid. The third, Beacon, would burn natural gas in its own power plant. Only one is inside city limits, so for the other two, state agencies make most of the decisions, not local voters.")}
 
 ${keyPoints(ctx, [
-  { kicker: "Proposals", big: "3 campuses", text: "Skybox / Emergent, Cipher, and Beacon. All three are waiting on state reviews.", tone: "ink", cite: ["gov-0803", "gov-0921"], link: anchorLink(ctx, "data-centers", "where", `Where each stands ${ICON.arrow}`, "key-go") },
   { kicker: "Beacon", big: "2,409 MW", text: "Beacon would run on its own gas power plant with 240 engines, southwest of town.", tone: "county", cite: ["westline-modeling-protocol"], link: `<a class="key-go" href="${href(ctx, "beacon")}">The Beacon page ${ICON.arrow}</a>` },
   { kicker: "City rules", big: "1 of 3", text: "Only Skybox is inside city limits, where City zoning, noise, and water rules apply.", tone: "city", cite: ["city-dc-page"] },
   { kicker: "Who decides", big: "Mostly Austin", text: "On county land, state agencies make most of the decisions, not local officials.", tone: "saisd", link: anchorLink(ctx, "data-centers", "who", `Who decides what ${ICON.arrow}`, "key-go") },
 ])}
 
-${reportsFor(ctx, byTopic("data-centers"))}
-
 ${section({
   id: "where",
-  title: "Where each project stands",
+  title: "The three projects",
   note: "Two would plug into the AEP Red Creek substation northeast of town. The third would build its own gas-fired power plant southwest of town.",
   body: projectCards(ctx) + `<p class="note">${rich(ctx, FOURTH_COMPANY)}</p>`,
 })}
+
+${moreHead()}
 
 ${section({
   id: "what",
@@ -82,7 +83,6 @@ ${section({
   note: "A plain explanation, and how AI data centers differ from older ones.",
   title: "What a data center is",
   body: prose(ctx, WHAT_IT_IS) + table(ctx, TYPES_TABLE, "Traditional and AI data centers compared") + `<p class="note">${TYPES_NOTE}</p>`,
-  band: true,
 })}
 
 ${section({
@@ -90,7 +90,7 @@ ${section({
   title: "When a data center helps a community, and when it costs one",
   note: "The same building can be either. The terms decide which.",
   body: signs + `<p class="note">${rich(ctx, SIGNS_NOTE)}</p>`,
-  band: true,
+  fold: true,
 })}
 
 ${section({
@@ -117,7 +117,11 @@ ${section({
   note: "Use these at City Council, Commissioners Court, or a community meeting.",
   body: `<ol class="asklist">${ASK_ANY_PROPOSAL.map((q) => `<li>${q}</li>`).join("")}</ol>`,
   fold: true,
-})}`;
+})}
+
+${reportsFor(ctx, byTopic("data-centers"))}
+
+${nextStep(ctx, { step: "Step 5 of 5", title: "The police cameras", text: "What the City bought, how it works, and what we propose.", route: "privacy", label: "Next: Flock cameras" })}`;
 }
 
 export function projectPage(ctx: Ctx, id: ProjectId): string {

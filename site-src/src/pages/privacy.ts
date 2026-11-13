@@ -25,6 +25,7 @@ import {
 } from "../content/privacy.ts";
 import { bullets, chip, docs, facts, ICON, keyPoints, pageHead, prose, questions, section, timeline } from "../render/components.ts";
 import { anchorLink, type Ctx, rich } from "../render/html.ts";
+import { bottomLine, moreHead, nextStep } from "../render/guide.ts";
 
 export function privacyPage(ctx: Ctx): string {
   const sides = `<div class="split">
@@ -66,8 +67,9 @@ export function privacyPage(ctx: Ctx): string {
     eyebrow: "Flock cameras",
     title: "License plate cameras and police drones",
     lede: PV_LEDE,
-    meta: [`Updated ${SITE.updated}`, chip("Contract approved Oct 2025", "plain")],
+    meta: [`Updated ${SITE.updated}`],
   })}
+${bottomLine(ctx, "In 2025 the City bought cameras that read every passing license plate, plus police drones. We support catching criminals. We believe the City should own the system, keep the data here, and search it only for an alert or a warrant.")}
 ${keyPoints(ctx, [
   { kicker: "The contract", big: "$309,050", text: "The spending limit for Flock plate cameras and police drones. Council approved it 7 to 0 on Oct 7, 2025.", tone: "city", cite: ["cc-agenda-2025-10-07", "cc-minutes-2025-10-07"] },
   { kicker: "How it works", big: "Every plate", text: "Each camera photographs passing vehicles and reads the plate. A match to a hotlist alerts officers.", tone: "ink", cite: ["npr-2026-02-17", "flock-lpr-product"], link: anchorLink(ctx, "privacy", "how", `How the system works ${ICON.arrow}`, "key-go") },
@@ -75,13 +77,14 @@ ${keyPoints(ctx, [
   { kicker: "Our view", big: "Own it locally", text: "We support cameras the City owns, kept off the internet, and searched only for an APB or a warrant.", tone: "saisd", link: anchorLink(ctx, "privacy", "stand", `Where we stand ${ICON.arrow}`, "key-go") },
 ])}
 
-${section({ id: "glance", title: "At a glance", note: "From the City's agenda, packet, and minutes for Oct 7, 2025, unless marked. Pink text rests on news coverage only.", body: facts(ctx, PV_FACTS) })}
+${section({ id: "act", title: "What you can do", body: bullets(ctx, PV_TODO) })}
 
-${section({ id: "stand", title: "Where we stand", note: "This section is our opinion, labeled as such. The rest of this page sticks to the record.", body: stance, aside: chip("Opinion", "plain"), band: true })}
+${moreHead()}
+${section({ id: "stand", fold: true, title: "Where we stand", note: "Our opinion, labeled as such: a City-owned system, kept local.", body: stance })}
 
-${section({ id: "rights", title: "A Technology Bill of Rights", note: "Our proposal for the City of San Angelo and Tom Green County.", body: rights, aside: chip("Proposal", "plain") })}
+${section({ id: "rights", fold: true, title: "A Technology Bill of Rights", note: "Our proposal: 15 rules for how the City and County use technology.", body: rights })}
 
-${section({ id: "act", title: "What you can do", body: bullets(ctx, PV_TODO), band: true })}
+${section({ id: "glance", fold: true, title: "What the City bought", note: "The contract, the vote, who pays, and how many cameras.", body: facts(ctx, PV_FACTS) })}
 
 ${section({ id: "how", title: "How the system works", note: "What the cameras record, how long it is kept, and who can search it.", body: prose(ctx, HOW_IT_WORKS), fold: true })}
 
@@ -91,5 +94,7 @@ ${section({ id: "sides", title: "The case for and against", note: "The arguments
 
 ${section({ id: "open", title: "Questions residents ask", note: PV_QUESTIONS_NOTE, body: questions(PV_QUESTIONS), fold: true })}
 
-${section({ id: "docs", title: "Documents and coverage", note: "The agenda, packet, minutes, court rulings, and news coverage behind this page.", body: docs(PV_DOCS), fold: true })}`;
+${section({ id: "docs", title: "Documents and coverage", note: "The agenda, packet, minutes, court rulings, and news coverage behind this page.", body: docs(PV_DOCS), fold: true })}
+
+${nextStep(ctx, { step: "You made it through", title: "Help keep this going", text: "This site is paid for by citizens. Help us build the live dashboard: debt, budgets, votes, and alerts.", route: "proposal", label: "Support Transparency" })}`;
 }

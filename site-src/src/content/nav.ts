@@ -64,21 +64,29 @@ export const GOVERNMENTS: NavGroup = {
 
 export const TOOLS: NavGroup = {
   key: "tools",
-  label: "Tools",
+  label: "Alerts",
   icon: "alert",
-  covers: ["alerts", "appraisal-check", "tips"],
+  covers: ["alerts", "appraisal-check"],
   items: [
     { route: "alerts", label: "Zoning alerts", desc: "Know about a zoning change near you before the vote", icon: "alert" },
-    { route: "appraisal-check", label: "Appraisal check", desc: "See if your property value is in line with your neighbors'", icon: "appraisal" },
-    { route: "tips", label: "Tip line", desc: "Report waste, wrongdoing, or an error in our data", icon: "question" },
+    { route: "appraisal-check", label: "Appraisal check", desc: "See if your property value is fair. Coming in 2027", icon: "appraisal" },
   ],
 };
 
-export const MENU_GROUPS = [MONEY, ISSUES, GOVERNMENTS, TOOLS];
+export const ABOUT: NavGroup = {
+  key: "about",
+  label: "About",
+  icon: "about",
+  covers: ["questions", "reports", "about", "tips"],
+  items: [
+    { route: "questions", label: "Open Questions", desc: "What the record does not answer yet", icon: "question" },
+    { route: "reports", label: "Reports", desc: "Our analysis, as PDFs you can save", icon: "reports" },
+    { route: "about", label: "Who we are", desc: "Who runs this site and how we check facts", icon: "about" },
+    { route: "tips", label: "Tip line", desc: "Report waste, wrongdoing, or an error", icon: "question" },
+  ],
+};
+
+export const MENU_GROUPS = [MONEY, ISSUES, GOVERNMENTS, TOOLS, ABOUT];
 
 /** Plain links in the top menu after the dropdowns. */
-export const MENU_LINKS: NavItem[] = [
-  { route: "questions", label: "Open Questions", desc: "What the record does not answer yet", icon: "question" },
-  { route: "reports", label: "Reports", desc: "Our analysis, as PDFs", icon: "reports" },
-  { route: "about", label: "About", desc: "Who we are and how we work", icon: "about" },
-];
+export const MENU_LINKS: NavItem[] = [];

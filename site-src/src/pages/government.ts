@@ -8,6 +8,7 @@ import { GI } from "../render/icons.ts";
 import { tiles } from "../render/tiles.ts";
 import { reportsFor } from "./reports.ts";
 import { schoolSections } from "./money.ts";
+import { bottomLine, moreHead, nextStep } from "../render/guide.ts";
 
 const STATUS_KIND: Record<string, string> = { "Not yet asked": "plain", Asked: "open", Answered: "good", "No reply": "hold", Resolved: "good" };
 
@@ -35,8 +36,8 @@ function bondsSection(ctx: Ctx): string {
   return section({
     id: "bonds",
     title: "The 2025 school bonds",
-    note: "Proposition A, approved by voters on May 3, 2025.",
-    band: true,
+    note: "$397 million approved by voters in May 2025. Most is still unspent.",
+    fold: true,
     body: `<div class="bond-steps">
       <div class="bs"><span class="bs-k">Approved</span><b class="mono">$397.0M</b><p>${rich(ctx, "For new and rebuilt schools and safety work. {{c:saisd-election-notice-2025}}")}</p></div>
       <div class="bs"><span class="bs-k">Borrowed</span><b class="mono">$385.1M</b><p>${rich(ctx, "Sold in 2025, plus a premium of about $16.9 million. {{c:saisd-hb1378}}")}</p></div>
@@ -65,8 +66,8 @@ function devcorpSection(ctx: Ctx): string {
   return section({
     id: "sales",
     title: "Where the half-cent goes",
-    note: "Sales tax collected for the Development Corporation each fiscal year.",
-    band: true,
+    note: "Sales tax collected for the Development Corporation each year.",
+    fold: true,
     body: `<div class="fin-card"><div class="mini-bars">${[
       ["FY2022", 11.2],
       ["FY2023", 12.21],
@@ -83,9 +84,9 @@ export function govPage(ctx: Ctx, id: GovId): string {
   const qs = QUESTIONS.filter((q) => q.gov.includes(id));
   const others = (Object.values(GOV_PAGES) as GovPage[]).filter((x) => x.id !== id);
 
-  const watch = `<div class="watch">${g.watch
-    .map((w) => `<div class="w${w.unv ? " unv-card" : ""}">${w.fig ? `<b class="w-fig mono">${w.fig}</b>` : ""}<h3>${w.k}</h3><p>${rich(ctx, w.v)}</p></div>`)
-    .join("")}</div>${g.watchNote ? `<p class="note">${g.watchNote}</p>` : ""}`;
+  const card = (w: (typeof g.watch)[number]) => `<div class="w${w.unv ? " unv-card" : ""}">${w.fig ? `<b class="w-fig mono">${w.fig}</b>` : ""}<h3>${w.k}</h3><p>${rich(ctx, w.v)}</p></div>`;
+  const watch = `<div class="watch">${g.watch.slice(0, 3).map(card).join("")}</div>`;
+  const watchMore = g.watch.length > 3 ? `<div class="watch">${g.watch.slice(3).map(card).join("")}</div>${g.watchNote ? `<p class="note">${g.watchNote}</p>` : ""}` : "";
 
   const mark = (s: string) => (s === "yes" ? `<span class="rc rc-yes">${ICON.check}Posted</span>` : s === "no" ? `<span class="rc rc-no">${ICON.close.replace('width="20" height="20"', 'width="14" height="14"')}Missing</span>` : `<span class="rc rc-unk">${ICON.dash}Partial</span>`);
   const records = `<ul class="rec">${g.records.map((r) => `<li>${mark(r.status)}<span class="rec-w"><b>${r.what}</b><span>${r.note}</span></span></li>`).join("")}</ul>
@@ -99,30 +100,35 @@ export function govPage(ctx: Ctx, id: GovId): string {
   const extra = g.extra === "bonds" ? schoolSections(ctx) + bondsSection(ctx) : g.extra === "appraisal" ? appraisalSection(ctx) : g.extra === "devcorp" ? devcorpSection(ctx) : "";
   const topic = TOPICS[id];
 
+  const isSchool = g.extra === "bonds";
+  const extraOpen = g.extra === "appraisal" ? appraisalSection(ctx) : "";
+  const extraFolds = isSchool ? schoolSections(ctx) + bondsSection(ctx) : g.extra === "devcorp" ? devcorpSection(ctx) : "";
+  const missing = g.records.filter((r) => r.status !== "yes").length;
+
   return `<header class="phead wrap gov-head tone-${g.tone}">
   <nav class="crumbs" aria-label="Breadcrumb"><span>Governments</span><span aria-hidden="true">/</span><span>${g.short}</span></nav>
   <div class="gh-row"><span class="gh-ic">${GI[g.icon]}</span><div><h1>${g.name}</h1></div></div>
   <p class="lede">${g.lede}</p>
-  <p class="meta"><span>${g.who}</span><span>Updated ${SITE.updated}</span></p>
 </header>
 <nav class="wrap gov-switch" aria-label="Governments">${(Object.values(GOV_PAGES) as GovPage[])
     .map((x) => `<a class="tone-${x.tone}" href="${href(ctx, x.id)}"${x.id === id ? ' aria-current="page"' : ""}><span class="gs-ic">${GI[x.icon]}</span>${x.short}</a>`)
     .join("")}</nav>
-
-${g.extra === "bonds" ? `<nav class="wrap subnav" aria-label="On this page">${[["watch", "What to know"], ["students", "Spending per student"], ["trend", "Enrollment"], ["bonds", "School bonds"], ["questions", "Open questions"], ["records", "Records"]].map(([a, l]) => anchorLink(ctx, id, a, l)).join("")}</nav>` : ""}
+${bottomLine(ctx, g.bottom)}
 
 ${keyPoints(ctx, g.keys, "Key numbers")}
 
-${section({ id: "watch", title: "What to know", note: "The figures and changes worth your attention.", body: watch })}
+${section({ id: "watch", title: "What to know", body: watch })}
 
-${extra}
+${extraOpen}
 
-${qs.length ? section({ id: "questions", title: "Open questions", note: "What the record does not answer yet.", body: qBlock, band: !extra }) : ""}
-
-${section({ id: "records", title: "What they post, and what is missing", note: "A public body's records should be easy to find. Here is what we found.", body: records, band: !!extra })}
-
-${topic ? reportsFor(ctx, byTopic(topic)) : ""}
+${moreHead()}
+${watchMore ? section({ id: "more", fold: true, title: "More to know", note: g.watch.slice(3).map((w, i) => (i ? w.k.charAt(0).toLowerCase() + w.k.slice(1) : w.k)).join(", ") + ".", body: watchMore }) : ""}
+${extraFolds}
+${qs.length ? section({ id: "questions", fold: true, title: `Open questions (${qs.length})`, note: "What the record does not answer yet, and who can answer it.", body: qBlock }) : ""}
+${section({ id: "records", fold: true, title: missing ? `Records: ${missing} missing or partial` : "Records", note: "What they post online, what is missing, and where to find it.", body: records })}
 
 <section class="sec"><div class="wrap sec-in"><div class="sec-h"><div class="sec-t"><h2>Related</h2></div></div>${tiles(ctx, g.related)}
-<p class="sub-h gov-others">Other governments</p>${tiles(ctx, others.map((x) => ({ route: x.id, label: x.short === "SAISD" ? "San Angelo ISD" : x.name, desc: "", icon: x.icon, tone: x.tone })), "t-small")}</div></section>`;
+<p class="sub-h gov-others">Other governments</p>${tiles(ctx, others.map((x) => ({ route: x.id, label: x.short === "SAISD" ? "San Angelo ISD" : x.name, desc: "", icon: x.icon, tone: x.tone })), "t-small")}</div></section>
+
+${nextStep(ctx, { title: "What the record leaves out", text: "Every open question for every local government, with who can answer it.", route: "questions", label: "See all open questions" })}`;
 }

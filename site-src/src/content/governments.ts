@@ -31,6 +31,8 @@ export interface GovPage {
   tone: "city" | "county" | "saisd" | "ink";
   kicker: string;
   lede: string;
+  /** One or two plain sentences: the point of the page. */
+  bottom: string;
   who: string;
   keys: KeyPoint[];
   watch: WatchItem[];
@@ -51,6 +53,7 @@ export const GOV_PAGES: Record<GovId, GovPage> = {
     icon: "city",
     tone: "city",
     kicker: "Government",
+    bottom: "The City owes $265.9 million and finished last year $6.1 million short. Several records its own policies call for, like quarterly investment reports, are not posted. {{c:brb-san-angelo,city-budget-fy2027,city-record-review}}",
     lede: "The City runs police, fire, water, sewer, streets, parks, and the airport. The City Council sets the budget and the tax rate, and hires the City Manager, who runs day-to-day operations.",
     who: "City Council. Agendas, packets, minutes, and video are on the City's CivicClerk portal.",
     keys: [
@@ -96,6 +99,7 @@ export const GOV_PAGES: Record<GovId, GovPage> = {
     icon: "county",
     tone: "county",
     kicker: "Government",
+    bottom: "The County is spending down its savings, from $39.4 million to $21.9 million this year. Past meeting agendas and several required reports are not online. {{c:county-budget-fy2027,county-records-review}}",
     lede: "The County runs the courts, the jail, the Sheriff's Office, county roads, elections, and property records. The Commissioners Court, four commissioners and the County Judge, sets the budget and the tax rate.",
     who: "Commissioners Court. It meets most Tuesdays. Minutes since 2008 are online; past agendas are not.",
     keys: [
@@ -143,6 +147,7 @@ export const GOV_PAGES: Record<GovId, GovPage> = {
     icon: "isd",
     tone: "saisd",
     kicker: "Government",
+    bottom: "The school district borrowed $385 million in 2025 and will pay $424 million in interest on it through 2055. It spends less per student than the state average, and fewer students are enrolling. {{c:saisd-hb1378,saisd-efficiency-audit-2024}}",
     lede: "San Angelo's public school district: what it spends per student, its 2025 school bonds, and what it owes. An elected Board of Trustees sets the budget and the tax rate and hires the superintendent. Most of its money comes from the state.",
     who: "Board of Trustees. Agendas, minutes, and attachments since 2005 are on BoardBook.",
     keys: [
@@ -183,6 +188,7 @@ export const GOV_PAGES: Record<GovId, GovPage> = {
     icon: "appraisal",
     tone: "ink",
     kicker: "Government",
+    bottom: "The Appraisal District decides what your property is worth. Every tax bill starts there. If your value looks too high, you can protest, usually by May 15. {{c:tx-tax-41-44}}",
     lede: "The Appraisal District sets the value of every property in the county. Every tax bill starts there: each government's rate is applied to the value the District sets. It does not set tax rates.",
     who: "A board of directors chosen by the local taxing units and voters. An appeal board hears protests.",
     keys: [
@@ -217,6 +223,7 @@ export const GOV_PAGES: Record<GovId, GovPage> = {
     icon: "devcorp",
     tone: "ink",
     kicker: "Government",
+    bottom: "A half-cent of every sales tax dollar, <span class=\"unv\">about $12.8 million a year</span>, goes to this City-created corporation for economic development. It does not publish what each award promised or delivered. {{c:cosadc-financials}}",
     lede: "A City-created corporation that spends a half-cent sales tax on economic development and voter-approved projects such as water supply. Its board approves grants to businesses and organizations.",
     who: "A board appointed by City Council. Its agendas and financial statements are on the City's CivicClerk portal.",
     keys: [

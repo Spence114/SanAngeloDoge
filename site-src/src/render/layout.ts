@@ -33,7 +33,7 @@ function mobileNav(ctx: Ctx): string {
       .map((n) => itemHref(ctx, n, `ml${n.tone ? ` tone-${n.tone}` : ""}`, `<span class="mm-ic">${GI[n.icon]}</span><span>${n.label}</span>`))
       .join("")}${g.foot ? `<a class="ml" href="${href(ctx, g.foot.route)}" data-nav="${g.foot.route}"><span class="mm-ic">${GI[g.foot.icon]}</span><span>${g.foot.label}</span></a>` : ""}</div>`,
   ).join("");
-  const links = `<div class="mg"><p class="mg-h">More</p>${MENU_LINKS.map((n) => `<a class="ml" href="${href(ctx, n.route)}" data-nav="${n.route}"><span class="mm-ic">${GI[n.icon]}</span><span>${n.label}</span></a>`).join("")}</div>`;
+  const links = MENU_LINKS.length ? `<div class="mg"><p class="mg-h">More</p>${MENU_LINKS.map((n) => `<a class="ml" href="${href(ctx, n.route)}" data-nav="${n.route}"><span class="mm-ic">${GI[n.icon]}</span><span>${n.label}</span></a>`).join("")}</div>` : "";
   return `<nav aria-label="Main" class="mnav">${groups}${links}</nav>`;
 }
 
@@ -69,7 +69,6 @@ export function footer(ctx: Ctx): string {
       </div>
       <nav class="foot-links" aria-label="Footer">
         ${MENU_GROUPS.map(col).join("")}
-        <div><h3>About</h3><a href="${href(ctx, "questions")}">Open Questions</a><a href="${href(ctx, "reports")}">Reports</a><a href="${href(ctx, "about")}">Who we are</a>${anchorLink(ctx, "about", "standards", "Sources and corrections")}${anchorLink(ctx, "about", "site-privacy", "Site privacy")}</div>
       </nav>
     </div>
     <div class="disc">
