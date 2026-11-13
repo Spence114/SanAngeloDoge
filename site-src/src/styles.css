@@ -1249,3 +1249,4 @@ table { font-size: 15.5px; }
 .mm-in.n5 { grid-template-columns: repeat(2, 290px); }
 .mm-t b { line-height: 1.3; }
 .fld .ck { padding: 9px 13px; }
+.ss-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ss-pay { max-width: none; } @media (max-width: 640px) { .ss-grid { grid-template-columns: minmax(0, 1fr); } }

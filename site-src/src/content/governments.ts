@@ -143,7 +143,7 @@ export const GOV_PAGES: Record<GovId, GovPage> = {
     icon: "isd",
     tone: "saisd",
     kicker: "Government",
-    lede: "San Angelo's public school district. An elected Board of Trustees sets the budget and the tax rate and hires the superintendent. Most of its money comes from the state.",
+    lede: "San Angelo's public school district: what it spends per student, its 2025 school bonds, and what it owes. An elected Board of Trustees sets the budget and the tax rate and hires the superintendent. Most of its money comes from the state.",
     who: "Board of Trustees. Agendas, minutes, and attachments since 2005 are on BoardBook.",
     keys: [
       { kicker: "Debt", big: "$446.8M", text: "Owed on Aug 31, 2025, repaid through 2055.", tone: "saisd", cite: ["saisd-hb1378"] },
@@ -170,7 +170,6 @@ export const GOV_PAGES: Record<GovId, GovPage> = {
       { label: "Records requests (NextRequest)", url: "https://sanangeloisdtx.nextrequest.com" },
     ],
     related: [
-      { route: "schools", label: "Spending per student", desc: "Next to the state average", icon: "school" },
       { route: "debt", label: "All local debt", desc: "The combined picture", icon: "debt" },
       { route: "taxes", label: "School tax rate", desc: "$1.0638 per $100", icon: "taxes" },
     ],

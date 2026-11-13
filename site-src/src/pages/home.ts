@@ -69,13 +69,17 @@ export function homePage(ctx: Ctx): string {
         { r: "debt", i: "debt", k: "Debt", v: "What is owed, and when it is paid off" },
         { r: "taxes", i: "taxes", k: "Taxes", v: "Rates, and why bills rise" },
         { r: "budgets", i: "budget", k: "Budgets", v: "What they plan to spend" },
-        { r: "schools", i: "school", k: "Schools", v: "Spending per student" },
+        { r: "saisd", a: "students", i: "school", k: "Schools", v: "Spending per student and bonds" },
         { r: "data-centers", i: "server", k: "Data centers", v: "Three proposals, who decides" },
         { r: "privacy", i: "camera", k: "Flock cameras", v: "Plate cameras and drones" },
         { r: "questions", i: "question", k: "Open Questions", v: "What the record leaves out" },
         { r: "alerts", i: "alert", k: "Zoning alerts", v: "Know before they vote" },
       ]
-        .map((x) => `<a class="ex" href="${href(ctx, x.r as Parameters<typeof href>[1])}"><span class="ex-ic">${GI[x.i as keyof typeof GI]}</span><b>${x.k}</b><span>${x.v}</span></a>`)
+        .map((x: { r: string; a?: string; i: string; k: string; v: string }) => {
+          const inner = `<span class="ex-ic">${GI[x.i as keyof typeof GI]}</span><b>${x.k}</b><span>${x.v}</span>`;
+          const r = x.r as Parameters<typeof href>[1];
+          return x.a ? anchorLink(ctx, r, x.a, inner, "ex") : `<a class="ex" href="${href(ctx, r)}">${inner}</a>`;
+        })
         .join("")}
     </div>
   </div>

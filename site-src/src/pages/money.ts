@@ -4,7 +4,7 @@ import { GOVERNMENTS, MONEY } from "../content/nav.ts";
 import { byTopic } from "../content/reports.ts";
 import { debtHistory, debtPurpose } from "../render/debtcharts.ts";
 import { ICON, keyPoints, pageHead, section } from "../render/components.ts";
-import { type Ctx, href, rich } from "../render/html.ts";
+import { anchorLink, type Ctx, href, rich } from "../render/html.ts";
 import { tiles } from "../render/tiles.ts";
 import { debtTotalChart } from "../render/totalchart.ts";
 import { finParts } from "./finances.ts";
@@ -18,8 +18,8 @@ const cta = (ctx: Ctx, h: string, p: string) => `<section class="cta-band">
 </section>`;
 
 const moneyNav = (ctx: Ctx, here: string) =>
-  `<nav class="wrap subnav" aria-label="Money pages">${[{ route: "finances" as const, label: "Overview" }, ...MONEY.items]
-    .map((n) => `<a href="${href(ctx, n.route)}"${n.route === here ? ' aria-current="page"' : ""}>${n.label}</a>`)
+  `<nav class="wrap subnav" aria-label="Money pages">${[{ route: "finances" as const, label: "Overview", anchor: undefined as string | undefined }, ...MONEY.items]
+    .map((n) => (n.anchor ? anchorLink(ctx, n.route, n.anchor, n.label) : `<a href="${href(ctx, n.route)}"${n.route === here ? ' aria-current="page"' : ""}>${n.label}</a>`))
     .join("")}</nav>`;
 
 /** Money overview: the headline chart, the short version, and a way into each part. */
@@ -176,7 +176,8 @@ ${section({ id: "books", title: "Big costs coming", note: "Commitments beyond th
 ${cta(ctx, "Next: every budget change, as it is voted", "Part of the dashboard we are raising money to build.")}</div>`;
 }
 
-export function schoolsPage(ctx: Ctx): string {
+/** Spending per student and the enrollment trend, shown on the San Angelo ISD page. */
+export function schoolSections(ctx: Ctx): string {
   const { students } = finParts(ctx);
   const enroll = [
     { y: "2021", v: 14100 },
@@ -190,25 +191,9 @@ export function schoolsPage(ctx: Ctx): string {
     <div class="fin-card tr-card"><h3 class="fc-t">New buildings</h3><p class="fc-s">Bond money voters approved in May 2025.${rich(ctx, " {{c:saisd-election-notice-2025}}")}</p>
       <div class="tr-pair"><span><em>Approved</em><b class="mono">$397M</b></span><span class="tr-arrow">${ICON.arrow}</span><span><em>Unspent, Sep 2026</em><b class="mono">$361.5M</b></span></div><p class="ss-d">${rich(ctx, "Most of the building is still ahead. {{c:saisd-invest-sep2026}}")}</p></div>
   </div>
-  <p class="note">Fewer students and fewer teachers, alongside a large building program. The question worth asking is what enrollment forecast the new buildings were sized for. <a href="${href(ctx, "questions")}">See Open Questions</a></p>`;
+  <p class="note">Fewer students and fewer teachers, alongside a large building program. The question worth asking is what enrollment forecast the new buildings were sized for. It is on the list below.</p>`;
 
-  return `<div class="pg-wide">${pageHead({
-    eyebrow: "Money",
-    title: "Schools: spending per student",
-    lede: "What San Angelo ISD spends on each student, next to the state average, and how enrollment is changing as new schools are built.",
-    meta: [`Updated ${SITE.updated}`],
-  })}
-${moneyNav(ctx, "schools")}
+  return `${section({ id: "students", title: "Spending per student", note: "San Angelo ISD next to the state average and ten peer districts the district's own audit chose.", body: students, band: true })}
 
-${keyPoints(ctx, [
-  { kicker: "Per student", big: "$10,882", text: "SAISD's operating spending per student in 2022-23. The state average was $12,382.", tone: "saisd", cite: ["saisd-efficiency-audit-2024"] },
-  { kicker: "Teachers", big: "$53,477", text: "SAISD's average teacher salary that year. The state average was $60,716.", tone: "city", cite: ["saisd-efficiency-audit-2024"] },
-  { kicker: "Central office", big: "33% below", text: "General administration costs per student, compared with the state average.", tone: "county", cite: ["saisd-efficiency-audit-2024"] },
-])}
-
-${section({ id: "students", title: "Spending per student", note: "San Angelo ISD next to the state average and ten peer districts the district's own audit chose.", body: students })}
-
-${section({ id: "trend", title: "Fewer students, bigger buildings", note: "Enrollment and teaching staff are falling while the bond program builds.", body: trend, band: true })}
-
-<section class="sec"><div class="wrap sec-in"><div class="sec-h"><div class="sec-t"><h2>More on the school district</h2></div></div>${tiles(ctx, [GOVERNMENTS.items[2], { route: "saisd", anchor: "bonds", label: "The 2025 school bonds", desc: "$385M borrowed, repaid through 2055", icon: "bond", tone: "saisd" }])}</div></section>`;
+${section({ id: "trend", title: "Fewer students, bigger buildings", note: "Enrollment and teaching staff are falling while the bond program builds.", body: trend })}`;
 }

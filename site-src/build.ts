@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 import { type BuildMode, FORMS, SITE } from "./src/config.ts";
 import { aboutPage } from "./src/pages/about.ts";
 import { dataCentersPage, projectPage } from "./src/pages/datacenters.ts";
-import { budgetsPage, debtPage, financesPage, schoolsPage, taxesPage } from "./src/pages/money.ts";
+import { budgetsPage, debtPage, financesPage, taxesPage } from "./src/pages/money.ts";
 import { govPage } from "./src/pages/government.ts";
 import { questionsPage } from "./src/pages/questions.ts";
 import { alertsPage, appraisalCheckPage, tipsPage } from "./src/pages/forms.ts";
@@ -42,7 +42,6 @@ const PAGES: Record<Route, { title: string; desc: string; render: (ctx: Ctx) => 
   debt: { title: "Debt", desc: "What the City, County, and San Angelo ISD owe, how it grew, what it pays for, and when it is paid off.", render: debtPage },
   taxes: { title: "Taxes", desc: "Property tax rates for San Angelo, and why a lower rate can still mean a bigger bill.", render: taxesPage },
   budgets: { title: "Budgets", desc: "This year's budgets for the City, County, and San Angelo ISD, and the big costs coming.", render: budgetsPage },
-  schools: { title: "Schools: spending per student", desc: "What San Angelo ISD spends per student, next to the state average, and how enrollment is changing.", render: schoolsPage },
   questions: { title: "Open Questions", desc: "What the public record does not answer yet, who can answer it, and their replies.", render: questionsPage },
   city: { title: "City of San Angelo", desc: "The City of San Angelo's debt, budget, taxes, records, and open questions.", render: (c) => govPage(c, "city") },
   county: { title: "Tom Green County", desc: "Tom Green County's debt, budget, taxes, records, and open questions.", render: (c) => govPage(c, "county") },

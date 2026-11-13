@@ -25,12 +25,12 @@ export const MONEY: NavGroup = {
   key: "money",
   label: "Money",
   icon: "money",
-  covers: ["finances", "debt", "taxes", "budgets", "schools"],
+  covers: ["finances", "debt", "taxes", "budgets"],
   items: [
     { route: "debt", label: "Debt", desc: "What is owed, how it grew, and when it is paid off", icon: "debt" },
     { route: "taxes", label: "Taxes", desc: "Tax rates, and why a lower rate can still mean a bigger bill", icon: "taxes" },
     { route: "budgets", label: "Budgets", desc: "What each government plans to spend, and how plans change", icon: "budget" },
-    { route: "schools", label: "Schools per student", desc: "What San Angelo ISD spends on each student", icon: "school" },
+    { route: "saisd", anchor: "students", label: "School spending", desc: "What San Angelo ISD spends per student, on its page", icon: "school" },
     { route: "devcorp", label: "Sales tax and incentives", desc: "The half-cent sales tax and who receives awards", icon: "sales" },
   ],
   foot: { route: "finances", label: "Money overview", desc: "", icon: "money" },
@@ -44,7 +44,7 @@ export const ISSUES: NavGroup = {
   items: [
     { route: "data-centers", label: "Data centers", desc: "Three proposed campuses and who decides", icon: "server" },
     { route: "privacy", label: "Flock cameras", desc: "Plate cameras, police drones, and our view", icon: "camera" },
-    { route: "saisd", anchor: "bonds", label: "School bonds", desc: "Prop A: $385M borrowed, repaid through 2055", icon: "bond" },
+    { route: "saisd", anchor: "bonds", label: "School bonds", desc: "Prop A: $385M borrowed, repaid through 2055, on the SAISD page", icon: "bond" },
   ],
 };
 

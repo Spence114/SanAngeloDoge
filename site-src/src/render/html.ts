@@ -7,7 +7,6 @@ export const ROUTES = [
   "debt",
   "taxes",
   "budgets",
-  "schools",
   "questions",
   "city",
   "county",

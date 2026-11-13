@@ -3,10 +3,11 @@ import { GOV_PAGES, type GovId, type GovPage } from "../content/governments.ts";
 import { type Question, QUESTIONS } from "../content/questions.ts";
 import { byTopic, type ReportTopic } from "../content/reports.ts";
 import { ICON, keyPoints, section } from "../render/components.ts";
-import { esc, type Ctx, href, rich } from "../render/html.ts";
+import { anchorLink, esc, type Ctx, href, rich } from "../render/html.ts";
 import { GI } from "../render/icons.ts";
 import { tiles } from "../render/tiles.ts";
 import { reportsFor } from "./reports.ts";
+import { schoolSections } from "./money.ts";
 
 const STATUS_KIND: Record<string, string> = { "Not yet asked": "plain", Asked: "open", Answered: "good", "No reply": "hold", Resolved: "good" };
 
@@ -95,7 +96,7 @@ export function govPage(ctx: Ctx, id: GovId): string {
     ? `<div class="qgrid">${qs.map((q) => questionCard(ctx, q, false)).join("")}</div><p class="note">We send each question to the office named. Their answer is posted here as given. <a href="${href(ctx, "questions")}">All open questions</a></p>`
     : "";
 
-  const extra = g.extra === "bonds" ? bondsSection(ctx) : g.extra === "appraisal" ? appraisalSection(ctx) : g.extra === "devcorp" ? devcorpSection(ctx) : "";
+  const extra = g.extra === "bonds" ? schoolSections(ctx) + bondsSection(ctx) : g.extra === "appraisal" ? appraisalSection(ctx) : g.extra === "devcorp" ? devcorpSection(ctx) : "";
   const topic = TOPICS[id];
 
   return `<header class="phead wrap gov-head tone-${g.tone}">
@@ -107,6 +108,8 @@ export function govPage(ctx: Ctx, id: GovId): string {
 <nav class="wrap gov-switch" aria-label="Governments">${(Object.values(GOV_PAGES) as GovPage[])
     .map((x) => `<a class="tone-${x.tone}" href="${href(ctx, x.id)}"${x.id === id ? ' aria-current="page"' : ""}><span class="gs-ic">${GI[x.icon]}</span>${x.short}</a>`)
     .join("")}</nav>
+
+${g.extra === "bonds" ? `<nav class="wrap subnav" aria-label="On this page">${[["watch", "What to know"], ["students", "Spending per student"], ["trend", "Enrollment"], ["bonds", "School bonds"], ["questions", "Open questions"], ["records", "Records"]].map(([a, l]) => anchorLink(ctx, id, a, l)).join("")}</nav>` : ""}
 
 ${keyPoints(ctx, g.keys, "Key numbers")}
 
