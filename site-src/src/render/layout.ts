@@ -28,13 +28,20 @@ function desktopNav(ctx: Ctx): string {
 }
 
 function mobileNav(ctx: Ctx): string {
-  const groups = MENU_GROUPS.map(
-    (g) => `<div class="mg"><p class="mg-h">${g.label}</p>${g.items
-      .map((n) => itemHref(ctx, n, `ml${n.tone ? ` tone-${n.tone}` : ""}`, `<span class="mm-ic">${GI[n.icon]}</span><span>${n.label}</span>${n.step ? `<i class="mm-step">Step ${n.step}</i>` : ""}`))
-      .join("")}${g.foot ? `<a class="ml" href="${href(ctx, g.foot.route)}" data-nav="${g.foot.route}"><span class="mm-ic">${GI[g.foot.icon]}</span><span>${g.foot.label}</span></a>` : ""}</div>`,
-  ).join("");
-  const links = MENU_LINKS.length ? `<div class="mg"><p class="mg-h">More</p>${MENU_LINKS.map((n) => `<a class="ml" href="${href(ctx, n.route)}" data-nav="${n.route}"><span class="mm-ic">${GI[n.icon]}</span><span>${n.label}</span></a>`).join("")}</div>` : "";
-  return `<nav aria-label="Main" class="mnav">${groups}${links}</nav>`;
+  const groups = MENU_GROUPS.map((g) => {
+    const open = g.covers.includes(ctx.route);
+    const items = [...g.items, ...(g.foot ? [g.foot] : [])]
+      .map((n) => itemHref(ctx, n, `mt${n.tone ? ` tone-${n.tone}` : ""}`, `<span class="mt-ic">${GI[n.icon]}</span><span class="mt-l">${n.label}</span>`))
+      .join("");
+    return `<details class="mg"${open ? " open" : ""}>
+      <summary><span class="mg-ic">${GI[g.icon]}</span><span class="mg-l">${g.label}</span><svg class="mg-c" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M4.5 7 9 11.5 13.5 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+      <div class="mg-grid">${items}</div>
+    </details>`;
+  }).join("");
+  return `<nav aria-label="Main" class="mnav">
+    <a class="m-home" href="${href(ctx, "home")}" data-nav="home"><span class="mg-ic">${GI.home}</span><span class="mg-l">Home</span></a>
+    ${groups}
+  </nav>`;
 }
 
 export function header(ctx: Ctx): string {
@@ -51,7 +58,8 @@ export function header(ctx: Ctx): string {
   <div class="menu" id="menu" hidden>
     <div class="wrap menu-in">
       ${mobileNav(ctx)}
-      <a class="btn btn-block btn-give" href="${href(ctx, "proposal")}">${ICON.heart} Support Transparency</a>
+      <a class="btn btn-lg btn-block btn-give" href="${href(ctx, "proposal")}">${ICON.heart} Support Transparency</a>
+      <p class="m-note">Independent. Paid for by citizens.</p>
     </div>
   </div>
 </header>`;

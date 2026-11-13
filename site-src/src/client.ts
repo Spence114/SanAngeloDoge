@@ -33,6 +33,7 @@ declare global {
   const setMenu = (open: boolean) => {
     if (!menu || !menuBtn) return;
     menu.hidden = !open;
+    document.documentElement.classList.toggle("menu-open", open);
     menuBtn.setAttribute("aria-expanded", String(open));
     menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
   };
