@@ -7,7 +7,11 @@ import {
   DEBT,
   DEBT_TOTAL,
   MEDIAN_HOME,
-  PER_PERSON,
+  PAYOFF,
+  STUDENT_SPEND,
+  STUDENT_SPEND_CITE,
+  STUDENT_SPEND_NOTE,
+  TEACHER_PAY,
   RATES,
   TAX_BASE,
   TAX_BASE_NOTE,
@@ -76,7 +80,7 @@ export function financesPage(ctx: Ctx): string {
   );
 
   const budgetChart = hbars({
-    aria: "General Fund revenue and spending this year. The City is balanced. The County spends $17.4 million more than it takes in. SAISD spends $3.3 million more than it takes in.",
+    aria: "General Fund revenue and spending this year. The City budget is balanced as adopted. The County spends $17.4 million more than it takes in. SAISD spends $3.3 million more than it takes in.",
     max: 150e6,
     step: 50e6,
     tick: (v) => (v === 0 ? "$0" : `$${Math.round(v / 1e6)}M`),
@@ -93,7 +97,7 @@ export function financesPage(ctx: Ctx): string {
           label: "Spending",
           segs: [{ v: b.spending, cls: "s" as const, title: usd(b.spending) }],
           value: usdM(b.spending),
-          sub: gap < 0 ? `<em class="neg">${"-" + usdM(-gap)} gap</em>` : `<em class="even">Balanced</em>`,
+          sub: gap < 0 ? `<em class="neg">${"-" + usdM(-gap)} gap</em>` : `<em class="even">Balanced as adopted</em>`,
         },
       ];
     }),
@@ -148,6 +152,7 @@ export function financesPage(ctx: Ctx): string {
   const jump = `<nav class="wrap fin-jump" aria-label="On this page">${[
     ["debt", "Debt"],
     ["purpose", "What it pays for"],
+    ["students", "Per student"],
     ["budgets", "Budgets"],
     ["rates", "Tax rates"],
     ["base", "Tax base"],
@@ -157,15 +162,21 @@ export function financesPage(ctx: Ctx): string {
     .join("")}</nav>`;
 
   const debtSide = `<div class="fin-card"><h3 class="fc-t">Who owes the most</h3><p class="fc-s">Principal plus the interest still scheduled.</p>${debtChart}
-    <h3 class="fc-t fc-gap">Per person, compared with similar governments</h3><p class="fc-s">FY2025. The state's trend line for peers of similar size.</p>
-    <ul class="pp-list">${PER_PERSON.map((r) => {
-      const hi = Math.max(r.v, r.peer);
-      const diff = Math.round(((r.v - r.peer) / r.peer) * 100);
-      return `<li><div class="pp-h"><span><span>${r.label}${cite(ctx, ...r.cite)}</span>${r.note ? `<small>${r.note}</small>` : ""}</span><b class="mono">${usd(r.v)}</b></div>
-      <div class="pp-bars"><span class="pp-b us" style="width:${((r.v / hi) * 100).toFixed(1)}%"></span><span class="pp-b peer" style="width:${((r.peer / hi) * 100).toFixed(1)}%"></span></div>
-      <p class="pp-n">Peers ${usd(r.peer)}. ${diff === 0 ? "About the same." : diff > 0 ? `${diff}% above.` : `${-diff}% below.`}</p></li>`;
-    }).join("")}</ul>
-    <div class="legend"><span><i class="sw pp-us"></i>Local</span><span><i class="sw pp-peer"></i>Peer trend</span></div></div>`;
+    <h3 class="fc-t fc-gap">When it is paid off</h3><p class="fc-s">The last scheduled payment, if nothing new is borrowed.</p>
+    <ul class="po-list">${PAYOFF.map((r) => `<li class="tone-${r.tone}"><span class="po-g"><i class="dot"></i>${r.gov}${cite(ctx, ...r.cite)}<small>${r.note}</small></span><b class="mono">${r.year}</b></li>`).join("")}</ul></div>`;
+
+  const sMax = Math.max(...STUDENT_SPEND.map((r) => Math.max(r.saisd, r.state, r.peer)));
+  const sBar = (label: string, v: number, hi: number, cls: string) => `<div class="ss-b"><span class="ss-l">${label}</span><span class="ss-track"><i class="${cls}" style="width:${((v / hi) * 100).toFixed(1)}%"></i></span><b class="mono">${usd(v)}</b></div>`;
+  const students = `<div class="ss-grid">${STUDENT_SPEND.map((r, i) => {
+    const hi = i === 0 ? sMax : Math.max(r.saisd, r.state, r.peer);
+    const diff = Math.round(((r.saisd - r.state) / r.state) * 100);
+    return `<div class="fin-card ss${i === 0 ? " ss-main" : ""}"><h3 class="fc-t">${r.k}${cite(ctx, ...STUDENT_SPEND_CITE)}</h3><p class="fc-s">${r.note}</p>
+      ${sBar("SAISD", r.saisd, hi, "b-us")}${sBar("State average", r.state, hi, "b-state")}${sBar("Peer districts", r.peer, hi, "b-peer")}
+      <p class="ss-d">SAISD is <b>${Math.abs(diff)}% ${diff < 0 ? "below" : "above"}</b> the state average.</p></div>`;
+  }).join("")}</div>
+  <div class="fin-card ss-pay"><h3 class="fc-t">Average teacher salary${cite(ctx, ...STUDENT_SPEND_CITE)}</h3>
+    ${sBar("SAISD", TEACHER_PAY.saisd, TEACHER_PAY.state, "b-us")}${sBar("State average", TEACHER_PAY.state, TEACHER_PAY.state, "b-state")}${sBar("Peer districts", TEACHER_PAY.peer, TEACHER_PAY.state, "b-peer")}</div>
+  <p class="note">${rich(ctx, STUDENT_SPEND_NOTE)}</p>`;
 
   return `<div class="pg-wide">${pageHead({
     eyebrow: "Basic finances",
@@ -180,7 +191,7 @@ ${jump}
 ${keyPoints(ctx, [
   { kicker: "All three together", big: `$${Math.round(tot[tot.length - 1].total / 1e6)}M`, text: `Owed on Aug 31, 2025. One year earlier: $${Math.round(tot[tot.length - 2].total / 1e6)} million.`, tone: "ink", cite: ["brb-san-angelo", "brb-tgc", "brb-saisd", "our-analysis"] },
   { kicker: "School district", big: "$385M", text: "New bonds San Angelo ISD sold in 2025. That is why the total jumped.", tone: "saisd", cite: ["brb-saisd"] },
-  { kicker: "City", big: "18% below", text: "City debt per resident is $2,077. The state's benchmark for similar cities is $2,521.", tone: "city", cite: ["brb-san-angelo", "our-analysis"] },
+  { kicker: "Per student", big: "$10,882", text: "What SAISD spent to operate per student in 2022-23. The state average was $12,382.", tone: "city", cite: ["saisd-efficiency-audit-2024"] },
   { kicker: "Payoff", big: "2055", text: "When the last school bond payment comes due, if nothing new is borrowed.", tone: "county", cite: ["brb-saisd"] },
 ])}
 
@@ -201,9 +212,11 @@ ${section({
 
 ${section({ id: "purpose", title: "What the debt pays for", note: "Debt owed on Aug 31, 2025, by the purpose each government reported to the state. Bars share one scale, so their lengths compare across governments.", body: debtPurpose(ctx), band: true })}
 
-${section({ id: "budgets", title: "This year's budgets", note: "General Fund revenue and spending as adopted. The General Fund pays for day-to-day operations.", body: `<div class="fin-card">${budgetChart}</div>` + budgetNotes })}
+${section({ id: "students", title: "School spending per student", note: "What San Angelo ISD spends on each student, next to the state average.", body: students })}
 
-${section({ id: "rates", title: "Property tax rates", note: "Per $100 of taxable value. Each rate has two parts: one for operations and one for debt payments.", body: `<div class="fin-card">${rateChart}</div>` + rateNotes, band: true })}
+${section({ id: "budgets", title: "This year's budgets", note: "General Fund revenue and spending as adopted. The General Fund pays for day-to-day operations.", body: `<div class="fin-card">${budgetChart}</div><div class="callout"><b>Adopted is not final.</b> ${rich(ctx, "These are the plans passed at the start of the year. Councils, courts, and boards amend them during the year as they vote on projects and spending, so a budget adopted in balance can end the year out of balance. The City's FY2026 budget, after revisions, spent $6.1 million more than it took in. {{c:city-budget-fy2027}} Tracking those mid-year votes is part of the dashboard we are building.")}</div>` + budgetNotes, band: true })}
+
+${section({ id: "rates", title: "Property tax rates", note: "Per $100 of taxable value. Each rate has two parts: one for operations and one for debt payments.", body: `<div class="fin-card">${rateChart}</div>` + rateNotes })}
 
 ${section({ id: "base", title: "Tax base and credit ratings", note: "Taxable value is what the rates are applied to. Ratings come from the agencies that rate each government's bonds.", body: baseTable, fold: true })}
 

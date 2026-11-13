@@ -79,7 +79,7 @@ export function debtPurpose(ctx: Ctx): string {
       .join("");
     const key = r.slices
       .map(
-        (s) => `<li><i class="psw t${s.tone}${/revenue/.test(s.k) ? " rev" : ""}"></i><span class="pk">${s.k}${s.note ? `<small>${s.note}</small>` : ""}</span><span class="pv mono">${usdM(s.v)}</span><span class="pp mono">${Math.round((s.v / r.total) * 100)}%</span></li>`,
+        (s) => `<li><i class="psw t${s.tone}${/revenue/.test(s.k) ? " rev" : ""}"></i><span class="pk">${s.k}${s.note ? `<small${s.unv ? ' class="unv"' : ""}>${s.note}</small>` : ""}</span><span class="pv mono">${usdM(s.v)}</span><span class="pp mono">${Math.round((s.v / r.total) * 100)}%</span></li>`,
       )
       .join("");
     return `<div class="prow">

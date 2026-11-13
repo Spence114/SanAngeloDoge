@@ -953,3 +953,27 @@ table { font-size: 15.5px; }
   .fold-w { display: none; }
   .prose { font-size: 17px; }
 }
+
+/* payoff list and per-student spending */
+.po-list { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; }
+.po-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.po-list li:last-child { border-bottom: 0; }
+.po-g { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 9px; font-size: 15.5px; font-weight: 600; }
+.po-g small { flex-basis: 100%; font-size: 12.5px; font-weight: 400; color: var(--ink-3); padding-left: 21px; }
+.po-list b { font-size: 26px; font-weight: 500; color: var(--tone); }
+.ss-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.ss { gap: 8px; }
+.ss-b { display: grid; grid-template-columns: 104px minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 14.5px; }
+.ss-l { color: var(--ink-2); }
+.ss-track { display: block; height: 14px; border-radius: 4px; background: color-mix(in srgb, var(--well) 45%, transparent); }
+.ss-track i { display: block; height: 100%; border-radius: 4px; }
+.b-us { background: var(--saisd); } .b-state { background: var(--ink-3); } .b-peer { background: var(--c3); }
+.ss-b b { font-weight: 500; font-size: 14.5px; min-width: 62px; text-align: right; }
+.ss-b:first-of-type .ss-l, .ss-b:first-of-type b { color: var(--ink); font-weight: 600; }
+.ss-d { margin-top: 6px; font-size: 14.5px; color: var(--ink-2); }
+.ss-d b { color: var(--saisd); }
+.ss-pay { max-width: 560px; gap: 8px; }
+@media (max-width: 1240px) { .ss-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .ss-grid { grid-template-columns: minmax(0, 1fr); } .ss-b { grid-template-columns: 92px minmax(0, 1fr) auto; } }
+.callout { padding: 16px 20px; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--hold) 35%, transparent); border-left: 5px solid var(--hold); background: var(--hold-soft); font-size: 16.5px; color: var(--ink-2); max-width: 90ch; }
+.callout b { color: var(--ink); }

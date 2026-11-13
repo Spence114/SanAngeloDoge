@@ -93,7 +93,7 @@ export const BUDGETS: BudgetRow[] = [
     year: "FY2027",
     revenue: 104_075_985,
     spending: 104_075_985,
-    note: "Balanced for FY2027. Last year (FY2026, revised) spent $6.1 million more than it took in. Adopted Sep 15, 2026, 7-0. {{c:city-budget-fy2027,cc-minutes-2026-09-15}}",
+    note: "Balanced on paper when adopted. Spending added by Council votes during the year is not in this figure. Last year's budget (FY2026), after revisions, spent $6.1 million more than it took in. Adopted Sep 15, 2026, 7-0. {{c:city-budget-fy2027,cc-minutes-2026-09-15}}",
     source: "City FY2027 adopted budget",
     cite: ["city-budget-fy2027"],
   },
@@ -306,9 +306,9 @@ export const DEBT_PURPOSE: PurposeRow[] = [
     total: 265_865_000,
     asOf: "Aug 31, 2025",
     slices: [
-      { k: "Transportation", v: 67_005_000, tone: 1 },
+      { k: "Transportation", v: 67_005_000, tone: 1, note: "The state's category for streets and roads. Its data does not list the projects.", unv: true },
       { k: "Water, revenue bonds", v: 57_855_000, tone: 2, note: "Repaid from water bills, not property taxes" },
-      { k: "Refunding older bonds", v: 53_800_000, tone: 3 },
+      { k: "Refinanced older debt", v: 53_800_000, tone: 3, note: "New bonds sold to pay off older bonds, usually at a lower rate. The state calls this refunding and does not list what the older bonds built." },
       { k: "Economic development", v: 41_660_000, tone: 4, note: "The 2025 Coliseum bonds" },
       { k: "Water, tax-supported", v: 39_355_000, tone: 5 },
       { k: "Public safety", v: 3_290_000, tone: 6 },
@@ -340,10 +340,22 @@ export const DEBT_PURPOSE: PurposeRow[] = [
   },
 ];
 
-// Debt per resident (per student in average daily attendance for SAISD), FY2025, against the
-// Bond Review Board's trend line for similar governments. The City figure counts tax-supported debt only.
-export const PER_PERSON = [
-  { label: "City, per resident", note: "Tax-supported debt only", v: 2076.8, peer: 2521, cite: ["brb-san-angelo"] },
-  { label: "County, per resident", note: "", v: 409.65, peer: 410.1, cite: ["brb-tgc"] },
-  { label: "SAISD, per student", note: "Per student in average daily attendance", v: 37943.85, peer: 28461.55, cite: ["brb-saisd"] },
+// When each government's debt is scheduled to be fully repaid if nothing new is borrowed (BRB schedules).
+export const PAYOFF = [
+  { gov: "Tom Green County", tone: "county", year: "2039", note: "Last payment on the state's schedule, which predates the Sept 2025 refunding", cite: ["brb-tgc"] },
+  { gov: "City of San Angelo", tone: "city", year: "2048", note: "Last payment", cite: ["brb-san-angelo-schedule"] },
+  { gov: "San Angelo ISD", tone: "saisd", year: "2055", note: "Last payment on the 2025 bonds", cite: ["brb-saisd"] },
 ];
+
+// What San Angelo ISD spends per student, against the state average and the audit's ten peer districts.
+// From the district's state-required efficiency audit (Eide Bailly), using TEA PEIMS data for 2022-23.
+export const STUDENT_SPEND = [
+  { k: "Total operating spending", note: "Day-to-day costs. Leaves out construction and debt payments.", saisd: 10882, state: 12382, peer: 11607 },
+  { k: "Instruction", note: "Teaching in the classroom", saisd: 5900, state: 6849, peer: 6457 },
+  { k: "Buildings and upkeep", note: "Plant maintenance and operations", saisd: 1094, state: 1227, peer: 1050 },
+  { k: "General administration", note: "The central office", saisd: 277, state: 411, peer: 375 },
+];
+export const TEACHER_PAY = { saisd: 53477, state: 60716, peer: 58939 };
+export const STUDENT_SPEND_CITE = ["saisd-efficiency-audit-2024"];
+export const STUDENT_SPEND_NOTE =
+  "From the district's state-required efficiency audit, which uses Texas Education Agency data for the 2022-23 school year, the latest year audited. Peers are the ten districts the audit chose: Abilene, Bastrop, Frenship, Grapevine-Colleyville, Hurst-Euless-Bedford, McAllen, Schertz-Cibolo-Universal City, Waco, Waxahachie, and Wichita Falls. {{c:saisd-efficiency-audit-2024}} For 2024-25 the district reports $13,326 per student across all funds, a broader measure that includes construction and debt payments, so it does not compare with the figures above. {{c:saisd-transparency}}";
